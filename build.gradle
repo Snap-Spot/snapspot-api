@@ -11,6 +11,8 @@ allprojects {
 	}
 }
 
+bootJar.enabled = false
+
 subprojects {
 	group = 'snap'
 
