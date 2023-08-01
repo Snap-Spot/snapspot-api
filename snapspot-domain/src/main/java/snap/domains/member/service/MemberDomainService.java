@@ -2,7 +2,7 @@ package snap.domains.member.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import snap.domains.member.Member;
+import snap.domains.member.entity.Member;
 import snap.domains.member.repository.MemberRepository;
 
 /*
