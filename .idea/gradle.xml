@@ -4,6 +4,8 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
+        <option name="delegatedBuild" value="true" />
+        <option name="testRunner" value="GRADLE" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
@@ -11,6 +13,9 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/snapspot-api" />
             <option value="$PROJECT_DIR$/snapspot-common" />
+            <option value="$PROJECT_DIR$/snapspot-common/src" />
+            <option value="$PROJECT_DIR$/snapspot-common/src/main" />
+            <option value="$PROJECT_DIR$/snapspot-common/src/main/java" />
             <option value="$PROJECT_DIR$/snapspot-domain" />
           </set>
         </option>
