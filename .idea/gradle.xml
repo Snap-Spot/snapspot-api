@@ -13,9 +13,6 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/snapspot-api" />
             <option value="$PROJECT_DIR$/snapspot-common" />
-            <option value="$PROJECT_DIR$/snapspot-common/src" />
-            <option value="$PROJECT_DIR$/snapspot-common/src/main" />
-            <option value="$PROJECT_DIR$/snapspot-common/src/main/java" />
             <option value="$PROJECT_DIR$/snapspot-domain" />
           </set>
         </option>
