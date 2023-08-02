@@ -21,7 +21,7 @@ public class Member {
     private String email;
 
     @Column(nullable = false)
-    private String password;
+    private String encodedPassword;
 
     @Column(nullable = false, length = 16)
     private String nickname;
@@ -29,11 +29,14 @@ public class Member {
     @Column(name = "profile_image")
     private String profileImage;
 
+    private String provider;
+
     @Builder
-    public Member(String email, String password, String nickname, String profileImage) {
+    public Member(String email, String password, String nickname, String profileImage, String provider) {
         this.email = email;
-        this.password = password;
+        this.encodedPassword = password;
         this.nickname = nickname;
         this.profileImage = profileImage;
+        this.provider = provider;
     }
 }
