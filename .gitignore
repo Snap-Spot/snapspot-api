@@ -4,6 +4,20 @@
 .gradle/8.1.1/fileHashes/
 
 .gradle/buildOutputCleanup/buildOutputCleanup.lock
+.gradle/buildOutputCleanup/outputFiles.bin
 
-.gradle
-.idea
+.gradle/
+.idea/
+
+*.bin
+*.jar
+*.probe
+*.yml
+*.properties
+*.uniqueId0
+*.uniqueId1
+*.uniqueId2
+*.uniqueId3
+
+snapspot-domain/build/
+snapspot-api/build/
