@@ -8,8 +8,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
-import snap.api.member.MemberService;
-import snap.domains.member.Member;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -22,8 +20,6 @@ import java.util.List;
 public class JwtTokenFilter extends OncePerRequestFilter {
 
     private final String secretKey;
-
-    private final MemberService memberService;
 
     @Override
     public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -50,12 +46,9 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         // 토큰에서 email 추출
         String email = JwtTokenUtil.getEmail(token, secretKey);
 
-        // 추출한 email로 member 찾기
-        Member member = memberService.findMemberByEmail(email);
-
         // 권한 부여
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken (
-                member.getEmail(), null, List.of(new SimpleGrantedAuthority("USER")));
+                email, null, List.of(new SimpleGrantedAuthority("USER")));
 
         authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
