@@ -1,4 +1,4 @@
-package snap.domains.member;
+package snap.domains.member.entity;
 
 
 import lombok.AccessLevel;
