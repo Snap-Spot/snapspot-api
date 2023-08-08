@@ -12,6 +12,13 @@
         <module name="snap.snapspot-common.main" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="17" />
+    <bytecodeTargetLevel target="11">
+      <module name="snap.snapspot-common.src" target="17" />
+      <module name="snap.snapspot-common.src.main" target="17" />
+      <module name="snap.snapspot-common.src.main.main" target="17" />
+      <module name="snap.snapspot-common.src.main.test" target="17" />
+      <module name="snap.snapspot-common.src.test" target="17" />
+      <module name="src.snap.snapspot-common.src.main" target="17" />
+    </bytecodeTargetLevel>
   </component>
 </project>
