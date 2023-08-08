@@ -29,6 +29,7 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private Provider provider;
 
+    @Builder
     public Member(String email, String profileImage, String nickname, Provider provider) {
         this.email = email;
         this.profileImage = profileImage;
