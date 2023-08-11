@@ -1,6 +1,8 @@
 package snap.api.spot.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import snap.api.spot.dto.SpotAreaRequestDto;
 import snap.api.spot.dto.SpotResponseDto;
@@ -21,13 +23,14 @@ public class SpotController {
     private final SpotImageService spotImageService;
 
     @GetMapping("/{spotId}")
-    public SpotResponseDto getSpot(@PathVariable Long spotId){
+    public ResponseEntity<SpotResponseDto> getSpot(@PathVariable Long spotId){
         Spot spot = spotService.findSpot(spotId);
-        return new SpotResponseDto(spot, spotImageService.findImagesBySpot(spot));
+        SpotResponseDto responseDto = new SpotResponseDto(spot, spotImageService.findImagesBySpot(spot));
+        return ResponseEntity.status(HttpStatus.OK).body(responseDto);
     }
 
     @GetMapping("/theme")
-    public List<SpotResponseDto> getSpotListByTheme(@RequestBody SpotThemeRequestDto requestDto){
+    public ResponseEntity<List<SpotResponseDto>> getSpotListByTheme(@RequestBody SpotThemeRequestDto requestDto){
         List<Spot> spotList = spotService.findSpotListByTheme(requestDto.getTheme());
 
         List<SpotResponseDto> responseDtoList = new ArrayList<>();
@@ -36,11 +39,11 @@ public class SpotController {
                     new SpotResponseDto(spot, spotImageService.findImagesBySpot(spot))
             );
         }
-        return responseDtoList;
+        return ResponseEntity.status(HttpStatus.OK).body(responseDtoList);
     }
 
     @GetMapping("/area")
-    public List<SpotResponseDto> getSpotListByArea(@RequestBody SpotAreaRequestDto requestDto){
+    public ResponseEntity<List<SpotResponseDto>> getSpotListByArea(@RequestBody SpotAreaRequestDto requestDto){
         List<Spot> spotList = spotService.findSpotListByArea(requestDto.getAreaId());
 
         List<SpotResponseDto> responseDtoList = new ArrayList<>();
@@ -49,6 +52,6 @@ public class SpotController {
                     new SpotResponseDto(spot, spotImageService.findImagesBySpot(spot))
             );
         }
-        return responseDtoList;
+        return ResponseEntity.status(HttpStatus.OK).body(responseDtoList);
     }
 }
