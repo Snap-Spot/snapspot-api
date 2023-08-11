@@ -6,6 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 import snap.domains.spot.entity.Spot;
 import snap.domains.spot.repository.SpotRepository;
 
+import java.util.List;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -17,5 +19,10 @@ public class SpotService {
     public Spot findSpot(Long spotId){
         return spotRepository.findById(spotId)
                 .orElseThrow(()->new IllegalArgumentException("존재하지 않는 spot입니다."));
+    }
+
+    @Transactional(readOnly = true)
+    public List<Spot> findSpotListByTheme(String theme){
+        return spotRepository.findAllByTheme(theme);
     }
 }
