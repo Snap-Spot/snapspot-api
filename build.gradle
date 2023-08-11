@@ -36,8 +36,6 @@ subprojects {
 	dependencies {
 		implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 		implementation 'org.springframework.boot:spring-boot-starter-web'
-		implementation 'org.springframework.boot:spring-boot-starter-security'	// Spring Security 추가
-		implementation 'io.jsonwebtoken:jjwt:0.9.1'	// JWT 형식의 토큰 발행 및 검증 위해 추가
 		compileOnly 'org.projectlombok:lombok'
 		annotationProcessor 'org.projectlombok:lombok'
 		testImplementation 'org.springframework.boot:spring-boot-starter-test'
