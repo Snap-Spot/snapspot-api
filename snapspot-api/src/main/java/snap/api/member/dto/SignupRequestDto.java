@@ -4,14 +4,11 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import snap.domains.member.Member;
+import snap.domains.member.entity.Member;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SignupRequestDto {
-
-    private PasswordEncoder passwordEncoder;
 
     private String profileImage;
     private String nickname;
@@ -31,7 +28,7 @@ public class SignupRequestDto {
                 .profileImage(this.profileImage)
                 .nickname(nickname)
                 .email(email)
-                .password(passwordEncoder.encode(password))
+                .password(password)
                 .build();
     }
 }

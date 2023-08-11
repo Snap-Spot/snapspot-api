@@ -17,11 +17,11 @@ public class Member {
     @Column(name = "member_id", updatable = false)
     private Long memberId;
 
-    @Column(nullable = false, length = 64)
+    @Column(nullable = false, length = 64, unique = true)
     private String email;
 
-    @Column(nullable = false)
-    private String encodedPassword;
+    @Column(nullable = true)
+    private String password;
 
     @Column(nullable = false, length = 16)
     private String nickname;
@@ -29,12 +29,14 @@ public class Member {
     @Column(name = "profile_image")
     private String profileImage;
 
-    private String provider;
+    @Column
+    @Enumerated(EnumType.STRING)
+    private Provider provider;
 
     @Builder
-    public Member(String email, String password, String nickname, String profileImage, String provider) {
+    public Member(String email, String password, String nickname, String profileImage, Provider provider) {
         this.email = email;
-        this.encodedPassword = password;
+        this.password = password;
         this.nickname = nickname;
         this.profileImage = profileImage;
         this.provider = provider;

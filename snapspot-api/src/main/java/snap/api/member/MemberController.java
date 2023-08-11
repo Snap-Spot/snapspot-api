@@ -23,13 +23,13 @@ public class MemberController {
     @PostMapping("/signup")
     @ResponseStatus(value = HttpStatus.CREATED)
     public String signup(@RequestBody final SignupRequestDto requestDto) {
-        return memberService.signup(requestDto);
+        return "";
     }
 
     // 로그인
     @PostMapping("/login")
     @ResponseStatus(value = HttpStatus.CREATED)
     public String login(@RequestBody final LoginRequestDto requestDto) {
-        return memberService.login(requestDto);
+        return "";
     }
 }
