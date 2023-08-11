@@ -9,6 +9,7 @@ import snap.domains.spot.repository.SpotImageRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -27,10 +28,6 @@ public class SpotImageService {
     public List<String> findImagesBySpot(Spot spot){
         List<SpotImage> spotImageList = spotImageRepository.findAllBySpot(spot);
 
-        List<String> imageUrlList = new ArrayList<>();
-        for (SpotImage spotImage : spotImageList) {
-            imageUrlList.add(spotImage.getImage());
-        }
-        return imageUrlList;
+        return spotImageList.stream().map(SpotImage::getImage).collect(Collectors.toList());
     }
 }
