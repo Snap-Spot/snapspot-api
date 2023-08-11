@@ -2,6 +2,7 @@ package snap.api.spot.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import snap.api.spot.dto.SpotAreaRequestDto;
 import snap.api.spot.dto.SpotResponseDto;
 import snap.api.spot.dto.SpotThemeRequestDto;
 import snap.domains.spot.entity.Spot;
@@ -28,6 +29,19 @@ public class SpotController {
     @GetMapping("/theme")
     public List<SpotResponseDto> getSpotListByTheme(@RequestBody SpotThemeRequestDto requestDto){
         List<Spot> spotList = spotService.findSpotListByTheme(requestDto.getTheme());
+
+        List<SpotResponseDto> responseDtoList = new ArrayList<>();
+        for(Spot spot : spotList){
+            responseDtoList.add(
+                    new SpotResponseDto(spot, spotImageService.findImagesBySpot(spot))
+            );
+        }
+        return responseDtoList;
+    }
+
+    @GetMapping("/area")
+    public List<SpotResponseDto> getSpotListByArea(@RequestBody SpotAreaRequestDto requestDto){
+        List<Spot> spotList = spotService.findSpotListByArea(requestDto.getAreaId());
 
         List<SpotResponseDto> responseDtoList = new ArrayList<>();
         for(Spot spot : spotList){
