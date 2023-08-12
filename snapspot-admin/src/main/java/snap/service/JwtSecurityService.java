@@ -11,7 +11,7 @@ import snap.jwt.JwtTokenUtil;
 
 @Service
 @RequiredArgsConstructor
-public class JwtTokenService {
+public class JwtSecurityService {
     private final JwtTokenUtil jwtUtil;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final PasswordEncoder passwordEncoder;

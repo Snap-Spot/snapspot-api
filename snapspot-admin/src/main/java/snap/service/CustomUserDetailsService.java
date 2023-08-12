@@ -18,7 +18,7 @@ import java.util.Collections;
 public class CustomUserDetailsService implements UserDetailsService {
 
     private final MemberDomainService memberDomainService;
-    private final JwtTokenService jwtService;
+    private final JwtSecurityService jwtService;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -31,7 +31,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         GrantedAuthority grantedAuthority = new SimpleGrantedAuthority("ROLE_USER");
         return new User(
                 member.getEmail(),
-                jwtService.encryptPassword(member.getPassword()),
+                member.getPassword(),
                 Collections.singleton(grantedAuthority)
         );
     }
