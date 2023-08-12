@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import snap.api.spot.dto.SpotImageResponseDto;
-import snap.domains.spot.service.SpotImageService;
+import snap.api.spot.service.SpotImageService;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,7 +19,8 @@ public class SpotImageController {
 
     @GetMapping("/{imageId}")
     public ResponseEntity<SpotImageResponseDto> getImage(@PathVariable Long imageId){
-        SpotImageResponseDto responseDto = new SpotImageResponseDto(spotImageService.findSpotImage(imageId));
-        return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(spotImageService.findSpotImage(imageId));
     }
 }

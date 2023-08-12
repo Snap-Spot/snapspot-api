@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import snap.api.spot.dto.AreaResponseDto;
-import snap.domains.spot.service.AreaService;
+import snap.api.spot.service.AreaService;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,7 +19,8 @@ public class AreaController {
 
     @GetMapping("/{areaId}")
     public ResponseEntity<AreaResponseDto> getArea(@PathVariable Long areaId){
-        AreaResponseDto responseDto = new AreaResponseDto(areaService.findArea(areaId));
-        return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(areaService.findArea(areaId));
     }
 }

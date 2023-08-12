@@ -12,10 +12,10 @@ import java.util.List;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class SpotService {
+public class SpotDomainService {
 
     private final SpotRepository spotRepository;
-    private final AreaService areaService;
+    private final AreaDomainService areaDomainService;
 
     @Transactional(readOnly = true)
     public Spot findSpot(Long spotId){
@@ -30,7 +30,7 @@ public class SpotService {
 
     @Transactional(readOnly = true)
     public List<Spot> findSpotListByArea(Long areaId){
-        Area area = areaService.findArea(areaId);
+        Area area = areaDomainService.findArea(areaId);
         return spotRepository.findAllByArea(area);
     }
 }
