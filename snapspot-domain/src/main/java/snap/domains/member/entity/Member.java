@@ -14,25 +14,29 @@ import javax.persistence.*;
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "member_id", updatable = false)
     private Long memberId;
 
-    @Column
+    @Column(nullable = false, length = 64)
     private String email;
 
-    @Column
-    private String profileImage;
+    @Column(nullable = false)
+    private String encodedPassword;
 
-    @Column
+    @Column(nullable = false, length = 16)
     private String nickname;
 
-    @Column
-    @Enumerated(EnumType.STRING)
-    private Provider provider;
+    @Column(name = "profile_image")
+    private String profileImage;
 
-    public Member(String email, String profileImage, String nickname, Provider provider) {
+    private String provider;
+
+    @Builder
+    public Member(String email, String password, String nickname, String profileImage, String provider) {
         this.email = email;
-        this.profileImage = profileImage;
+        this.encodedPassword = password;
         this.nickname = nickname;
+        this.profileImage = profileImage;
         this.provider = provider;
     }
 }
