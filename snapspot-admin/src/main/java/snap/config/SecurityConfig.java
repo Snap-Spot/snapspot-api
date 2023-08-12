@@ -13,7 +13,6 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import snap.jwt.JwtTokenFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -32,10 +31,9 @@ public class SecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/members/test", "/members/signup", "/members/login").permitAll()   // 인증 없이 접근을 허용
-                .antMatchers(HttpMethod.POST, "/members/**").authenticated()    // 접근 시 인증 필요
+                .antMatchers("/members/test", "/members/signup", "/members/login").permitAll()
+                .antMatchers(HttpMethod.POST, "/members/**").authenticated()
                 .and()
-                .addFilterBefore(new JwtTokenFilter(secretKey), UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
