@@ -29,18 +29,19 @@ public class Photographer {
     private String nickname;
 
     @Column
+    private String password;
+
+    @Column
     private Long lowestPay;
 
     @Column
     private String paymentImage;
 
     @Builder
-    public Photographer(String email, Provider provider, String profileImage, String nickname, Long lowestPay, String paymentImage) {
+    public Photographer(String email, Provider provider, String nickname, String password) {
         this.email = email;
         this.provider = provider;
-        this.profileImage = profileImage;
         this.nickname = nickname;
-        this.lowestPay = lowestPay;
-        this.paymentImage = paymentImage;
+        this.password = password;
     }
 }

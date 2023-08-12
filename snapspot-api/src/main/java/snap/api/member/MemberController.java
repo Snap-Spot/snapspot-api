@@ -12,24 +12,4 @@ import snap.api.member.dto.SignupRequestDto;
 @RequestMapping("/members")
 public class MemberController {
 
-    private final MemberService memberService;
-
-    @GetMapping("/test")
-    public ResponseEntity<String> test() {
-        return ResponseEntity.ok("test success!");
-    }
-
-    // 회원가입
-    @PostMapping("/signup")
-    @ResponseStatus(value = HttpStatus.CREATED)
-    public String signup(@RequestBody final SignupRequestDto requestDto) {
-        return "";
-    }
-
-    // 로그인
-    @PostMapping("/login")
-    @ResponseStatus(value = HttpStatus.CREATED)
-    public String login(@RequestBody final LoginRequestDto requestDto) {
-        return "";
-    }
 }

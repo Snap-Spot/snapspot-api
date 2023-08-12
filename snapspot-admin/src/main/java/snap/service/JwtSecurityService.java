@@ -19,9 +19,7 @@ public class JwtSecurityService {
     public TokenRes createJwt(String email, String password) {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email, password);
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-        return jwtUtil.generateToken(
-                authentication
-        );
+        return jwtUtil.generateToken(authentication);
     }
 
     public String encryptPassword(String password) {
