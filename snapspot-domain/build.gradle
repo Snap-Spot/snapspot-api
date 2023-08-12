@@ -3,5 +3,6 @@ jar { enabled = true }
 
 dependencies {
     implementation "com.mysql:mysql-connector-j"
+    implementation project(":snapspot-common")
     runtimeOnly("com.mysql:mysql-connector-j")
 }
