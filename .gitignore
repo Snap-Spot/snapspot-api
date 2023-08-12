@@ -23,3 +23,5 @@ snapspot-domain/build/
 snapspot-api/build/
 
 snapspot-domain/src/main/resources/
+
+snapspot-admin/src/main/resources/
