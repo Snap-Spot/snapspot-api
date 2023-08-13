@@ -21,7 +21,6 @@ import java.util.Date;
 import java.util.stream.Collectors;
 
 @Component
-@RequiredArgsConstructor
 public class JwtTokenUtil {
 
     private static final String AUTHORITIES_KEY = "role";

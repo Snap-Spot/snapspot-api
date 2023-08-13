@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import snap.domains.member.entity.Member;
+import snap.domains.member.entity.Role;
 import snap.domains.photographer.entity.Photographer;
 
 @Getter
@@ -12,19 +13,12 @@ import snap.domains.photographer.entity.Photographer;
 public class SignUpResponseDto {
     private String nickname;
     private String email;
-    private String type;
+    private Role role;
 
     @Builder
     public SignUpResponseDto(Member entity) {
         this.nickname = entity.getNickname();
         this.email = entity.getEmail();
-        this.type = "MEMBER";
-    }
-
-    @Builder
-    public SignUpResponseDto(Photographer entity) {
-        this.nickname = entity.getNickname();
-        this.email = entity.getEmail();
-        this.type = "PHOTOGRAPHER";
+        this.role = entity.getRole();
     }
 }

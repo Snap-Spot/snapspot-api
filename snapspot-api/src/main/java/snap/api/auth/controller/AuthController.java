@@ -1,6 +1,7 @@
 package snap.api.auth.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,14 +23,6 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<SignUpResponseDto> signUp(@RequestBody SignUpRequestDto requestDto) {
-        if (Objects.equals(requestDto.getType(), "PHOTOGRAPHER")) {
-            return ResponseEntity.ok().body(authService.createPhotographer(requestDto));
-        }
-        else if (Objects.equals(requestDto.getType(), "MEMBER")) {
-            return ResponseEntity.ok().body(authService.createMember(requestDto));
-        }
-        else {
-            throw new IllegalArgumentException("올바른 계정 타입이 아닙니다. MEMBER 혹은 PHOTOGRAPHER로 입력해주세요.");
-        }
+        return new ResponseEntity<>(authService.createMember(requestDto), HttpStatus.CREATED);
     }
 }
