@@ -33,12 +33,17 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private Provider provider;
 
+    @Column
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     @Builder
-    public Member(String email, String password, String nickname, String profileImage, Provider provider) {
+    public Member(String email, String password, String nickname, String profileImage, Provider provider, Role role) {
         this.email = email;
         this.password = password;
         this.nickname = nickname;
         this.profileImage = profileImage;
         this.provider = provider;
+        this.role = role;
     }
 }

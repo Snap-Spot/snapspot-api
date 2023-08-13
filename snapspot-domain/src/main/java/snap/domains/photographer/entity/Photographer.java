@@ -3,6 +3,7 @@ package snap.domains.photographer.entity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import snap.domains.member.entity.Member;
 import snap.domains.member.entity.Provider;
 
 import javax.persistence.*;
@@ -15,21 +16,9 @@ public class Photographer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long photographerId;
 
-    @Column
-    private String email;
-
-    @Column
-    @Enumerated(EnumType.STRING)
-    private Provider provider;
-
-    @Column
-    private String profileImage;
-
-    @Column
-    private String nickname;
-
-    @Column
-    private String password;
+    @OneToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     @Column
     private Long lowestPay;
@@ -37,11 +26,12 @@ public class Photographer {
     @Column
     private String paymentImage;
 
+    @Column
+    private String bio;
+
     @Builder
-    public Photographer(String email, Provider provider, String nickname, String password) {
-        this.email = email;
-        this.provider = provider;
-        this.nickname = nickname;
-        this.password = password;
+    public Photographer(Long photographerId, Member member) {
+        this.photographerId = photographerId;
+        this.member = member;
     }
 }
