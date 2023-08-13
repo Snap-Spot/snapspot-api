@@ -1,4 +1,4 @@
-package snap.api.auth.dto;
+package snap.api.auth.dto.request;
 
 import lombok.AccessLevel;
 import lombok.Getter;
