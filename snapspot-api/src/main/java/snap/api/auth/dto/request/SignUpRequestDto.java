@@ -8,7 +8,7 @@ import snap.domains.member.entity.Provider;
 import snap.domains.member.entity.Role;
 
 /**
- * type: `MEMBER` 혹은 `PHOTOGRAPHER`로 고정
+ * Role: `ROLE_MEMBER` 혹은 `ROLE_PHOTOGRAPHER`로 고정
  */
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

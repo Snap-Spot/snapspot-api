@@ -11,25 +11,32 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import snap.jwt.JwtTokenUtil;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
 
+    private final JwtTokenUtil jwtTokenUtil;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        return httpSecurity
+        httpSecurity
                 .httpBasic().disable()
                 .csrf().disable()
                 .cors().and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/members/test", "/members/signup", "/members/login").permitAll()
+                .antMatchers("/members/test", "/members/signup", "/members/signin").permitAll()
+                .antMatchers("/photographers/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/members/**").authenticated()
                 .and()
-                .build();
+                .apply(new JwtSecurityConfig(jwtTokenUtil));
+
+        return httpSecurity.build();
+
     }
 
     // password 암호화
