@@ -9,7 +9,7 @@ import snap.domains.spot.repository.AreaRepository;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class AreaService {
+public class AreaDomainService {
 
     private final AreaRepository areaRepository;
 

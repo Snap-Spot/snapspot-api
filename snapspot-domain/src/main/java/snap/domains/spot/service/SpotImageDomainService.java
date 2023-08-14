@@ -7,14 +7,13 @@ import snap.domains.spot.entity.Spot;
 import snap.domains.spot.entity.SpotImage;
 import snap.domains.spot.repository.SpotImageRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class SpotImageService {
+public class SpotImageDomainService {
 
     private final SpotImageRepository spotImageRepository;
 
