@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  spring-boot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - LIBGL_PATH=/usr/lib/x86_64-linux-gnu/libGL.so.1
+    ports:
+      - 80:8080
+    networks:
+      - snapspot-backend
+  redis:
+    image: redis:alpine
+    ports:
+      - 6379:6379
+    networks:
+      - snapspot-backend
+
+
+networks:
+  snapspot-backend:
