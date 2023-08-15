@@ -20,6 +20,10 @@ public class Spot {
 
     private String name;
 
+    private String address;
+
+    private String theme;
+
     @Builder
     public Spot(Area area, String name) {
         this.area = area;
