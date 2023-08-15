@@ -25,7 +25,7 @@ public class JwtTokenUtil {
 
     private static final String AUTHORITIES_KEY = "role";
     private static final String BEARER_TYPE = "Bearer";
-    private static final Long ACCESS_TOKEN_EXPIRE_TIME = (long) (1000 * 60 * 30 * 24 * 3);
+    private static final Long ACCESS_TOKEN_EXPIRE_TIME = (long) (1000 * 60 * 60 * 24 * 3);
     private static final Long REFRESH_TOKEN_EXPIRE_TIME = (long) (1000 * 60 * 60 * 24 * 7);
 
     private final Key key;
