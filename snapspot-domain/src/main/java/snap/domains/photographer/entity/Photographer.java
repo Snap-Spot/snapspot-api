@@ -30,8 +30,7 @@ public class Photographer {
     private String bio;
 
     @Builder
-    public Photographer(Long photographerId, Member member) {
-        this.photographerId = photographerId;
+    public Photographer(Member member) {
         this.member = member;
     }
 }
