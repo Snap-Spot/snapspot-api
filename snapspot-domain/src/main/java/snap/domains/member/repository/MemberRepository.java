@@ -2,7 +2,7 @@ package snap.domains.member.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import snap.domains.member.Member;
+import snap.domains.member.entity.Member;
 
 import java.util.Optional;
 

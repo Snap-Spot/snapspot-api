@@ -2,6 +2,5 @@ bootJar { enabled = false }
 jar { enabled = true }
 
 dependencies {
-    implementation project(":snapspot-domain")
     implementation 'org.springdoc:springdoc-openapi-ui:1.6.6'
 }
