@@ -5,30 +5,26 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Getter
 @Entity
 @NoArgsConstructor
-public class Sns {
+public class PhotographerSchedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long snsId;
+    private Long scheduleId;
 
     @ManyToOne
     @JoinColumn(name = "photographer_id")
     private Photographer photographer;
 
     @Column
-    @Enumerated(EnumType.STRING)
-    private SnsType type;
-
-    @Column
-    private String account;
+    private Timestamp unableDate;
 
     @Builder
-    public Sns(Photographer photographer, SnsType type, String account) {
+    public PhotographerSchedule(Photographer photographer, Timestamp unableDate){
         this.photographer = photographer;
-        this.type = type;
-        this.account = account;
+        this.unableDate = unableDate;
     }
 }

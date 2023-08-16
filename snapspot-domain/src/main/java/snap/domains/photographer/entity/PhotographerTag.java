@@ -9,26 +9,22 @@ import javax.persistence.*;
 @Getter
 @Entity
 @NoArgsConstructor
-public class Sns {
+public class PhotographerTag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long snsId;
+    private Long photographerTagId;
 
     @ManyToOne
     @JoinColumn(name = "photographer_id")
     private Photographer photographer;
 
-    @Column
-    @Enumerated(EnumType.STRING)
-    private SnsType type;
-
-    @Column
-    private String account;
+    @ManyToOne
+    @JoinColumn(name = "tag_id")
+    private Tag tag;
 
     @Builder
-    public Sns(Photographer photographer, SnsType type, String account) {
+    public PhotographerTag(Photographer photographer, Tag tag){
         this.photographer = photographer;
-        this.type = type;
-        this.account = account;
+        this.tag = tag;
     }
 }

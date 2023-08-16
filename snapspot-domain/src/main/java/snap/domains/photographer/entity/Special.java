@@ -9,10 +9,11 @@ import javax.persistence.*;
 @Getter
 @Entity
 @NoArgsConstructor
-public class Sns {
+public class Special {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long snsId;
+    private Long specialId;
 
     @ManyToOne
     @JoinColumn(name = "photographer_id")
@@ -20,15 +21,11 @@ public class Sns {
 
     @Column
     @Enumerated(EnumType.STRING)
-    private SnsType type;
-
-    @Column
-    private String account;
+    private SpecialKeyword keyword;
 
     @Builder
-    public Sns(Photographer photographer, SnsType type, String account) {
+    public Special(Photographer photographer, SpecialKeyword keyword){
         this.photographer = photographer;
-        this.type = type;
-        this.account = account;
+        this.keyword = keyword;
     }
 }
