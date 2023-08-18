@@ -12,6 +12,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/snapspot-admin" />
             <option value="$PROJECT_DIR$/snapspot-api" />
             <option value="$PROJECT_DIR$/snapspot-common" />
             <option value="$PROJECT_DIR$/snapspot-domain" />
