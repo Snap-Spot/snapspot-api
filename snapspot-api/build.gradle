@@ -3,4 +3,6 @@ jar { enabled = false }
 
 dependencies {
     implementation project(":snapspot-domain")
+    implementation project(":snapspot-common")
+    implementation project(":snapspot-admin")
 }
