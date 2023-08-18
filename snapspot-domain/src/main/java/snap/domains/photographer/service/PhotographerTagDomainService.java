@@ -25,7 +25,11 @@ public class PhotographerTagDomainService {
     }
 
     public void createTag(Photographer photographer, String tag){
-        Tag entity = tagRepository.save(new Tag(tag));
+        Tag entity;
+        if(tagRepository.existsByTag(tag))
+            entity = tagRepository.findByTag(tag);
+        else
+            entity = tagRepository.save(new Tag(tag));
         photographerTagRepository.save(new PhotographerTag(photographer, entity));
     }
 }
