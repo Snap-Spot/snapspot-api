@@ -4,8 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import snap.domains.member.entity.Member;
+import snap.domains.member.repository.MemberRepository;
 import snap.domains.photographer.entity.Photographer;
 import snap.domains.photographer.repository.PhotographerRepository;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -13,6 +17,7 @@ import snap.domains.photographer.repository.PhotographerRepository;
 public class PhotographerDomainService {
 
     private final PhotographerRepository photographerRepository;
+    private final MemberRepository memberRepository;
 
 
     public Photographer createPhotographer(Member member) {
@@ -31,5 +36,11 @@ public class PhotographerDomainService {
     public Photographer findById(Long id) {
         return photographerRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("해당 ID를 가진 사진 작가를 찾을 수 없습니다."));
+    }
+
+    @Transactional(readOnly = true)
+    public List<Photographer> findByNickname(String nickname){
+        List<Member> memberList = memberRepository.findAllByNicknameContaining(nickname);
+        return memberList.stream().map(photographerRepository::findByMember).collect(Collectors.toList());
     }
 }

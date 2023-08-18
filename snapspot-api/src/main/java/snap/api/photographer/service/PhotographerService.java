@@ -67,4 +67,11 @@ public class PhotographerService {
         List<PhotographerSchedule> scheduleList = photographerScheduleDomainService.findScheduleListByPhotographerId(photographerId);
         return scheduleList.stream().map(PhotographerSchedule::getUnableDate).collect(Collectors.toList());
     }
+
+    public List<PhotographerResponseDto> searchByNickname(String nickname){
+        return photographerDomainService.findByNickname(nickname).stream()
+                .map(Photographer::getPhotographerId)
+                .map(this::findPhotographer)
+                .collect(Collectors.toList());
+    }
 }
