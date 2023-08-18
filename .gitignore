@@ -21,8 +21,9 @@
 snapspot-domain/build/
 snapspot-api/build/
 
-snapspot-domain/src/main/resources/
 
 snapspot-admin/src/main/resources/
-
 snapspot-api/src/main/resources/
+snapspot-common/src/main/resources/
+snapspot-domain/src/main/resources/
+*.yaml
