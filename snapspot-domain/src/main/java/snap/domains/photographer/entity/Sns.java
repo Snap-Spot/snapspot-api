@@ -12,6 +12,7 @@ import javax.persistence.*;
 public class Sns {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "sns_id")
     private Long snsId;
 
     @ManyToOne

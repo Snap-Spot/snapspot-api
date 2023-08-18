@@ -12,6 +12,7 @@ import javax.persistence.*;
 public class PhotographerTag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "photographer_tag_id")
     private Long photographerTagId;
 
     @ManyToOne

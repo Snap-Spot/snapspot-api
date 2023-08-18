@@ -13,6 +13,7 @@ public class Special {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "special_id")
     private Long specialId;
 
     @ManyToOne
