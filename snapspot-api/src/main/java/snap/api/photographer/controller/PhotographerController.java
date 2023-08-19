@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import snap.api.photographer.dto.response.PhotographerResponseDto;
+import snap.api.photographer.dto.response.PhotographerSearchResponseDto;
 import snap.api.photographer.service.PhotographerService;
 import snap.domains.photographer.entity.Photographer;
 import snap.resolver.AuthPhotographer;
@@ -29,7 +30,7 @@ public class PhotographerController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<PhotographerResponseDto>> search(@RequestBody String word){
+    public ResponseEntity<PhotographerSearchResponseDto> search(@RequestBody String word){
         return new ResponseEntity<>(photographerService.findBySearch(word), HttpStatus.OK);
     }
 }

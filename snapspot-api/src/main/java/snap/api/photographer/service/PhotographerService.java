@@ -3,6 +3,7 @@ package snap.api.photographer.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import snap.api.photographer.dto.response.PhotographerResponseDto;
+import snap.api.photographer.dto.response.PhotographerSearchResponseDto;
 import snap.api.photographer.dto.response.SnsDto;
 import snap.api.spot.dto.AreaResponseDto;
 import snap.domains.photographer.entity.*;
@@ -69,7 +70,7 @@ public class PhotographerService {
         return scheduleList.stream().map(PhotographerSchedule::getUnableDate).collect(Collectors.toList());
     }
 
-    public List<PhotographerResponseDto> findBySearch(String word) {
+    public PhotographerSearchResponseDto findBySearch(String word) {
         List<PhotographerResponseDto> nicknameResult =
                 photographerDomainService.findByNickname(word).stream()
                         .map(Photographer::getPhotographerId)
@@ -82,9 +83,7 @@ public class PhotographerService {
                         .map(this::findPhotographer)
                         .collect(Collectors.toList());
 
-        List<PhotographerResponseDto> result = new ArrayList<>();
-        result.addAll(nicknameResult); result.addAll(areaResult);
-        return result;
+        return new PhotographerSearchResponseDto(nicknameResult, areaResult);
     }
 
 }
