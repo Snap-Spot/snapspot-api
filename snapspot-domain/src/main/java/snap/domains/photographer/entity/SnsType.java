@@ -3,7 +3,7 @@ package snap.domains.photographer.entity;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public enum Type {
+public enum SnsType {
     INSTAGRAM("INSTAGRAM"),
     KAKAO_CHANNEL("KAKAO_CHANNEL"),
     FACEBOOK("FACEBOOK"),

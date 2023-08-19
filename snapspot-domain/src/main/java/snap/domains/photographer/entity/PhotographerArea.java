@@ -13,6 +13,7 @@ import javax.persistence.*;
 public class PhotographerArea {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "pa_id")
     private Long photographerAreaId;
 
     @ManyToOne

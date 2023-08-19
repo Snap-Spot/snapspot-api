@@ -20,6 +20,8 @@
 
 snapspot-domain/build/
 snapspot-api/build/
+snapspot-admin/build/
+snapspot-common/build/
 
 snapspot-domain/src/main/resources/
 

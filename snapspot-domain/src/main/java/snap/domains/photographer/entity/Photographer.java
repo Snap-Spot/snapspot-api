@@ -4,7 +4,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import snap.domains.member.entity.Member;
-import snap.domains.member.entity.Provider;
 
 import javax.persistence.*;
 
@@ -14,16 +13,17 @@ import javax.persistence.*;
 public class Photographer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "photographer_id")
     private Long photographerId;
 
     @OneToOne
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @Column
+    @Column(name = "lowest_pay")
     private Long lowestPay;
 
-    @Column
+    @Column(name = "payment_image")
     private String paymentImage;
 
     @Column
