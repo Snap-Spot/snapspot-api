@@ -9,6 +9,7 @@ import snap.domains.photographer.entity.*;
 import snap.domains.photographer.service.*;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,9 +38,9 @@ public class PhotographerService {
                 .build();
     }
 
-    public AreaResponseDto findArea(Long photographerId){
+    public AreaResponseDto findArea(Long photographerId) {
         return new AreaResponseDto(
-                photographerAreaDomainService.findArea(photographerId)
+                photographerAreaDomainService.findAreaByPhotographer(photographerId)
         );
     }
 
@@ -48,7 +49,7 @@ public class PhotographerService {
         return photographerImageList.stream().map(PhotographerImage::getImage).collect(Collectors.toList());
     }
 
-    public List<String> findTagList(Long photographerId){
+    public List<String> findTagList(Long photographerId) {
         List<PhotographerTag> photographerTagList = photographerTagDomainService.findTagList(photographerId);
         return photographerTagList.stream().map(PhotographerTag::getTag).map(Tag::getTag).collect(Collectors.toList());
     }
@@ -68,10 +69,22 @@ public class PhotographerService {
         return scheduleList.stream().map(PhotographerSchedule::getUnableDate).collect(Collectors.toList());
     }
 
-    public List<PhotographerResponseDto> searchByNickname(String nickname){
-        return photographerDomainService.findByNickname(nickname).stream()
-                .map(Photographer::getPhotographerId)
-                .map(this::findPhotographer)
-                .collect(Collectors.toList());
+    public List<PhotographerResponseDto> findBySearch(String word) {
+        List<PhotographerResponseDto> nicknameResult =
+                photographerDomainService.findByNickname(word).stream()
+                        .map(Photographer::getPhotographerId)
+                        .map(this::findPhotographer)
+                        .collect(Collectors.toList());
+
+        List<PhotographerResponseDto> areaResult =
+                photographerAreaDomainService.findPhotographerListByArea(word).stream()
+                        .map(Photographer::getPhotographerId)
+                        .map(this::findPhotographer)
+                        .collect(Collectors.toList());
+
+        List<PhotographerResponseDto> result = new ArrayList<>();
+        result.addAll(nicknameResult); result.addAll(areaResult);
+        return result;
     }
+
 }

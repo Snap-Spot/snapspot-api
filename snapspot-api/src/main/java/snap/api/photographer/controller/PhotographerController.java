@@ -28,8 +28,8 @@ public class PhotographerController {
         return new ResponseEntity<>(photographerService.findPhotographer(photographerId), HttpStatus.OK);
     }
 
-    @GetMapping("/nickname")
-    public ResponseEntity<List<PhotographerResponseDto>> search(@RequestBody String nickname){
-        return new ResponseEntity<>(photographerService.searchByNickname(nickname), HttpStatus.OK);
+    @GetMapping("/search")
+    public ResponseEntity<List<PhotographerResponseDto>> search(@RequestBody String word){
+        return new ResponseEntity<>(photographerService.findBySearch(word), HttpStatus.OK);
     }
 }
