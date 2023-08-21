@@ -19,8 +19,6 @@ public class PhotographerDomainService {
 
     private final PhotographerRepository photographerRepository;
     private final MemberRepository memberRepository;
-    private final AreaDomainService areaDomainService;
-    private final PhotographerAreaDomainService photographerAreaDomainService;
 
 
     public Photographer createPhotographer(Member member) {

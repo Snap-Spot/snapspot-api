@@ -33,4 +33,9 @@ public class PhotographerController {
     public ResponseEntity<PhotographerSearchResponseDto> search(@RequestBody String word){
         return new ResponseEntity<>(photographerService.findBySearch(word), HttpStatus.OK);
     }
+
+    @GetMapping("tag")
+    public ResponseEntity<List<PhotographerResponseDto>> photographerFindByTag(@RequestBody String tag){
+        return new ResponseEntity<>(photographerService.findByTag(tag), HttpStatus.OK);
+    }
 }

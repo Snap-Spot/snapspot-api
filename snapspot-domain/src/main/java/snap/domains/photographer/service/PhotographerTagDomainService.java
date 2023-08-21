@@ -10,6 +10,7 @@ import snap.domains.photographer.repository.PhotographerTagRepository;
 import snap.domains.photographer.repository.TagRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -31,5 +32,13 @@ public class PhotographerTagDomainService {
         else
             entity = tagRepository.save(new Tag(tag));
         photographerTagRepository.save(new PhotographerTag(photographer, entity));
+    }
+
+    @Transactional(readOnly = true)
+    public List<Photographer> findPhotographerListByTag(String tag){
+        Tag entity = tagRepository.findByTag(tag);
+        List<PhotographerTag> photographerTagList = photographerTagRepository.findAllByTag(entity);
+        return photographerTagList.stream().map(PhotographerTag::getPhotographer)
+                .collect(Collectors.toList());
     }
 }

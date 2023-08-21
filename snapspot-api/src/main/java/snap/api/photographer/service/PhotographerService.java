@@ -10,7 +10,6 @@ import snap.domains.photographer.entity.*;
 import snap.domains.photographer.service.*;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -86,4 +85,11 @@ public class PhotographerService {
         return new PhotographerSearchResponseDto(nicknameResult, areaResult);
     }
 
+    public List<PhotographerResponseDto> findByTag(String tag){
+        List<Photographer> photographerList = photographerTagDomainService.findPhotographerListByTag(tag);
+        return photographerList.stream()
+                .map(Photographer::getPhotographerId)
+                .map(this::findPhotographer)
+                .collect(Collectors.toList());
+    }
 }
