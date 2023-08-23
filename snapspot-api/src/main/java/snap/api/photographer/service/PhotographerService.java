@@ -28,12 +28,16 @@ public class PhotographerService {
     public PhotographerResponseDto findPhotographer(Long photographerId) {
         return PhotographerResponseDto.builder()
                 .entity(photographerDomainService.findById(photographerId))
+                /*
                 .area(findArea(photographerId))
+
                 .photographerImages(findImageList(photographerId))
                 .tag(findTagList(photographerId))
                 .sns(findSnsList(photographerId))
                 .special(findKeywordList(photographerId))
                 .unableSchedule(findUnableDateList(photographerId))
+
+                 */
                 .build();
     }
 

@@ -18,6 +18,7 @@ public class PhotographerAreaDomainService {
     public Area findArea(Long photographerId){
         return photographerAreaRepository
                 .findByPhotographer_PhotographerId(photographerId)
-                .getArea();
+                .orElse(null).getArea();
+
     }
 }
