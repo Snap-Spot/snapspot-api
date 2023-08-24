@@ -1,4 +1,5 @@
-cd /snapspot
+REPOSITORY=/home/ubuntu/snapspot
+cd $REPOSITORY
 
 kubectl delete pod snapspot-api
 
