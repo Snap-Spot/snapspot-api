@@ -10,4 +10,4 @@ spec:
     - port: 80
       protocol: TCP
       targetPort: 8080
-      nodePost: 32555
+      nodePort: 32555
