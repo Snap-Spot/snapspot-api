@@ -29,6 +29,7 @@ public class SecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
+                .antMatchers("/**").permitAll()
                 .antMatchers("/members/test", "/members/signup", "/members/signin").permitAll()
                 .antMatchers("/photographers/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/members/**").authenticated()

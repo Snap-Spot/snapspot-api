@@ -11,6 +11,8 @@ services:
       - 80:8080
     networks:
       - snapspot-backend
+    depends_on:
+      - redis
   redis:
     image: redis:alpine
     ports:

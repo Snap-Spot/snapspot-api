@@ -1,4 +1,4 @@
-FROM --platform=linux/amd64 openjdk:17-alpine
+FROM azul/zulu-openjdk:17
 
 ARG JAR_FILE=./snapspot-api/build/libs/*.jar
 
