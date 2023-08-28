@@ -1,5 +1,6 @@
 package snap.api.plan.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,6 +14,9 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PlanResponseDto {
+    private Long customer;
+    private Long photographer;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime planDate;
     private SpecialKeyword category;
     private Long people;
@@ -22,11 +26,13 @@ public class PlanResponseDto {
 
     @Builder
     public PlanResponseDto(Plan plan) {
-        planDate = plan.getPlanDate();
-        category = plan.getCategory();
-        people = plan.getPeople();
-        wishPlace = plan.getWishPlace();
-        request = plan.getRequest();
-        status = plan.getStatus();
+        this.customer = plan.getCustomer().getMemberId();
+        this.photographer = plan.getPhotographer().getPhotographerId();
+        this.planDate = plan.getPlanDate();
+        this.category = plan.getCategory();
+        this.people = plan.getPeople();
+        this.wishPlace = plan.getWishPlace();
+        this.request = plan.getRequest();
+        this.status = plan.getStatus();
     }
 }

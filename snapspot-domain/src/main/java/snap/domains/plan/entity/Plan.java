@@ -1,23 +1,28 @@
 package snap.domains.plan.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 import snap.domains.member.entity.Member;
 import snap.domains.photographer.entity.Photographer;
 import snap.domains.photographer.entity.SpecialKeyword;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Getter
 @NoArgsConstructor
 public class Plan {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long planId;
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
+    @Type(type = "uuid-char")
+    private UUID planId;
 
     @ManyToOne
     @JoinColumn(name = "member_id")
@@ -32,10 +37,11 @@ public class Plan {
     private Status status;
 
     @Column
-    @DateTimeFormat(pattern = "yyyy-mm-dd HH:MM")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime planDate;
 
     @Column
+    @Enumerated(EnumType.STRING)
     private SpecialKeyword category;
 
     @Column

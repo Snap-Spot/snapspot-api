@@ -18,10 +18,10 @@ public class PlanController {
 
     private final PlanService planService;
 
-    @PostMapping
-    public ResponseEntity<PlanResponseDto> createRequested(@RequestBody PlanRequestDto requestDto) {
-        return new ResponseEntity<>(planService.createRequested(requestDto), HttpStatus.CREATED);
-    }
+//    @PostMapping
+//    public ResponseEntity<PlanResponseDto> createRequested(@RequestBody PlanRequestDto requestDto) {
+//        return new ResponseEntity<>(planService.createRequested(requestDto), HttpStatus.CREATED);
+//    }
 
 
 }
