@@ -25,13 +25,13 @@ public class PhotographerTagDomainService {
         return photographerTagRepository.findAllByPhotographer_PhotographerId(photographerId);
     }
 
-    public void createTag(Photographer photographer, String tag){
+    public PhotographerTag createTag(Photographer photographer, String tag){
         Tag entity;
         if(tagRepository.existsByTag(tag))
             entity = tagRepository.findByTag(tag);
         else
             entity = tagRepository.save(new Tag(tag));
-        photographerTagRepository.save(new PhotographerTag(photographer, entity));
+        return photographerTagRepository.save(new PhotographerTag(photographer, entity));
     }
 
     @Transactional(readOnly = true)
