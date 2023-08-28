@@ -9,7 +9,7 @@ import snap.api.spot.dto.AreaResponseDto;
 import snap.domains.photographer.entity.*;
 import snap.domains.photographer.service.*;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -64,7 +64,7 @@ public class PhotographerService {
         return specialList.stream().map(Special::getKeyword).collect(Collectors.toList());
     }
 
-    public List<Timestamp> findUnableDateList(Long photographerId) {
+    public List<LocalDateTime> findUnableDateList(Long photographerId) {
         List<PhotographerSchedule> scheduleList = photographerScheduleDomainService.findScheduleListByPhotographerId(photographerId);
         return scheduleList.stream().map(PhotographerSchedule::getUnableDate).collect(Collectors.toList());
     }

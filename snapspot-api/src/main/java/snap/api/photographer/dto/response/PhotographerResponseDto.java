@@ -9,7 +9,7 @@ import snap.api.spot.dto.AreaResponseDto;
 import snap.domains.photographer.entity.Photographer;
 import snap.domains.photographer.entity.SpecialKeyword;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -24,13 +24,13 @@ public class PhotographerResponseDto {
     private List<String> tag;
     private List<SnsDto> sns;
     private List<SpecialKeyword> special;
-    private List<Timestamp> unableSchedule;
+    private List<LocalDateTime> unableSchedule;
 
     @Builder
     public PhotographerResponseDto(Photographer entity, AreaResponseDto area,
                                    List<String> photographerImages, List<String> tag,
                                    List<SnsDto> sns, List<SpecialKeyword> special,
-                                   List<Timestamp> unableSchedule) {
+                                   List<LocalDateTime> unableSchedule) {
         this.member = new MemberResponseDto(entity.getMember());
         this.lowestPay = entity.getLowestPay();
         this.paymentImage = entity.getPaymentImage();
