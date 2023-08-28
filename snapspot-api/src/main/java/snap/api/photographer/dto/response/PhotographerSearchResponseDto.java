@@ -1,12 +1,13 @@
 package snap.api.photographer.dto.response;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PhotographerSearchResponseDto {
     private List<PhotographerResponseDto> nicknameResult;
     private List<PhotographerResponseDto> areaResult;

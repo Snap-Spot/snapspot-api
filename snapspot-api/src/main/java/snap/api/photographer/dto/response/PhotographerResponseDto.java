@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import snap.api.member.dto.MemberResponseDto;
 import snap.api.spot.dto.AreaResponseDto;
-import snap.domains.member.entity.Member;
 import snap.domains.photographer.entity.Photographer;
 import snap.domains.photographer.entity.SpecialKeyword;
 
