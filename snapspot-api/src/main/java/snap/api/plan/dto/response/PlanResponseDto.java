@@ -10,10 +10,12 @@ import snap.domains.plan.entity.Plan;
 import snap.domains.plan.entity.Status;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PlanResponseDto {
+    private UUID planId;
     private Long customer;
     private Long photographer;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
@@ -26,6 +28,7 @@ public class PlanResponseDto {
 
     @Builder
     public PlanResponseDto(Plan plan) {
+        this.planId = plan.getPlanId();
         this.customer = plan.getCustomer().getMemberId();
         this.photographer = plan.getPhotographer().getPhotographerId();
         this.planDate = plan.getPlanDate();
