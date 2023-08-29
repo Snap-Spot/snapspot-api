@@ -12,22 +12,22 @@ import javax.persistence.*;
 public class Sns {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "sns_id")
     private Long snsId;
 
     @ManyToOne
     @JoinColumn(name = "photographer_id")
     private Photographer photographer;
 
-
     @Column
     @Enumerated(EnumType.STRING)
-    private Type type;
+    private SnsType type;
 
     @Column
     private String account;
 
     @Builder
-    public Sns(Photographer photographer, Type type, String account) {
+    public Sns(Photographer photographer, SnsType type, String account) {
         this.photographer = photographer;
         this.type = type;
         this.account = account;

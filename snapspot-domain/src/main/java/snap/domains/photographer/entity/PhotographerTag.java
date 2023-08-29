@@ -9,22 +9,23 @@ import javax.persistence.*;
 @Getter
 @Entity
 @NoArgsConstructor
-public class PhotographerImage {
+public class PhotographerTag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "image_id")
-    private Long imageId;
+    @Column(name = "photographer_tag_id")
+    private Long photographerTagId;
 
     @ManyToOne
     @JoinColumn(name = "photographer_id")
     private Photographer photographer;
 
-    @Column
-    private String image;
+    @ManyToOne
+    @JoinColumn(name = "tag_id")
+    private Tag tag;
 
     @Builder
-    public PhotographerImage(Photographer photographer, String image) {
+    public PhotographerTag(Photographer photographer, Tag tag){
         this.photographer = photographer;
-        this.image = image;
+        this.tag = tag;
     }
 }

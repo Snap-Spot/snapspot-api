@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    password: vjqltmsoq1886
+    driver-class-name:  com.mysql.cj.jdbc.Driver
+    username: efub2023
+    url: jdbc:mysql://snapspot-db.cechzp23mskp.ap-northeast-2.rds.amazonaws.com:3306/snapspot
+  mvc:
+    path match:
+      matching-strategy: ant_path_matcher
+
