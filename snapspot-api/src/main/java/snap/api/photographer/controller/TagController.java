@@ -19,9 +19,8 @@ public class TagController {
     private final TagService tagService;
 
     @PostMapping
-    public ResponseEntity<String> tagRegister(@AuthPhotographer Photographer photographer, @RequestBody TagRequestDto requestDto){
-        tagService.createTag(photographer, requestDto.getTag());
-        return new ResponseEntity<>("태그를 등록하였습니다.", HttpStatus.OK);
+    public ResponseEntity<List<String>> tagRegister(@AuthPhotographer Photographer photographer, @RequestBody TagRequestDto requestDto){
+        return new ResponseEntity<>(tagService.createTag(photographer, requestDto.getTag()), HttpStatus.OK);
     }
 
     @GetMapping

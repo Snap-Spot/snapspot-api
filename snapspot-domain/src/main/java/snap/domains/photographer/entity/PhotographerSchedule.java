@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Getter
 @Entity
@@ -21,10 +21,10 @@ public class PhotographerSchedule {
     private Photographer photographer;
 
     @Column(name = "unable_date")
-    private Timestamp unableDate;
+    private LocalDateTime unableDate;
 
     @Builder
-    public PhotographerSchedule(Photographer photographer, Timestamp unableDate){
+    public PhotographerSchedule(Photographer photographer, LocalDateTime unableDate){
         this.photographer = photographer;
         this.unableDate = unableDate;
     }
