@@ -28,5 +28,4 @@ public class PlanDomainService {
                 .request(plan.getRequest())
                 .build());
     }
-
 }

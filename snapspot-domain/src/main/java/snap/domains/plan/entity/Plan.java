@@ -54,7 +54,10 @@ public class Plan {
     private String wishPlace;
 
     @Column
-    private String address;
+    private String placeName;
+
+    @Column
+    private String placeAddress;
 
     @Column
     private Long x;
@@ -66,9 +69,9 @@ public class Plan {
     private String request;
 
     @Builder
-
-    public Plan(Member customer, Photographer photographer, Status status, LocalDateTime planDate, SpecialKeyword category,
-                Long people, Long price, String wishPlace, String address, Long x, Long y, String request) {
+    public Plan(Member customer, Photographer photographer, Status status, LocalDateTime planDate,
+                SpecialKeyword category, Long people, Long price, String wishPlace, String placeName,
+                String placeAddress, Long x, Long y, String request) {
         this.customer = customer;
         this.photographer = photographer;
         this.status = status;
@@ -77,7 +80,8 @@ public class Plan {
         this.people = people;
         this.price = price;
         this.wishPlace = wishPlace;
-        this.address = address;
+        this.placeName = placeName;
+        this.placeAddress = placeAddress;
         this.x = x;
         this.y = y;
         this.request = request;

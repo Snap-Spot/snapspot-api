@@ -12,5 +12,5 @@ public interface PhotographerRepository extends JpaRepository<Photographer, Long
 
     Photographer findByMember(Member member);
 
-    Photographer findByPhotographerId(Long photographerId);
+    Optional<Photographer> findByPhotographerId(Long photographerId);
 }

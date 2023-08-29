@@ -14,7 +14,6 @@ public class MemberResponseDto {
     private String nickname;
     private Role role;
 
-    @Builder
     public MemberResponseDto(Member entity) {
         this.email = entity.getEmail();
         this.role = entity.getRole();
