@@ -41,11 +41,6 @@ public class PhotographerService {
                 .build();
     }
 
-    public Photographer findPhotographerEntity(Long photographerId) {
-        Photographer photographer = photographerDomainService.findById(photographerId);
-        return photographer;
-    }
-
     public AreaResponseDto findArea(Long photographerId){
         return new AreaResponseDto(
                 photographerAreaDomainService.findArea(photographerId)
