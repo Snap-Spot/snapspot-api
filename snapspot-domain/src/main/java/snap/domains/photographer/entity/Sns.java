@@ -15,16 +15,36 @@ public class Sns {
     @Column(name = "sns_id")
     private Long snsId;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "photographer_id")
     private Photographer photographer;
 
+    /*
+    TODO: 삭제해야 함
+     */
     @Column
-    @Enumerated(EnumType.STRING)
     private SnsType type;
 
+    /*
+    TODO: 삭제해야 함
+     */
     @Column
     private String account;
+
+    @Column(length = 255)
+    private String homepage;
+
+    @Column(length = 31)
+    private String instagram;
+
+    @Column(length = 31)
+    private String kakaoChannel;
+
+    @Column(length = 31)
+    private String twitter;
+
+    @Column(length = 255)
+    private String naverBlog;
 
     @Builder
     public Sns(Photographer photographer, SnsType type, String account) {
