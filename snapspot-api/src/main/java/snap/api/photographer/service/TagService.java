@@ -26,8 +26,4 @@ public class TagService {
                 .map(tag -> photographerTagDomainService.createTag(photographer, tag.trim()))
                 .collect(Collectors.toList()));
     }
-
-    public List<String> findTagStartingWith(String str){
-        return tagDomainService.findTagStartingWith(str).stream().map(Tag::getTag).collect(Collectors.toList());
-    }
 }

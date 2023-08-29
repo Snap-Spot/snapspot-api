@@ -23,9 +23,4 @@ public class TagController {
     public ResponseEntity<TagsDto> tagRegister(@AuthPhotographer Photographer photographer, @RequestBody TagRequestDto requestDto){
         return new ResponseEntity<>(tagService.createTag(photographer, requestDto.getTag()), HttpStatus.OK);
     }
-
-    @GetMapping
-    public ResponseEntity<List<String>> tagFindStartingWith(@RequestBody TagRequestDto requestDto){
-        return new ResponseEntity<>(tagService.findTagStartingWith(requestDto.getTag()), HttpStatus.OK);
-    }
 }
