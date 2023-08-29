@@ -3,6 +3,7 @@ package snap.api.auth.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import snap.api.auth.dto.request.KaKaoSignUpRequestDto;
+import snap.api.auth.dto.request.KakaoSignInRequestDto;
 import snap.api.auth.dto.request.SignInRequestDto;
 import snap.api.auth.dto.request.SignUpRequestDto;
 import snap.api.auth.dto.response.SignInResponseDto;
@@ -53,5 +54,14 @@ public class AuthService {
             photographerDomainService.createPhotographer(member);
         }
         return new SignUpResponseDto(member);
+    }
+
+    public SignInResponseDto createJwtOfKakaoMember(KakaoSignInRequestDto requestDto) {
+        KakaoRes kakaoRes = kakaoOAuthService.getKakaoInfo(requestDto.getAccessToken());
+        Member member = memberDomainService.findKakaoMemberByEmail(kakaoRes.getEmail());
+        return new SignInResponseDto(
+                kakaoRes.getEmail(),
+                jwtSecurityService.createJwtOfKakaoMember(kakaoRes.getEmail(), member.getRole())
+        );
     }
 }

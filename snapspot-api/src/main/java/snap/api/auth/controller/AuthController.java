@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import snap.api.auth.dto.request.KaKaoSignUpRequestDto;
+import snap.api.auth.dto.request.KakaoSignInRequestDto;
 import snap.api.auth.dto.request.SignInRequestDto;
 import snap.api.auth.dto.request.SignUpRequestDto;
 import snap.api.auth.dto.response.SignInResponseDto;
@@ -34,5 +35,10 @@ public class AuthController {
     @PostMapping("/kakao/signup")
     public ResponseEntity<SignUpResponseDto> kakaoSignUp(@RequestBody KaKaoSignUpRequestDto requestDto) {
         return new ResponseEntity<>(authService.createKakaoMember(requestDto), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/kakao/signin")
+    public ResponseEntity<SignInResponseDto> kakoSignIn(@RequestBody KakaoSignInRequestDto requestDto) {
+        return ResponseEntity.ok(authService.createJwtOfKakaoMember(requestDto));
     }
 }

@@ -24,6 +24,12 @@ public class MemberDomainService {
         return memberRepository.findByEmail(email);
     }
 
+    @Transactional(readOnly = true)
+    public Member findKakaoMemberByEmail(String email) {
+        return memberRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 이메일입니다."));
+    }
+
     public Member createMember(Member member) {
         return memberRepository.save(member);
     }
