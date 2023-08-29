@@ -8,6 +8,7 @@ import snap.api.member.dto.MemberResponseDto;
 import snap.api.spot.dto.AreaResponseDto;
 import snap.domains.photographer.entity.Photographer;
 import snap.domains.photographer.entity.PhotographerArea;
+import snap.domains.photographer.entity.PhotographerTag;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,6 +40,8 @@ public class PhotographerResponseDto {
         this.unableSchedules = new UnableSchedulesDto(entity.getUnableSchedules());
         this.sns = new SnsDto(entity.getSns());
         this.specialList = new SpecialListDto(entity.getSpecialList());
-        this.tags = new TagsDto(entity.getTags());
+        this.tags = new TagsDto(entity.getTags().stream()
+                .map(PhotographerTag::getTag)
+                .collect(Collectors.toList()));
     }
 }
