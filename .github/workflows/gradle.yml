@@ -1,0 +1,103 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+# This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
+
+name: Java CI with Gradle
+
+on:
+  push:
+    branches: [ "chore/ci", "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v1
+        with:
+          java-version: 17
+      
+      - name: Gradle Caching
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+    
+      
+      - name: create application.yml in domain
+        run: touch ./snapspot-domain/src/main/resources/application-domain.yml 
+          && echo "${{secrets.APPLICATION_DOMAIN}}" > ./snapspot-domain/src/main/resources/application-domain.yml
+
+      - name: create application.yml in api
+        run: touch ./snapspot-api/src/main/resources/application.yml 
+          && echo "${{secrets.APPLICATION_API}}" > ./snapspot-api/src/main/resources/application.yml 
+      
+      - name: create application.yml in common
+        run: touch ./snapspot-common/src/main/resources/application.yml 
+          && echo "${{secrets.APPLICATION_COMMON}}" > ./snapspot-common/src/main/resources/application.yml 
+      
+      - name: create application.yml in admin
+        run: touch ./snapspot-admin/src/main/resources/application-admin.yml 
+          && echo "${{secrets.APPLICATION_ADMIN}}" > ./snapspot-admin/src/main/resources/application-admin.yml 
+        
+      - uses: actions/upload-artifact@v2
+        with:
+          name: application-domain.yml
+          path: ./snapspot-domain/src/main/resources/application-domain.yml
+          
+      - uses: actions/upload-artifact@v2
+        with:
+          name: application.yml
+          path: ./snapspot-api/src/main/resources/application.yml
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: application.yml
+          path: ./snapspot-common/src/main/resources/application-common.yml
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: application-admin.yml
+          path: ./snapspot-admin/src/main/resources/application-admin.yml
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build with Gradle
+        run: ./gradlew clean bootJar
+
+      - name: Make zip file
+        run: zip -qq -r ./$GITHUB_SHA.zip .
+        shell: bash
+
+      # AWS 사용자 정보 입력
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: ap-northeast-2
+          aws-access-key-id: ${{ secrets.ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.ACCESS_KEY_SECRET }}
+
+      # S3에 zip 파일 업로드
+      - name: Upload to S3
+        run: aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://${{ secrets.S3_BUCKET_NAME }}/deploy/$GITHUB_SHA.zip --source .
+
+      - name: Code Deploy
+        run: aws deploy create-deployment --application-name ${{ secrets.CODE_DEPLOY_APP_NAME }}
+            --deployment-config-name CodeDeployDefault.OneAtATime
+            --deployment-group-name ${{ secrets.CODE_DEPLOY_DEPLOYMENT_GROUP_NAME }}
+            --s3-location bucket=${{ secrets.S3_BUCKET_NAME }},bundleType=zip,key=deploy/$GITHUB_SHA.zip
