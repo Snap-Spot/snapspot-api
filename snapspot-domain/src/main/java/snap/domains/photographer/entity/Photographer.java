@@ -46,7 +46,7 @@ public class Photographer {
     private List<PhotographerSchedule> unableSchedules;
 
     @OneToOne()
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "sns_id")
     private Sns sns;
 
     @OneToMany(
@@ -60,7 +60,10 @@ public class Photographer {
     private List<PhotographerTag> tags;
 
     @Builder
-    public Photographer(Member member) {
+    public Photographer(Member member, Long lowestPay, String paymentImage, String bio) {
         this.member = member;
+        this.lowestPay = lowestPay;
+        this.paymentImage = paymentImage;
+        this.bio = bio;
     }
 }
