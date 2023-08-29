@@ -20,11 +20,6 @@ public class PhotographerTagDomainService {
     private final PhotographerTagRepository photographerTagRepository;
     private final TagRepository tagRepository;
 
-    @Transactional(readOnly = true)
-    public List<PhotographerTag> findTagList(Long photographerId){
-        return photographerTagRepository.findAllByPhotographer_PhotographerId(photographerId);
-    }
-
     public PhotographerTag createTag(Photographer photographer, String tag){
         Tag entity;
         if(tagRepository.existsByTag(tag))

@@ -8,7 +8,5 @@ import java.util.List;
 
 public interface PhotographerTagRepository extends JpaRepository<PhotographerTag, Long> {
 
-    List<PhotographerTag> findAllByPhotographer_PhotographerId(Long photographerId);
-
     List<PhotographerTag> findAllByTag(Tag tag);
 }

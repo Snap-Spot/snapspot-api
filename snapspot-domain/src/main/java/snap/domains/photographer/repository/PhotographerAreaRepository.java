@@ -8,7 +8,5 @@ import java.util.List;
 
 public interface PhotographerAreaRepository extends JpaRepository<PhotographerArea, Long> {
 
-    PhotographerArea findByPhotographer_PhotographerId(Long photographerId);
-
     List<PhotographerArea> findAllByArea(Area area);
 }

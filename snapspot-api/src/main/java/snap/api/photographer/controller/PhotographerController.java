@@ -21,7 +21,7 @@ public class PhotographerController {
 
     @GetMapping("/me")
     public ResponseEntity<PhotographerResponseDto> photographerInfoFind(@AuthPhotographer Photographer photographer) {
-        return new ResponseEntity<>(photographerService.findPhotographer(photographer.getPhotographerId()), HttpStatus.OK);
+        return new ResponseEntity<>(new PhotographerResponseDto(photographer), HttpStatus.OK);
     }
 
     @GetMapping("/{photographerId}")

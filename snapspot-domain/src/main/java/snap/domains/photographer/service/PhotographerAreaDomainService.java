@@ -21,13 +21,6 @@ public class PhotographerAreaDomainService {
     private final AreaDomainService areaDomainService;
 
     @Transactional(readOnly = true)
-    public Area findAreaByPhotographer(Long photographerId){
-        return photographerAreaRepository
-                .findByPhotographer_PhotographerId(photographerId)
-                .getArea();
-    }
-
-    @Transactional(readOnly = true)
     public List<Photographer> findPhotographerListByArea(String areaName) {
         List<Area> areaList = areaDomainService.findByMetropolitanAndCity(areaName);
         List<PhotographerArea> photographerAreaList =
