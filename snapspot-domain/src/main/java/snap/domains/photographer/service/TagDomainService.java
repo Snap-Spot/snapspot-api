@@ -14,4 +14,8 @@ import java.util.List;
 public class TagDomainService {
 
     private final TagRepository tagRepository;
+
+    public List<Tag> tagList(){
+        return tagRepository.findAll();
+    }
 }

@@ -4,14 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import snap.api.photographer.dto.response.TagsDto;
 import snap.domains.photographer.entity.Photographer;
-import snap.domains.photographer.entity.PhotographerTag;
-import snap.domains.photographer.entity.Tag;
 import snap.domains.photographer.service.PhotographerTagDomainService;
 import snap.domains.photographer.service.TagDomainService;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,7 +19,11 @@ public class TagService {
 
     public TagsDto createTag(Photographer photographer, String tags) {
         return new TagsDto(Arrays.stream(tags.split("#"))
-                .map(tag -> photographerTagDomainService.createTag(photographer, tag.trim()))
+                .map(tag -> photographerTagDomainService.createTag(photographer, tag.trim()).getTag())
                 .collect(Collectors.toList()));
+    }
+
+    public TagsDto findTagList(){
+        return new TagsDto(tagDomainService.tagList());
     }
 }

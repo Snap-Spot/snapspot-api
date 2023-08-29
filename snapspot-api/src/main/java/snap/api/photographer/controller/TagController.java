@@ -10,8 +10,6 @@ import snap.api.photographer.service.TagService;
 import snap.domains.photographer.entity.Photographer;
 import snap.resolver.AuthPhotographer;
 
-import java.util.List;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/tags")
@@ -22,5 +20,10 @@ public class TagController {
     @PostMapping
     public ResponseEntity<TagsDto> tagRegister(@AuthPhotographer Photographer photographer, @RequestBody TagRequestDto requestDto){
         return new ResponseEntity<>(tagService.createTag(photographer, requestDto.getTag()), HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<TagsDto> tagList(){
+        return new ResponseEntity<>(tagService.findTagList(), HttpStatus.OK);
     }
 }
