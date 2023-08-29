@@ -30,12 +30,12 @@ public class PhotographerController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<PhotographerSearchResponseDto> search(@RequestBody String word){
-        return new ResponseEntity<>(photographerService.findBySearch(word), HttpStatus.OK);
+    public ResponseEntity<PhotographerSearchResponseDto> search(@RequestParam String keyword){
+        return new ResponseEntity<>(photographerService.findBySearch(keyword), HttpStatus.OK);
     }
 
-    @GetMapping("tag")
-    public ResponseEntity<List<PhotographerResponseDto>> photographerFindByTag(@RequestBody String tag){
+    @GetMapping("/tag")
+    public ResponseEntity<List<PhotographerResponseDto>> photographerFindByTag(@RequestParam String tag){
         return new ResponseEntity<>(photographerService.findByTag(tag), HttpStatus.OK);
     }
 }
