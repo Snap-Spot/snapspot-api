@@ -27,9 +27,6 @@ public class KakaoOAuthService {
 
     public KakaoRes getKakaoInfo(String accessToken) {
 
-        log.info("카카오 토큰: {}", accessToken);
-        log.info("REST KEY: {}", clientId);
-
         WebClient kakaoApiWebClient =
                 WebClient.builder()
                         .baseUrl(kakaoApiUrl)
@@ -47,8 +44,6 @@ public class KakaoOAuthService {
                         .retrieve()
                         .bodyToMono(Map.class)
                         .block();
-
-        log.info("카카오 토큰: {}", kakaoResponse);
 
         Map<String, Object> kakaoAccountMap = (Map<String, Object>) kakaoResponse.get("kakao_account");
         Map<String, String> profileMap = (Map<String, String>) kakaoAccountMap.get("profile");
