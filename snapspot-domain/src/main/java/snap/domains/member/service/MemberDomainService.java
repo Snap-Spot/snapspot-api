@@ -4,8 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import snap.domains.member.entity.Member;
-import snap.domains.member.entity.Provider;
 import snap.domains.member.repository.MemberRepository;
+import snap.enums.Provider;
+import snap.enums.Role;
 
 import java.util.Optional;
 
@@ -25,5 +26,17 @@ public class MemberDomainService {
 
     public Member createMember(Member member) {
         return memberRepository.save(member);
+    }
+
+    public Member createKakaoMember(String nickname, String profile, String email, Role role) {
+        return memberRepository.save(
+                Member.builder()
+                        .role(role)
+                        .provider(Provider.PROD_KAKAO)
+                        .nickname(nickname)
+                        .email(email)
+                        .profileImage(profile)
+                        .build()
+        );
     }
 }
