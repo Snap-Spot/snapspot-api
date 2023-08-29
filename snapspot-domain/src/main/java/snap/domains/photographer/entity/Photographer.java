@@ -3,9 +3,10 @@ package snap.domains.photographer.entity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import snap.domains.member.entity.Provider;
+import snap.domains.member.entity.Member;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Entity
@@ -13,34 +14,56 @@ import javax.persistence.*;
 public class Photographer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "photographer_id")
     private Long photographerId;
 
-    @Column
-    private String email;
+    @OneToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
 
-    @Column
-    @Enumerated(EnumType.STRING)
-    private Provider provider;
-
-    @Column
-    private String profileImage;
-
-    @Column
-    private String nickname;
-
-    @Column
+    @Column(name = "lowest_pay")
     private Long lowestPay;
 
-    @Column
+    @Column(name = "payment_image")
     private String paymentImage;
 
+    @Column
+    private String bio;
+
+    @OneToMany(
+            mappedBy = "photographer"
+    )
+    private List<PhotographerImage> images;
+
+    @OneToMany(
+            mappedBy = "photographer"
+    )
+    private List<PhotographerArea> areas;
+
+    @OneToMany(
+            mappedBy = "photographer"
+    )
+    private List<PhotographerSchedule> unableSchedules;
+
+    @OneToOne()
+    @JoinColumn(name = "sns_id")
+    private Sns sns;
+
+    @OneToMany(
+            mappedBy = "photographer"
+    )
+    private List<Special> specialList;
+
+    @OneToMany(
+            mappedBy = "photographer"
+    )
+    private List<PhotographerTag> tags;
+
     @Builder
-    public Photographer(String email, Provider provider, String profileImage, String nickname, Long lowestPay, String paymentImage) {
-        this.email = email;
-        this.provider = provider;
-        this.profileImage = profileImage;
-        this.nickname = nickname;
+    public Photographer(Member member, Long lowestPay, String paymentImage, String bio) {
+        this.member = member;
         this.lowestPay = lowestPay;
         this.paymentImage = paymentImage;
+        this.bio = bio;
     }
 }

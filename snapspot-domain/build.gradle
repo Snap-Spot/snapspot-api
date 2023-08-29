@@ -2,5 +2,7 @@ bootJar { enabled = false }
 jar { enabled = true }
 
 dependencies {
-    runtimeOnly 'com.h2database:h2'
+    implementation "com.mysql:mysql-connector-j"
+    runtimeOnly("com.mysql:mysql-connector-j")
+    implementation project(":snapspot-common")
 }

@@ -12,24 +12,36 @@ import javax.persistence.*;
 public class Sns {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "sns_id")
     private Long snsId;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "photographer_id")
     private Photographer photographer;
 
+    @Column(length = 255)
+    private String homepage;
 
-    @Column
-    @Enumerated(EnumType.STRING)
-    private Type type;
+    @Column(length = 31)
+    private String instagram;
 
-    @Column
-    private String account;
+    @Column(length = 31, name = "kakao_channel")
+    private String kakaoChannel;
+
+    @Column(length = 31)
+    private String twitter;
+
+    @Column(length = 255, name = "naver_blog")
+    private String naverBlog;
 
     @Builder
-    public Sns(Photographer photographer, Type type, String account) {
+    public Sns(Photographer photographer, String homepage, String instagram,
+               String kakaoChannel, String twitter, String naverBlog) {
         this.photographer = photographer;
-        this.type = type;
-        this.account = account;
+        this.homepage = homepage;
+        this.instagram = instagram;
+        this.kakaoChannel = kakaoChannel;
+        this.twitter = twitter;
+        this.naverBlog = naverBlog;
     }
 }
