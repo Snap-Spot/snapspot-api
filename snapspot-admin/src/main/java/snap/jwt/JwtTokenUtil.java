@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import snap.dto.TokenRes;
+import snap.enums.Role;
 
 import java.security.Key;
 import java.util.Arrays;
@@ -45,6 +46,26 @@ public class JwtTokenUtil {
 
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
+                .claim(AUTHORITIES_KEY, authorities)
+                .setExpiration(new Date(current + ACCESS_TOKEN_EXPIRE_TIME))
+                .signWith(key, SignatureAlgorithm.HS256).compact();
+        String refreshToken = Jwts.builder()
+                .setExpiration((new Date(current + REFRESH_TOKEN_EXPIRE_TIME)))
+                .signWith(key, SignatureAlgorithm.HS256).compact();
+
+        return TokenRes.builder()
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .build();
+    }
+
+    public TokenRes generateTokenForKakao(String email, Role role) {
+        Long current = (new Date()).getTime();
+
+        String authorities = role.name();
+
+        String accessToken = Jwts.builder()
+                .setSubject(email)
                 .claim(AUTHORITIES_KEY, authorities)
                 .setExpiration(new Date(current + ACCESS_TOKEN_EXPIRE_TIME))
                 .signWith(key, SignatureAlgorithm.HS256).compact();

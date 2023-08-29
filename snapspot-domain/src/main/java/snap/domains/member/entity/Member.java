@@ -5,6 +5,8 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import snap.enums.Provider;
+import snap.enums.Role;
 
 import javax.persistence.*;
 
