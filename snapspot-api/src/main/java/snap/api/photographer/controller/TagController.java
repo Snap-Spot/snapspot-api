@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import snap.api.photographer.dto.request.TagRequestDto;
+import snap.api.photographer.dto.response.TagsDto;
 import snap.api.photographer.service.TagService;
 import snap.domains.photographer.entity.Photographer;
 import snap.resolver.AuthPhotographer;
@@ -19,7 +20,7 @@ public class TagController {
     private final TagService tagService;
 
     @PostMapping
-    public ResponseEntity<List<String>> tagRegister(@AuthPhotographer Photographer photographer, @RequestBody TagRequestDto requestDto){
+    public ResponseEntity<TagsDto> tagRegister(@AuthPhotographer Photographer photographer, @RequestBody TagRequestDto requestDto){
         return new ResponseEntity<>(tagService.createTag(photographer, requestDto.getTag()), HttpStatus.OK);
     }
 

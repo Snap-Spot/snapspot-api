@@ -2,6 +2,7 @@ package snap.api.photographer.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import snap.api.photographer.dto.response.TagsDto;
 import snap.domains.photographer.entity.Photographer;
 import snap.domains.photographer.entity.PhotographerTag;
 import snap.domains.photographer.entity.Tag;
@@ -20,10 +21,10 @@ public class TagService {
     private final PhotographerTagDomainService photographerTagDomainService;
     private final TagDomainService tagDomainService;
 
-    public List<String> createTag(Photographer photographer, String tags) {
-        return Arrays.stream(tags.split("#"))
-                .map(tag -> photographerTagDomainService.createTag(photographer, tag.trim()).getTag().getTag())
-                .collect(Collectors.toList());
+    public TagsDto createTag(Photographer photographer, String tags) {
+        return new TagsDto(Arrays.stream(tags.split("#"))
+                .map(tag -> photographerTagDomainService.createTag(photographer, tag.trim()))
+                .collect(Collectors.toList()));
     }
 
     public List<String> findTagStartingWith(String str){
