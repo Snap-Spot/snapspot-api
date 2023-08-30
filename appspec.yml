@@ -1,0 +1,28 @@
+version: 0.0
+
+# 서버의 운영 체제
+os: linux
+
+# 코드 파일 전송과 관련된 설정
+files:
+  # 코드 파일의 소스 경로
+  - source: /
+    # 코드 파일의 대상 경로
+    destination: /home/ubuntu/snapspot
+    # 덮어쓰기 허용
+    overwrite: yes
+
+# 파일 및 디렉토리 권한에 관련된 설정
+permissions:
+  # 권한을 설정할 대상 경로
+  - object: /
+    # 모든 파일 및 디렉토리를 의미
+    pattern: "**"
+    owner: ubuntu
+    group: ubuntu
+
+hooks:
+  ApplicationStart:
+    - location: scripts/deploy.sh
+      timeout: 180
+      runas: ubuntu

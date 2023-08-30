@@ -1,12 +1,12 @@
 .gradle/8.1.1/executionHistory/
 .gradle/8.1.1/fileHashes/
 .gradle/8.1.1/
+.gradle/
 
 .gradle/buildOutputCleanup/buildOutputCleanup.lock
 .gradle/buildOutputCleanup/outputFiles.bin
-
-.gradle/
 .idea/
+build/
 
 *.bin
 *.jar
@@ -23,8 +23,10 @@ snapspot-api/build/
 snapspot-admin/build/
 snapspot-common/build/
 
-snapspot-domain/src/main/resources/
+snapspot-domain/src/main/resources/*.yml
 
-snapspot-admin/src/main/resources/
+snapspot-admin/src/main/resources/*.yml
 
-snapspot-api/src/main/resources/
+snapspot-api/src/main/resources/*.yml
+
+snapspot-common/src/main/resources/*.yml

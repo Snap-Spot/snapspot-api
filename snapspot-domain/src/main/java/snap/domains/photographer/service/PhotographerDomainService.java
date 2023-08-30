@@ -7,7 +7,6 @@ import snap.domains.member.entity.Member;
 import snap.domains.member.repository.MemberRepository;
 import snap.domains.photographer.entity.Photographer;
 import snap.domains.photographer.repository.PhotographerRepository;
-import snap.domains.spot.service.AreaDomainService;
 
 import java.util.List;
 import java.util.stream.Collectors;
