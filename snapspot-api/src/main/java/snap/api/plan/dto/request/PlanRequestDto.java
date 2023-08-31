@@ -9,6 +9,9 @@ import snap.domains.plan.entity.Plan;
 
 import java.time.LocalDateTime;
 
+/**
+ * 예약신청
+ */
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PlanRequestDto {
