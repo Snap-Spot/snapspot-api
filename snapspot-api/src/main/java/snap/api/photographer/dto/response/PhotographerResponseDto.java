@@ -23,7 +23,7 @@ public class PhotographerResponseDto {
     private ImageUrlsDto images;
     private List<AreaResponseDto> areas;
     private UnableSchedulesDto unableSchedules;
-    private SnsDto sns;
+    private List<SnsDto> sns;
     private SpecialListDto specialList;
     private TagsDto tags;
 
@@ -38,7 +38,7 @@ public class PhotographerResponseDto {
                 .map(AreaResponseDto::new)
                 .collect(Collectors.toList());
         this.unableSchedules = new UnableSchedulesDto(entity.getUnableSchedules());
-        this.sns = new SnsDto(entity.getSns());
+        this.sns = entity.getSns().stream().map(SnsDto::new).collect(Collectors.toList());
         this.specialList = new SpecialListDto(entity.getSpecialList());
         this.tags = new TagsDto(entity.getTags().stream()
                 .map(PhotographerTag::getTag)
