@@ -68,4 +68,12 @@ public class Photographer {
         this.paymentImage = paymentImage;
         this.bio = bio;
     }
+
+    public void updatePhotographer(
+            String nickname, String profileImage, String paymentImage, Long lowestPay, String bio) {
+        this.member.updateMember(nickname, profileImage);
+        this.paymentImage = paymentImage;
+        this.lowestPay = lowestPay;
+        this.bio = bio;
+    }
 }

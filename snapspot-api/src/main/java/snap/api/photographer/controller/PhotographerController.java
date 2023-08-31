@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import snap.api.photographer.dto.request.PhotographerCustomDto;
 import snap.api.photographer.dto.response.PhotographerResponseDto;
 import snap.api.photographer.dto.response.PhotographerSearchResponseDto;
 import snap.api.photographer.service.PhotographerService;
@@ -23,6 +24,12 @@ public class PhotographerController {
     @GetMapping("/me")
     public ResponseEntity<PhotographerResponseDto> photographerInfoFind(@AuthPhotographer Photographer photographer) {
         return new ResponseEntity<>(new PhotographerResponseDto(photographer), HttpStatus.OK);
+    }
+
+    @PutMapping("/me")
+    public ResponseEntity<PhotographerResponseDto> photographerInfoUpdate(@AuthPhotographer Photographer photographer,
+                                                                          @RequestBody PhotographerCustomDto dto) {
+        return new ResponseEntity<>(photographerService.updatePhotographerInfo(photographer, dto), HttpStatus.OK);
     }
 
     @GetMapping("/{photographerId}")

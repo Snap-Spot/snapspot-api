@@ -35,4 +35,19 @@ public class PhotographerTagDomainService {
         return photographerTagList.stream().map(PhotographerTag::getPhotographer)
                 .collect(Collectors.toList());
     }
+
+    public void updateTag(Photographer photographer, List<String> tagList){
+        tagList.stream()
+                .map(tagName -> photographerTagRepository.save(
+                        PhotographerTag.builder()
+                                .photographer(photographer)
+                                .tag(
+                                        tagRepository.save(
+                                                Tag.builder().tag(tagName).build()
+                                        )
+                                )
+                                .build()
+                ))
+                .collect(Collectors.toList());
+    }
 }

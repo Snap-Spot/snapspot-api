@@ -50,4 +50,9 @@ public class PhotographerDomainService {
     public Page<Photographer> findAllPhotographers(Pageable pageable){
         return photographerRepository.findAll(pageable);
     }
+
+    public void updatePhotographer(Photographer photographer, String nickname, String profileImage,
+                                           String paymentImage, Long lowestPay, String bio){
+        photographer.updatePhotographer(nickname, profileImage, paymentImage, lowestPay, bio);
+    }
 }
