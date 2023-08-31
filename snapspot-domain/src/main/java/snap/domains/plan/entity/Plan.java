@@ -100,4 +100,8 @@ public class Plan {
         this.placeAddress = placeAddress;
         this.message = message;
     }
+
+    public void statusChange(Status status) {
+        this.status = status;
+    }
 }
