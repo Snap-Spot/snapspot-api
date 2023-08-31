@@ -22,11 +22,11 @@ public class PlanDomainService {
     private final PlanRepository planRepository;
     private final MessageRepository messageRepository;
 
-    public Plan createRequested(Member member, Photographer photographer, Plan plan) {
+    public Plan createRequest(Member member, Photographer photographer, Plan plan) {
         return planRepository.save(Plan.builder()
                 .customer(member)
                 .photographer(photographer)
-                .status(Status.REQUESTED)
+                .status(Status.REQUEST)
                 .planDate(plan.getPlanDate())
                 .category(plan.getCategory())
                 .people(plan.getPeople())

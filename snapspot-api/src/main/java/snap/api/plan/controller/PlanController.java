@@ -20,8 +20,8 @@ public class PlanController {
     private final PlanService planService;
 
     @PostMapping("/request")
-    public ResponseEntity<PlanResponseDto> createRequested(@AuthMember Member member, @RequestBody PlanRequestDto requestDto) {
-        return new ResponseEntity<>(planService.createRequested(member, requestDto), HttpStatus.CREATED);
+    public ResponseEntity<PlanResponseDto> createRequest(@AuthMember Member member, @RequestBody PlanRequestDto requestDto) {
+        return new ResponseEntity<>(planService.createRequest(member, requestDto), HttpStatus.CREATED);
     }
 
     @PatchMapping("/deposit")

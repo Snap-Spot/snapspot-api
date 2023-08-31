@@ -19,9 +19,9 @@ public class PlanService {
     private final PlanDomainService planDomainService;
     private final PhotographerDomainService photographerDomainService;
 
-    public PlanResponseDto createRequested(Member member, PlanRequestDto requestDto) {
+    public PlanResponseDto createRequest(Member member, PlanRequestDto requestDto) {
         Photographer photographer = photographerDomainService.findById(requestDto.getPhotographerId());
-        Plan plan = planDomainService.createRequested(member, photographer, requestDto.toEntity());
+        Plan plan = planDomainService.createRequest(member, photographer, requestDto.toEntity());
         return new PlanResponseDto(plan);
     }
 

@@ -8,5 +8,5 @@ public enum Sender {
     PHOTOGRAPHER("사진 작가"),
     SNAPSPOT("스냅스팟");
 
-    private final String name;
+    private final String label;
 }
