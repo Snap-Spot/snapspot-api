@@ -1,6 +1,7 @@
 package snap.api.photographer.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import snap.api.photographer.dto.response.PhotographerResponseDto;
 import snap.api.photographer.dto.response.PhotographerSearchResponseDto;
@@ -46,5 +47,11 @@ public class PhotographerService {
         return photographerList.stream()
                 .map(PhotographerResponseDto::new)
                 .collect(Collectors.toList());
+    }
+
+    public List<PhotographerResponseDto> findAllPhotographers(Pageable pageable){
+        return photographerDomainService.findAllPhotographers(pageable)
+                .map(PhotographerResponseDto::new)
+                .getContent();
     }
 }

@@ -45,8 +45,7 @@ public class Photographer {
     )
     private List<PhotographerSchedule> unableSchedules;
 
-    @OneToOne()
-    @JoinColumn(name = "sns_id")
+    @OneToOne(mappedBy = "photographer")
     private Sns sns;
 
     @OneToMany(
