@@ -4,8 +4,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import snap.domains.member.entity.Member;
-import snap.domains.member.entity.Provider;
-import snap.domains.member.entity.Role;
+import snap.enums.Provider;
+import snap.enums.Role;
 
 /**
  * Role: `ROLE_MEMBER` 혹은 `ROLE_PHOTOGRAPHER`로 고정

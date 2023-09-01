@@ -1,10 +1,11 @@
 package snap.api.member.dto;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import snap.domains.member.entity.Member;
-import snap.domains.member.entity.Role;
+import snap.enums.Role;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
