@@ -48,4 +48,9 @@ public class Member {
         this.provider = provider;
         this.role = role;
     }
+
+    public void updateMember(String nickname, String profileImage){
+        this.nickname = nickname;
+        this.profileImage = profileImage;
+    }
 }

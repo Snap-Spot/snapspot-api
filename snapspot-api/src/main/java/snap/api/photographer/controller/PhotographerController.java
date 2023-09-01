@@ -1,9 +1,11 @@
 package snap.api.photographer.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import snap.api.photographer.dto.request.PhotographerCustomDto;
 import snap.api.photographer.dto.response.PhotographerResponseDto;
 import snap.api.photographer.dto.response.PhotographerSearchResponseDto;
 import snap.api.photographer.service.PhotographerService;
@@ -24,6 +26,12 @@ public class PhotographerController {
         return new ResponseEntity<>(new PhotographerResponseDto(photographer), HttpStatus.OK);
     }
 
+    @PutMapping("/me")
+    public ResponseEntity<PhotographerResponseDto> photographerInfoUpdate(@AuthPhotographer Photographer photographer,
+                                                                          @RequestBody PhotographerCustomDto dto) {
+        return new ResponseEntity<>(photographerService.updatePhotographerInfo(photographer, dto), HttpStatus.OK);
+    }
+
     @GetMapping("/{photographerId}")
     public ResponseEntity<PhotographerResponseDto> photographerFindById(@PathVariable Long photographerId) {
         return new ResponseEntity<>(photographerService.findPhotographer(photographerId), HttpStatus.OK);
@@ -37,5 +45,10 @@ public class PhotographerController {
     @GetMapping("/tag")
     public ResponseEntity<List<PhotographerResponseDto>> photographerFindByTag(@RequestParam String tag){
         return new ResponseEntity<>(photographerService.findByTag(tag), HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<PhotographerResponseDto>> photographerList(Pageable pageable){
+        return new ResponseEntity<>(photographerService.findAllPhotographers(pageable), HttpStatus.OK);
     }
 }
