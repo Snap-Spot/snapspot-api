@@ -5,6 +5,8 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import snap.enums.Provider;
+import snap.enums.Role;
 
 import javax.persistence.*;
 
@@ -45,5 +47,10 @@ public class Member {
         this.profileImage = profileImage;
         this.provider = provider;
         this.role = role;
+    }
+
+    public void updateMember(String nickname, String profileImage){
+        this.nickname = nickname;
+        this.profileImage = profileImage;
     }
 }

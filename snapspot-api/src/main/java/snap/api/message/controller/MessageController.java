@@ -11,12 +11,6 @@ import snap.api.message.service.MessageService;
 @RequiredArgsConstructor
 public class MessageController {
 
-    private final MessageService messageService;
 
-    @PostMapping("/refuse")
-    @ResponseStatus(value = HttpStatus.CREATED)
-    public String createRefuse(@RequestBody RefuseRequestDto requestDto) {
-        return messageService.createRefuse(requestDto);
-    }
 
 }

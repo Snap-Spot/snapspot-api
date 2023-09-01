@@ -1,4 +1,4 @@
-package snap.api.photographer.dto.request;
+package snap.api.auth.dto.request;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class TagRequestDto {
-
-    private String tag;
+public class KakaoSignInRequestDto {
+    private String accessToken;
+    private String refreshToken;
 }

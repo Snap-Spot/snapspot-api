@@ -4,17 +4,26 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import snap.domains.photographer.entity.Sns;
-import snap.domains.photographer.entity.SnsType;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SnsDto {
-    private SnsType type;
-    private String account;
+
+    private String homepage;
+    private String instagram;
+    private String kakaoChannel;
+    private String twitter;
+    private String naverBlog;
 
     public SnsDto(Sns sns){
-        this.type = sns.getType();
-        this.account = sns.getAccount();
+        if (sns == null) {
+            return;
+        }
+        this.homepage = sns.getHomepage();
+        this.instagram = sns.getInstagram();
+        this.kakaoChannel = sns.getKakaoChannel();
+        this.twitter = sns.getTwitter();
+        this.naverBlog = sns.getNaverBlog();
     }
 }
 

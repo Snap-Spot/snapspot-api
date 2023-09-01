@@ -13,9 +13,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TagDomainService {
 
-    private TagRepository tagRepository;
+    private final TagRepository tagRepository;
 
-    public List<Tag> findTagStartingWith(String str){
-        return tagRepository.findAllByTagStartingWith(str);
+    public List<Tag> tagList(){
+        return tagRepository.findAll();
     }
 }

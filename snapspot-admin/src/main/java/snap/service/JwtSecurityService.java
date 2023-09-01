@@ -7,6 +7,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import snap.dto.TokenRes;
+import snap.enums.Role;
 import snap.jwt.JwtTokenUtil;
 
 @Service
@@ -20,6 +21,10 @@ public class JwtSecurityService {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email, password);
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         return jwtUtil.generateToken(authentication);
+    }
+
+    public TokenRes createJwtOfKakaoMember(String email, Role role) {
+        return jwtUtil.generateTokenForKakao(email, role);
     }
 
     public String encryptPassword(String password) {

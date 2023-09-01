@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import snap.domains.member.entity.Member;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Entity
@@ -29,8 +30,50 @@ public class Photographer {
     @Column
     private String bio;
 
+    @OneToMany(
+            mappedBy = "photographer"
+    )
+    private List<PhotographerImage> images;
+
+    @OneToMany(
+            mappedBy = "photographer"
+    )
+    private List<PhotographerArea> areas;
+
+    @OneToMany(
+            mappedBy = "photographer"
+    )
+    private List<PhotographerSchedule> unableSchedules;
+
+    /**
+     * TODO: OneToOne으로 변경하기
+     */
+    @OneToOne(mappedBy = "photographer")
+    private Sns sns;
+
+    @OneToMany(
+            mappedBy = "photographer"
+    )
+    private List<Special> specialList;
+
+    @OneToMany(
+            mappedBy = "photographer"
+    )
+    private List<PhotographerTag> tags;
+
     @Builder
-    public Photographer(Member member) {
+    public Photographer(Member member, Long lowestPay, String paymentImage, String bio) {
         this.member = member;
+        this.lowestPay = lowestPay;
+        this.paymentImage = paymentImage;
+        this.bio = bio;
+    }
+
+    public void updatePhotographer(
+            String nickname, String profileImage, String paymentImage, Long lowestPay, String bio) {
+        this.member.updateMember(nickname, profileImage);
+        this.paymentImage = paymentImage;
+        this.lowestPay = lowestPay;
+        this.bio = bio;
     }
 }
