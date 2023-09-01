@@ -9,6 +9,7 @@ import org.hibernate.annotations.Type;
 import snap.domains.member.entity.Member;
 import snap.domains.photographer.entity.Photographer;
 import snap.domains.photographer.entity.SpecialKeyword;
+import snap.enums.Status;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -103,5 +104,8 @@ public class Plan {
 
     public void statusChange(Status status) {
         this.status = status;
+    }
+
+    public void setStatus(Status status) {
     }
 }

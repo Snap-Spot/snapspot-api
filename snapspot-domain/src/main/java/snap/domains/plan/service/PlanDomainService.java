@@ -9,7 +9,7 @@ import snap.domains.message.entity.Sender;
 import snap.domains.message.repository.MessageRepository;
 import snap.domains.photographer.entity.Photographer;
 import snap.domains.plan.entity.Plan;
-import snap.domains.plan.entity.Status;
+import snap.enums.Status;
 import snap.domains.plan.repository.PlanRepository;
 
 import java.util.UUID;
@@ -58,6 +58,12 @@ public class PlanDomainService {
 
     @Transactional(readOnly = true)
     public Plan findByPlanId(UUID planId) {
-        return planRepository.findByPlanId(planId);
+        return planRepository.findById(planId)
+                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 촬영 일정입니다."));
+    }
+
+    public Plan updateState(Plan plan, Status status) {
+        plan.setStatus(status);
+        return planRepository.save(plan);
     }
 }

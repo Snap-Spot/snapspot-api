@@ -4,7 +4,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import snap.domains.plan.entity.Plan;
-import snap.domains.plan.entity.Status;
+import snap.enums.Status;
 
 import java.util.UUID;
 

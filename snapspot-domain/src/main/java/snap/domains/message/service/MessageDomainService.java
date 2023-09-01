@@ -7,7 +7,6 @@ import snap.domains.message.entity.Message;
 import snap.domains.message.entity.Sender;
 import snap.domains.message.repository.MessageRepository;
 import snap.domains.plan.entity.Plan;
-import snap.domains.plan.entity.Status;
 
 @Service
 @Transactional
@@ -16,17 +15,11 @@ public class MessageDomainService {
 
     private final MessageRepository messageRepository;
 
-    public String createRefuse(Plan requestedPlan, Message message) {
-        messageRepository.save(Message.builder()
-                .plan(requestedPlan)
+    public Message createMessage(Plan plan, Message message, Sender sender) {
+        return messageRepository.save(Message.builder()
+                .plan(plan)
                 .contents(message.getContents())
-                .sender(Sender.PHOTOGRAPHER)
+                .sender(sender)
                 .build());
-
-        requestedPlan.statusChange(
-                Status.REFUSE
-        );
-
-        return "예약 신청이 거절되었습니다.";
     }
 }

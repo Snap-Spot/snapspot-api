@@ -10,12 +10,7 @@ import snap.domains.plan.service.PlanDomainService;
 @Service
 @RequiredArgsConstructor
 public class MessageService {
-
-    private final MessageDomainService messageDomainService;
     private final PlanDomainService planDomainService;
 
-    public String createRefuse(RefuseRequestDto requestDto) {
-        Plan plan = planDomainService.findByPlanId(requestDto.getPlanId());
-        return messageDomainService.createRefuse(plan, requestDto.toEntity());
-    }
+
 }

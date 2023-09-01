@@ -1,4 +1,4 @@
-package snap.domains.plan.entity;
+package snap.enums;
 
 import lombok.RequiredArgsConstructor;
 
