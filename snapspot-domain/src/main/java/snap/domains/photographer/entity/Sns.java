@@ -15,7 +15,7 @@ public class Sns {
     @Column(name = "sns_id")
     private Long snsId;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "photographer_id")
     private Photographer photographer;
 

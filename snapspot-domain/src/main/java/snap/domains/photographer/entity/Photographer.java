@@ -46,10 +46,10 @@ public class Photographer {
     private List<PhotographerSchedule> unableSchedules;
 
     /**
-     * OneToOne으로 변경하기
+     * TODO: OneToOne으로 변경하기
      */
-    @OneToMany(mappedBy = "photographer")
-    private List<Sns> sns;
+    @OneToOne(mappedBy = "photographer")
+    private Sns sns;
 
     @OneToMany(
             mappedBy = "photographer"
