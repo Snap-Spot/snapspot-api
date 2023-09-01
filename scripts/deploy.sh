@@ -8,6 +8,7 @@ then
   echo "> 현재 실행중인 도커 컨테이너가 없습니다."
 else
   echo "> kill -15 $CURRENT_CONTAINER"
+  sudo sudo docker stop snapspot-server
   sudo sudo docker rm snapspot-server
   sleep 5
 fi
