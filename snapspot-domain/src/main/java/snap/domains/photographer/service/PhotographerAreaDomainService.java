@@ -30,4 +30,12 @@ public class PhotographerAreaDomainService {
         return photographerAreaList.stream().map(PhotographerArea::getPhotographer)
                 .collect(Collectors.toList());
     }
+
+    public void updatePhotographerArea(Photographer photographer, List<Long> areaId) {
+        List<Area> areaList = areaId.stream().map(areaDomainService::findArea).collect(Collectors.toList());
+        areaList.stream()
+                .map(area -> photographerAreaRepository.save(
+                        PhotographerArea.builder().photographer(photographer).area(area).build()))
+                .collect(Collectors.toList());
+    }
 }

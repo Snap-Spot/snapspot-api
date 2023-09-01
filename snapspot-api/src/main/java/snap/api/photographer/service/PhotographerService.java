@@ -1,17 +1,19 @@
 package snap.api.photographer.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import snap.api.photographer.dto.request.PhotographerCustomDto;
 import snap.api.photographer.dto.response.PhotographerResponseDto;
 import snap.api.photographer.dto.response.PhotographerSearchResponseDto;
 import snap.domains.photographer.entity.Photographer;
-import snap.domains.photographer.service.PhotographerAreaDomainService;
-import snap.domains.photographer.service.PhotographerDomainService;
-import snap.domains.photographer.service.PhotographerTagDomainService;
+import snap.domains.photographer.service.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class PhotographerService {
@@ -19,7 +21,10 @@ public class PhotographerService {
     private final PhotographerDomainService photographerDomainService;
     private final PhotographerAreaDomainService photographerAreaDomainService;
     private final PhotographerTagDomainService photographerTagDomainService;
-
+    private final SnsDomainService snsDomainService;
+    private final SpecialDomainService specialDomainService;
+    private final PhotographerScheduleDomainService photographerScheduleDomainService;
+    private final PhotographerImageDomainService photographerImageDomainService;
 
     public PhotographerResponseDto findPhotographer(Long photographerId) {
         return PhotographerResponseDto.builder()
@@ -46,5 +51,31 @@ public class PhotographerService {
         return photographerList.stream()
                 .map(PhotographerResponseDto::new)
                 .collect(Collectors.toList());
+    }
+
+    public List<PhotographerResponseDto> findAllPhotographers(Pageable pageable){
+        return photographerDomainService.findAllPhotographers(pageable)
+                .map(PhotographerResponseDto::new)
+                .getContent();
+    }
+
+    public PhotographerResponseDto updatePhotographerInfo(Photographer photographer, PhotographerCustomDto dto){
+        photographerDomainService.updatePhotographer(photographer, dto.getNickname(), dto.getProfileImage(),
+                dto.getPaymentImage(), dto.getLowestPay(), dto.getBio());
+
+        photographerAreaDomainService.updatePhotographerArea(photographer, dto.getAreaId());
+
+        snsDomainService.updateSns(photographer, dto.getInstagram(), dto.getTwitter(),
+                dto.getKakaoChannel(), dto.getNaverBlog(), dto.getHomepage());
+
+        specialDomainService.updateSpecial(photographer, dto.getSpecialList());
+
+        photographerTagDomainService.updateTag(photographer, dto.getTagList());
+
+        photographerScheduleDomainService.updateSchedule(photographer, dto.getUnableDates());
+
+        photographerImageDomainService.updatePhotographerImage(photographer, dto.getPhotographerImages());
+
+        return new PhotographerResponseDto(photographer);
     }
 }

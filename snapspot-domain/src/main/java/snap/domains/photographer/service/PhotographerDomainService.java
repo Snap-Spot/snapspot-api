@@ -1,6 +1,8 @@
 package snap.domains.photographer.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import snap.domains.member.entity.Member;
@@ -42,5 +44,15 @@ public class PhotographerDomainService {
     public List<Photographer> findByNickname(String nickname){
         List<Member> memberList = memberRepository.findAllByNicknameContaining(nickname);
         return memberList.stream().map(photographerRepository::findByMember).collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Photographer> findAllPhotographers(Pageable pageable){
+        return photographerRepository.findAll(pageable);
+    }
+
+    public void updatePhotographer(Photographer photographer, String nickname, String profileImage,
+                                           String paymentImage, Long lowestPay, String bio){
+        photographer.updatePhotographer(nickname, profileImage, paymentImage, lowestPay, bio);
     }
 }

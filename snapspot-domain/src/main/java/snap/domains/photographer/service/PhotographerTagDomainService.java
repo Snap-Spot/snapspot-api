@@ -21,19 +21,33 @@ public class PhotographerTagDomainService {
     private final TagRepository tagRepository;
 
     public PhotographerTag createTag(Photographer photographer, String tag){
-        Tag entity;
-        if(tagRepository.existsByTag(tag))
-            entity = tagRepository.findByTag(tag);
-        else
-            entity = tagRepository.save(new Tag(tag));
+        Tag entity = tagRepository.findByTag(tag)
+                .orElse(tagRepository.save(new Tag(tag)));
+
         return photographerTagRepository.save(new PhotographerTag(photographer, entity));
     }
 
     @Transactional(readOnly = true)
     public List<Photographer> findPhotographerListByTag(String tag){
-        Tag entity = tagRepository.findByTag(tag);
+        Tag entity = tagRepository.findByTag(tag)
+                .orElse(null);
         List<PhotographerTag> photographerTagList = photographerTagRepository.findAllByTag(entity);
         return photographerTagList.stream().map(PhotographerTag::getPhotographer)
+                .collect(Collectors.toList());
+    }
+
+    public void updateTag(Photographer photographer, List<String> tagList){
+        tagList.stream()
+                .map(tagName -> photographerTagRepository.save(
+                        PhotographerTag.builder()
+                                .photographer(photographer)
+                                .tag(
+                                        tagRepository.save(
+                                                Tag.builder().tag(tagName).build()
+                                        )
+                                )
+                                .build()
+                ))
                 .collect(Collectors.toList());
     }
 }

@@ -45,8 +45,10 @@ public class Photographer {
     )
     private List<PhotographerSchedule> unableSchedules;
 
-    @OneToOne()
-    @JoinColumn(name = "sns_id")
+    /**
+     * TODO: OneToOne으로 변경하기
+     */
+    @OneToOne(mappedBy = "photographer")
     private Sns sns;
 
     @OneToMany(
@@ -64,6 +66,14 @@ public class Photographer {
         this.member = member;
         this.lowestPay = lowestPay;
         this.paymentImage = paymentImage;
+        this.bio = bio;
+    }
+
+    public void updatePhotographer(
+            String nickname, String profileImage, String paymentImage, Long lowestPay, String bio) {
+        this.member.updateMember(nickname, profileImage);
+        this.paymentImage = paymentImage;
+        this.lowestPay = lowestPay;
         this.bio = bio;
     }
 }

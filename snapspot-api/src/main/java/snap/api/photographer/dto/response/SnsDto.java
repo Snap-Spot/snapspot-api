@@ -16,6 +16,9 @@ public class SnsDto {
     private String naverBlog;
 
     public SnsDto(Sns sns){
+        if (sns == null) {
+            return;
+        }
         this.homepage = sns.getHomepage();
         this.instagram = sns.getInstagram();
         this.kakaoChannel = sns.getKakaoChannel();
