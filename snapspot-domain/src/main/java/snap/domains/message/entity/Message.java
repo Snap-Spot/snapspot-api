@@ -24,10 +24,11 @@ public class Message {
     private String contents;
 
     @Column
-    private String sender;
+    @Enumerated(EnumType.STRING)
+    private Sender sender;
 
     @Builder
-    public Message(Plan plan, String contents, String sender) {
+    public Message(Plan plan, String contents, Sender sender) {
         this.plan = plan;
         this.contents = contents;
         this.sender = sender;

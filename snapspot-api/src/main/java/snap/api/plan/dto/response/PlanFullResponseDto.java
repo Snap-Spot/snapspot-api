@@ -14,7 +14,7 @@ import java.util.UUID;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class PlanResponseDto {
+public class PlanFullResponseDto {
     private UUID planId;
     private Long customer;
     private Long photographer;
@@ -24,10 +24,14 @@ public class PlanResponseDto {
     private Long people;
     private String wishPlace;
     private String request;
+    private Long price;
+    private String placeName;
+    private String placeAddress;
+    private String message;
     private Status status;
 
     @Builder
-    public PlanResponseDto(Plan plan) {
+    public PlanFullResponseDto(Plan plan) {
         this.planId = plan.getPlanId();
         this.customer = plan.getCustomer().getMemberId();
         this.photographer = plan.getPhotographer().getPhotographerId();
@@ -36,6 +40,10 @@ public class PlanResponseDto {
         this.people = plan.getPeople();
         this.wishPlace = plan.getWishPlace();
         this.request = plan.getRequest();
+        this.price = plan.getPrice();
+        this.placeName = plan.getPlaceName();
+        this.placeAddress = plan.getPlaceAddress();
+        this.message = plan.getMessage();
         this.status = plan.getStatus();
     }
 }
