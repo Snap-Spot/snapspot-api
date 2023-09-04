@@ -29,13 +29,11 @@ public class PlanController {
 
     private final MessageService messageService;
 
-    /*
+
     @GetMapping("/member")
     private ResponseEntity<List<PlanResponseDto>> planFindByMember(@AuthMember Member member){
-
+        return ResponseEntity.ok(planService.findAllPlanByMember(member));
     }
-    
-     */
 
     @GetMapping("/photographer")
     private ResponseEntity<List<PlanResponseDto>> planFindByPhotographer(@AuthPhotographer Photographer photographer) {
@@ -47,7 +45,7 @@ public class PlanController {
         return new ResponseEntity<>(planService.createRequest(member, requestDto), HttpStatus.CREATED);
     }
 
-    @PostMapping("/refuse")
+    @PutMapping("/refuse")
     @ResponseStatus(value = HttpStatus.CREATED)
     public ResponseEntity<SuccessResponse> refusePlan(@RequestBody RefuseRequestDto requestDto) {
         PlanFullResponseDto responseDto = planService.refusePlan(requestDto);

@@ -1,6 +1,7 @@
 package snap.domains.plan.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +18,7 @@ import java.util.UUID;
 
 @Entity
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Plan {
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -102,10 +103,8 @@ public class Plan {
         this.message = message;
     }
 
-    public void statusChange(Status status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 
-    public void setStatus(Status status) {
-    }
 }
