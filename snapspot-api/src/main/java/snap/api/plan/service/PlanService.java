@@ -2,7 +2,7 @@ package snap.api.plan.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import snap.api.message.dto.request.RefuseRequestDto;
+import snap.api.plan.dto.request.RefuseRequestDto;
 import snap.api.plan.dto.request.DepositRequestDto;
 import snap.api.plan.dto.request.PlanRequestDto;
 import snap.api.plan.dto.response.PlanFullResponseDto;
@@ -16,6 +16,9 @@ import snap.domains.photographer.service.PhotographerDomainService;
 import snap.domains.plan.entity.Plan;
 import snap.domains.plan.service.PlanDomainService;
 import snap.enums.Status;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -42,5 +45,10 @@ public class PlanService {
         Plan updatedPlan = planDomainService.updateState(plan, Status.REFUSE);
         Message message = messageDomainService.createMessage(updatedPlan, requestDto.toEntity(), Sender.PHOTOGRAPHER);
         return new PlanFullResponseDto(plan);
+    }
+
+    public List<PlanResponseDto> findAllPlanByPhotographer(Photographer photographer) {
+        List<Plan> entities =  planDomainService.findByPhotographer(photographer);
+        return entities.stream().map(PlanResponseDto::new).collect(Collectors.toList());
     }
 }
