@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PhotographerResponseDto {
     private MemberResponseDto member;
+    private Long photographerId;
     private Long lowestPay;
     private String paymentImage;
     private String bio;
@@ -30,6 +31,7 @@ public class PhotographerResponseDto {
     @Builder
     public PhotographerResponseDto(Photographer entity) {
         this.member = new MemberResponseDto(entity.getMember());
+        this.photographerId = entity.getPhotographerId();
         this.lowestPay = entity.getLowestPay();
         this.paymentImage = entity.getPaymentImage();
         this.bio = entity.getBio();
