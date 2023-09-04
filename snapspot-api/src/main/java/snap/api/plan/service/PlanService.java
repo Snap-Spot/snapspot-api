@@ -1,6 +1,7 @@
 package snap.api.plan.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import snap.api.plan.dto.request.RefuseRequestDto;
 import snap.api.plan.dto.request.DepositRequestDto;
@@ -21,6 +22,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class PlanService {
 
@@ -49,6 +51,11 @@ public class PlanService {
 
     public List<PlanResponseDto> findAllPlanByPhotographer(Photographer photographer) {
         List<Plan> entities =  planDomainService.findByPhotographer(photographer);
+        return entities.stream().map(PlanResponseDto::new).collect(Collectors.toList());
+    }
+
+    public List<PlanResponseDto> findAllPlanByMember(Member member) {
+        List<Plan> entities = planDomainService.findByMember(member);
         return entities.stream().map(PlanResponseDto::new).collect(Collectors.toList());
     }
 }

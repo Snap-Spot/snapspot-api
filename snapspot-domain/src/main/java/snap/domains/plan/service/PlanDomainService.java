@@ -69,6 +69,10 @@ public class PlanDomainService {
     }
 
     public List<Plan> findByPhotographer(Photographer photographer) {
-        return planRepository.findByPhotographer(photographer);
+        return planRepository.findAllByPhotographer(photographer);
+    }
+
+    public List<Plan> findByMember(Member member) {
+        return planRepository.findAllByCustomer(member);
     }
 }

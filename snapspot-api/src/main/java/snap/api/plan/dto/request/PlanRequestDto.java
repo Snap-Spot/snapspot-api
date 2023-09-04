@@ -16,9 +16,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PlanRequestDto {
     private Long photographerId;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+    // @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime planDate;
-    private String category;
+    private SpecialKeyword category;
     private Long people;
     private String wishPlace;
     private String request;
@@ -26,7 +26,7 @@ public class PlanRequestDto {
     public Plan toEntity() {
         return Plan.builder()
                 .planDate(planDate)
-                .category(SpecialKeyword.valueOf(category))
+                .category(category)
                 .people(people)
                 .wishPlace(wishPlace)
                 .request(request)
