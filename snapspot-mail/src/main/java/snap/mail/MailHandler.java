@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -39,9 +40,14 @@ public class MailHandler {
         messageHelper.setText(text, useHtml);
     }
 
-    public void setFile(MultipartFile file) throws MessagingException, IOException {
-        FileSystemResource fsr = new FileSystemResource((File) file);
-        messageHelper.addAttachment(Objects.requireNonNull(file.getOriginalFilename()), fsr);
+    public void setFile(MultipartFile multipartFile) throws MessagingException, IOException {
+        File file = new File(multipartFile.getOriginalFilename());
+        file.createNewFile();
+        FileOutputStream fos = new FileOutputStream(file);
+        fos.write(multipartFile.getBytes());
+        fos.close();
+        FileSystemResource fsr = new FileSystemResource(file);
+        messageHelper.addAttachment(Objects.requireNonNull(file.toString()), fsr);
     }
 
     public void send() {

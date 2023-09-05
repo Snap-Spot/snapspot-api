@@ -3,6 +3,7 @@ package snap.api.plan.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import snap.api.plan.dto.request.*;
 import snap.api.plan.dto.response.PlanFullResponseDto;
 import snap.api.plan.dto.response.PlanResponseDto;
@@ -16,6 +17,8 @@ import snap.domains.plan.entity.Plan;
 import snap.domains.plan.service.PlanDomainService;
 import snap.enums.Role;
 import snap.enums.Status;
+import snap.mail.MailDto;
+import snap.mail.MailService;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,8 +30,8 @@ public class PlanService {
 
     private final PlanDomainService planDomainService;
     private final PhotographerDomainService photographerDomainService;
-
     private final MessageDomainService messageDomainService;
+    private final MailService mailService;
 
     public PlanResponseDto createRequest(Member member, PlanRequestDto requestDto) {
         Photographer photographer = photographerDomainService.findById(requestDto.getPhotographerId());
@@ -74,5 +77,17 @@ public class PlanService {
         }
 
         Message message = messageDomainService.createMessage(updatedPlan, requestDto.toEntity(), sender);
+    }
+
+    public void completePlan(MultipartFile file, PlanCompleteDto requestDto) {
+        Plan plan = planDomainService.findByPlanId(requestDto.getPlanId());
+        Plan updatedPlan = planDomainService.updateState(plan, Status.DELIVERY);
+        mailService.mailSendZipFile(MailDto.builder()
+                        .planId(updatedPlan.getPlanId())
+                        .toEmail(updatedPlan.getCustomer().getEmail())
+                        .toName(updatedPlan.getCustomer().getNickname())
+                        .message(requestDto.getContents())
+                        .file(file)
+                .build());
     }
 }

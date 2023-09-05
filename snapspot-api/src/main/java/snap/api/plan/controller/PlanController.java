@@ -1,10 +1,15 @@
 package snap.api.plan.controller;
 
-import lombok.Getter;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import snap.api.plan.dto.request.*;
 import snap.api.message.service.MessageService;
 import snap.api.plan.dto.response.PlanFullResponseDto;
@@ -18,6 +23,7 @@ import snap.response.SuccessResponse;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/plans")
 @RequiredArgsConstructor
@@ -77,4 +83,23 @@ public class PlanController {
                         .details("사진 작가 혹은 일반 고객이 스냅 사진 촬영 일정을 취소했습니다.")
                         .build());
     }
+
+    @PutMapping("/complete")
+    public ResponseEntity<SuccessResponse> completePlan(
+            @AuthPhotographer Photographer photographer,
+            @RequestParam("file") MultipartFile file,
+            @RequestParam("json") String reqeust
+    ) throws JsonProcessingException
+    {
+        ObjectMapper objectMapper = new ObjectMapper().registerModule(new SimpleModule());
+        PlanCompleteDto requestDto = objectMapper.readValue(reqeust, new TypeReference<>() {});
+        log.info(requestDto.getPlanId().toString());
+        planService.completePlan(file, requestDto);
+        return ResponseEntity
+                .ok(SuccessResponse.builder()
+                        .code("OK").status(200).message("스냅 사진 파일을 전달했습니다.")
+                        .details("사진 작가가 스냅 사진을 전달했습니다.")
+                        .build());
+    }
+
 }
