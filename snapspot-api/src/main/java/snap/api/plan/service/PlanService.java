@@ -3,10 +3,7 @@ package snap.api.plan.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import snap.api.plan.dto.request.PlanReservedDto;
-import snap.api.plan.dto.request.RefuseRequestDto;
-import snap.api.plan.dto.request.DepositRequestDto;
-import snap.api.plan.dto.request.PlanRequestDto;
+import snap.api.plan.dto.request.*;
 import snap.api.plan.dto.response.PlanFullResponseDto;
 import snap.api.plan.dto.response.PlanResponseDto;
 import snap.domains.member.entity.Member;
@@ -17,6 +14,7 @@ import snap.domains.photographer.entity.Photographer;
 import snap.domains.photographer.service.PhotographerDomainService;
 import snap.domains.plan.entity.Plan;
 import snap.domains.plan.service.PlanDomainService;
+import snap.enums.Role;
 import snap.enums.Status;
 
 import java.util.List;
@@ -64,5 +62,17 @@ public class PlanService {
         Plan plan = planDomainService.findByPlanId(requestDto.getPlanId());
         Plan updatedPlan = planDomainService.updateState(plan, Status.RESERVED);
         Message message = messageDomainService.createMessage(updatedPlan, requestDto.toEntity(),Sender.PHOTOGRAPHER);
+    }
+
+    public void cancelPlan(Member member, PlanCancelDto requestDto) {
+        Plan plan = planDomainService.findByPlanId(requestDto.getPlanId());
+        Plan updatedPlan = planDomainService.updateState(plan, Status.CANCEL);
+
+        Sender sender = Sender.MEMBER;
+        if (member.getRole().equals(Role.ROLE_PHOTOGRAPHER)) {
+            sender = Sender.PHOTOGRAPHER;
+        }
+
+        Message message = messageDomainService.createMessage(updatedPlan, requestDto.toEntity(), sender);
     }
 }

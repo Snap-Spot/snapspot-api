@@ -5,11 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import snap.api.plan.dto.request.PlanReservedDto;
-import snap.api.plan.dto.request.RefuseRequestDto;
+import snap.api.plan.dto.request.*;
 import snap.api.message.service.MessageService;
-import snap.api.plan.dto.request.DepositRequestDto;
-import snap.api.plan.dto.request.PlanRequestDto;
 import snap.api.plan.dto.response.PlanFullResponseDto;
 import snap.api.plan.dto.response.PlanResponseDto;
 import snap.api.plan.service.PlanService;
@@ -69,5 +66,15 @@ public class PlanController {
                         .code("OK").status(200).message("스냅 사진 예약이 완료되었습니다.")
                         .details("사진 작가가 촬영에 대한 입금을 확인했고, 촬영 일정을 픽스했습니다.")
                 .build());
+    }
+
+    @PutMapping("/cancel")
+    public ResponseEntity<SuccessResponse> cancelPlan(@AuthMember Member member, @RequestBody PlanCancelDto requestDto) {
+        planService.cancelPlan(member, requestDto);
+        return ResponseEntity
+                .ok(SuccessResponse.builder()
+                        .code("OK").status(200).message("스냅 사진 촬영 일정을 취소했습니다.")
+                        .details("사진 작가 혹은 일반 고객이 스냅 사진 촬영 일정을 취소했습니다.")
+                        .build());
     }
 }
