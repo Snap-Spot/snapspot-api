@@ -1,13 +1,23 @@
+buildscript {
+	ext {
+		queryDslVersion = "5.0.0"
+	}
+}
+
+
 plugins {
 	id 'java'
 	id 'org.springframework.boot' version '2.7.13'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+	id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 }
 
 allprojects {
 
 	repositories {
 		mavenCentral()
+		maven { url 'https://repo.spring.io/milestone' }
+		maven { url 'https://repo.spring.io/snapshot' }
 	}
 }
 
@@ -38,6 +48,12 @@ subprojects {
 		implementation 'org.springframework.boot:spring-boot-starter-web'
 		implementation 'org.springframework.boot:spring-boot-starter-webflux'
 		implementation("io.netty:netty-resolver-dns-native-macos:4.1.79.Final:osx-aarch_64")
+
+		// query-dsl
+		implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+		implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
+		implementation 'com.google.code.findbugs:jsr305:3.0.2'
+
 		compileOnly 'org.projectlombok:lombok'
 		annotationProcessor 'org.projectlombok:lombok'
 		testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -46,5 +62,5 @@ subprojects {
 	tasks.named('test') {
 		useJUnitPlatform()
 	}
-}
 
+}
