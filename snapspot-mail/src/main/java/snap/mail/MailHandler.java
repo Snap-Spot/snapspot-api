@@ -41,13 +41,7 @@ public class MailHandler {
     }
 
     public void setFile(MultipartFile multipartFile) throws MessagingException, IOException {
-        File file = new File(multipartFile.getOriginalFilename());
-        file.createNewFile();
-        FileOutputStream fos = new FileOutputStream(file);
-        fos.write(multipartFile.getBytes());
-        fos.close();
-        FileSystemResource fsr = new FileSystemResource(file);
-        messageHelper.addAttachment(Objects.requireNonNull(file.toString()), fsr);
+        messageHelper.addAttachment(multipartFile.getOriginalFilename(), multipartFile);
     }
 
     public void send() {
