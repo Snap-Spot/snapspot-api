@@ -8,7 +8,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import snap.domains.member.entity.Member;
 import snap.domains.photographer.entity.Photographer;
-import snap.domains.photographer.entity.SpecialKeyword;
+import snap.enums.SpecialKeyword;
 import snap.enums.Status;
 
 import javax.persistence.*;

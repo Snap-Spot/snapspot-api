@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import snap.domains.photographer.entity.Photographer;
 import snap.domains.photographer.entity.Special;
-import snap.domains.photographer.entity.SpecialKeyword;
+import snap.enums.SpecialKeyword;
 import snap.domains.photographer.repository.SpecialRepository;
 
 import java.util.List;
