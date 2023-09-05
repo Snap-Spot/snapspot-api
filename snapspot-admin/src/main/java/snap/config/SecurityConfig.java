@@ -33,7 +33,7 @@ public class SecurityConfig {
                 .antMatchers("/members/test", "/members/signup", "/members/signin").permitAll()
                 .antMatchers("/photographers/**").permitAll()
                 .antMatchers("/plans/**").authenticated()
-                .antMatchers("/plans/deposit").hasRole("PHOTOGRAPHER")
+                .antMatchers("/plans/deposit", "/plans/reserve").hasRole("PHOTOGRAPHER")
                 .antMatchers(HttpMethod.POST, "/members/**").authenticated()
                 .and()
                 .apply(new JwtSecurityConfig(jwtTokenUtil));

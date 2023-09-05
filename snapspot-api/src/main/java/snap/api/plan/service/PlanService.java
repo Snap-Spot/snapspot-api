@@ -3,6 +3,7 @@ package snap.api.plan.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import snap.api.plan.dto.request.PlanReservedDto;
 import snap.api.plan.dto.request.RefuseRequestDto;
 import snap.api.plan.dto.request.DepositRequestDto;
 import snap.api.plan.dto.request.PlanRequestDto;
@@ -57,5 +58,11 @@ public class PlanService {
     public List<PlanResponseDto> findAllPlanByMember(Member member) {
         List<Plan> entities = planDomainService.findByMember(member);
         return entities.stream().map(PlanResponseDto::new).collect(Collectors.toList());
+    }
+
+    public void reservePlan(PlanReservedDto requestDto) {
+        Plan plan = planDomainService.findByPlanId(requestDto.getPlanId());
+        Plan updatedPlan = planDomainService.updateState(plan, Status.RESERVED);
+        Message message = messageDomainService.createMessage(updatedPlan, requestDto.toEntity(),Sender.PHOTOGRAPHER);
     }
 }

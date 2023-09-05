@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import snap.api.plan.dto.request.PlanReservedDto;
 import snap.api.plan.dto.request.RefuseRequestDto;
 import snap.api.message.service.MessageService;
 import snap.api.plan.dto.request.DepositRequestDto;
@@ -46,7 +47,7 @@ public class PlanController {
     }
 
     @PutMapping("/refuse")
-    @ResponseStatus(value = HttpStatus.CREATED)
+    @ResponseStatus(value = HttpStatus.OK)
     public ResponseEntity<SuccessResponse> refusePlan(@RequestBody RefuseRequestDto requestDto) {
         PlanFullResponseDto responseDto = planService.refusePlan(requestDto);
         return ResponseEntity
@@ -58,5 +59,15 @@ public class PlanController {
     @PutMapping("/deposit")
     public ResponseEntity<PlanFullResponseDto> depositPlan(@RequestBody DepositRequestDto requestDto) {
         return new ResponseEntity<>(planService.createDeposit(requestDto), HttpStatus.OK);
+    }
+
+    @PutMapping("/reserve")
+    public ResponseEntity<SuccessResponse> reservedPlan(@AuthPhotographer Photographer photographer, @RequestBody PlanReservedDto requestDto) {
+        planService.reservePlan(requestDto);
+        return ResponseEntity
+                .ok(SuccessResponse.builder()
+                        .code("OK").status(200).message("스냅 사진 예약이 완료되었습니다.")
+                        .details("사진 작가가 촬영에 대한 입금을 확인했고, 촬영 일정을 픽스했습니다.")
+                .build());
     }
 }
