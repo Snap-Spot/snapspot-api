@@ -40,8 +40,8 @@ public class MailHandler {
         messageHelper.setText(text, useHtml);
     }
 
-    public void setFile(MultipartFile multipartFile) throws MessagingException, IOException {
-        messageHelper.addAttachment(multipartFile.getOriginalFilename(), multipartFile);
+    public void setFile(MultipartFile multipartFile) throws MessagingException {
+        messageHelper.addAttachment(Objects.requireNonNull(multipartFile.getOriginalFilename()), multipartFile);
     }
 
     public void send() {
