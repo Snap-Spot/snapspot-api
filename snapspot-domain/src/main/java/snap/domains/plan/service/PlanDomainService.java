@@ -12,6 +12,7 @@ import snap.domains.plan.entity.Plan;
 import snap.enums.Status;
 import snap.domains.plan.repository.PlanRepository;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -65,5 +66,13 @@ public class PlanDomainService {
     public Plan updateState(Plan plan, Status status) {
         plan.setStatus(status);
         return planRepository.save(plan);
+    }
+
+    public List<Plan> findByPhotographer(Photographer photographer) {
+        return planRepository.findAllByPhotographer(photographer);
+    }
+
+    public List<Plan> findByMember(Member member) {
+        return planRepository.findAllByCustomer(member);
     }
 }

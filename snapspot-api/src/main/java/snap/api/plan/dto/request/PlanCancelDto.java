@@ -1,4 +1,4 @@
-package snap.api.message.dto.request;
+package snap.api.plan.dto.request;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -7,18 +7,16 @@ import snap.domains.message.entity.Message;
 
 import java.util.UUID;
 
-/**
- * 예약거절
- */
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class RefuseRequestDto {
+public class PlanCancelDto {
     private UUID planId;
-    private String contents;
+    private String reason;
+    private String refundAccount;
 
     public Message toEntity() {
         return Message.builder()
-                .contents(contents)
+                .contents(reason)
                 .build();
     }
 }
