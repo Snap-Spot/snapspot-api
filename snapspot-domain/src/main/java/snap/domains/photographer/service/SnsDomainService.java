@@ -16,7 +16,7 @@ public class SnsDomainService {
     public void updateSns(Photographer photographer, String instagram, String twitter,
                           String kakaoChannel, String naverBlog, String homepage){
         Sns sns = snsRepository.findByPhotographer(photographer)
-                .orElse(snsRepository.save(
+                .orElseGet(() -> snsRepository.save(
                         Sns.builder().photographer(photographer).build()
                 ));
 
