@@ -36,18 +36,17 @@ public class PhotographerTagDomainService {
                 .collect(Collectors.toList());
     }
 
-    public void updateTag(Photographer photographer, List<String> tagList){
-        tagList.stream()
-                .map(tagName -> photographerTagRepository.save(
-                        PhotographerTag.builder()
-                                .photographer(photographer)
-                                .tag(
-                                        tagRepository.save(
-                                                Tag.builder().tag(tagName).build()
-                                        )
-                                )
-                                .build()
-                ))
+    public void updateTag(Photographer photographer, List<String> tagNameList){
+        List<PhotographerTag> oldList = photographerTagRepository.findAllByPhotographer(photographer);
+        photographerTagRepository.deleteAll(oldList);
+
+        List<Tag> tagList = tagNameList.stream()
+                .map(tagName -> tagRepository.findByTag(tagName)
+                    .orElse(tagRepository.save(Tag.builder().tag(tagName).build())))
                 .collect(Collectors.toList());
+
+        tagList.forEach(tag -> photographerTagRepository.save(
+                PhotographerTag.builder().photographer(photographer).tag(tag).build()
+        ));
     }
 }

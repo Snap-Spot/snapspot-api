@@ -25,17 +25,19 @@ public class PhotographerAreaDomainService {
         List<Area> areaList = areaDomainService.findByMetropolitanAndCity(areaName);
         List<PhotographerArea> photographerAreaList =
                 areaList.stream()
-                .flatMap(area -> photographerAreaRepository.findAllByArea(area).stream())
-                .collect(Collectors.toList());
+                        .flatMap(area -> photographerAreaRepository.findAllByArea(area).stream())
+                        .collect(Collectors.toList());
         return photographerAreaList.stream().map(PhotographerArea::getPhotographer)
                 .collect(Collectors.toList());
     }
 
     public void updatePhotographerArea(Photographer photographer, List<Long> areaId) {
+        List<PhotographerArea> oldList = photographerAreaRepository.findAllByPhotographer(photographer);
+        photographerAreaRepository.deleteAll(oldList);
+
         List<Area> areaList = areaId.stream().map(areaDomainService::findArea).collect(Collectors.toList());
-        areaList.stream()
-                .map(area -> photographerAreaRepository.save(
-                        PhotographerArea.builder().photographer(photographer).area(area).build()))
-                .collect(Collectors.toList());
+        areaList.forEach(area -> photographerAreaRepository.save(
+                PhotographerArea.builder().photographer(photographer).area(area).build())
+        );
     }
 }

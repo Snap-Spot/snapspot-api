@@ -9,7 +9,6 @@ import snap.domains.photographer.repository.PhotographerScheduleRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -17,14 +16,12 @@ import java.util.stream.Collectors;
 public class PhotographerScheduleDomainService {
     private final PhotographerScheduleRepository scheduleRepository;
 
-    public void updateSchedule(Photographer photographer, List<LocalDateTime> unableDates){
-        unableDates.stream()
-                .map(unableDate -> scheduleRepository.save(
-                        PhotographerSchedule.builder()
-                                .photographer(photographer)
-                                .unableDate(unableDate)
-                                .build()
-                ))
-                .collect(Collectors.toList());
+    public void updateSchedule(Photographer photographer, List<LocalDateTime> unableDates) {
+        List<PhotographerSchedule> oldList = scheduleRepository.findAllByPhotographer(photographer);
+        scheduleRepository.deleteAll(oldList);
+
+        unableDates.forEach(unableDate -> scheduleRepository.save(
+                PhotographerSchedule.builder().photographer(photographer).unableDate(unableDate).build()
+        ));
     }
 }
