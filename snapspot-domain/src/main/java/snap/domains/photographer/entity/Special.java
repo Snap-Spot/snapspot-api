@@ -3,6 +3,7 @@ package snap.domains.photographer.entity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import snap.enums.SpecialKeyword;
 
 import javax.persistence.*;
 

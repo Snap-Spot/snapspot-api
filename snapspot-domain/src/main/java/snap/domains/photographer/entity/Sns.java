@@ -35,13 +35,16 @@ public class Sns {
     private String naverBlog;
 
     @Builder
-    public Sns(Photographer photographer, String homepage, String instagram,
-               String kakaoChannel, String twitter, String naverBlog) {
+    public Sns(Photographer photographer) {
         this.photographer = photographer;
-        this.homepage = homepage;
+    }
+
+    public void updateSns(String instagram, String twitter,
+                          String kakaoChannel, String naverBlog, String homepage){
         this.instagram = instagram;
-        this.kakaoChannel = kakaoChannel;
         this.twitter = twitter;
+        this.kakaoChannel = kakaoChannel;
         this.naverBlog = naverBlog;
+        this.homepage = homepage;
     }
 }

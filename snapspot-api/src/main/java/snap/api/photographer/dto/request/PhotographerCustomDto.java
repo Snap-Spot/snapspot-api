@@ -3,8 +3,7 @@ package snap.api.photographer.dto.request;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import snap.domains.photographer.entity.PhotographerImage;
-import snap.domains.photographer.entity.SpecialKeyword;
+import snap.enums.SpecialKeyword;
 
 import java.time.LocalDateTime;
 import java.util.List;
