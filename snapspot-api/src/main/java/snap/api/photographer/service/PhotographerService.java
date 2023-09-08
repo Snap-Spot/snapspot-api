@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import snap.api.photographer.dto.request.PhotographerCustomDto;
+import snap.api.photographer.dto.response.PhotographerNameResponseDto;
 import snap.api.photographer.dto.response.PhotographerResponseDto;
 import snap.api.photographer.dto.response.PhotographerSearchResponseDto;
 import snap.domains.photographer.entity.Photographer;
@@ -53,8 +54,13 @@ public class PhotographerService {
                 .collect(Collectors.toList());
     }
 
+    public List<PhotographerNameResponseDto> findAllNames(){
+        return photographerDomainService.findAllToList().stream()
+                .map(PhotographerNameResponseDto::new).collect(Collectors.toList());
+    }
+
     public List<PhotographerResponseDto> findAllPhotographers(Pageable pageable){
-        return photographerDomainService.findAllPhotographers(pageable)
+        return photographerDomainService.findAllToPage(pageable)
                 .map(PhotographerResponseDto::new)
                 .getContent();
     }

@@ -47,7 +47,12 @@ public class PhotographerDomainService {
     }
 
     @Transactional(readOnly = true)
-    public Page<Photographer> findAllPhotographers(Pageable pageable){
+    public List<Photographer> findAllToList(){
+        return photographerRepository.findAll();
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Photographer> findAllToPage(Pageable pageable){
         return photographerRepository.findAll(pageable);
     }
 
