@@ -59,6 +59,5 @@ public class PhotographerAreaDomainService {
 
         photographerAreaRepository.saveAll(addList);
         photographerAreaRepository.deleteAll(removeList);
-        
     }
 }

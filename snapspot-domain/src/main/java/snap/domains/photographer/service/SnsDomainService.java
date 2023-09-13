@@ -15,11 +15,7 @@ public class SnsDomainService {
 
     public void updateSns(Photographer photographer, String instagram, String twitter,
                           String kakaoChannel, String naverBlog, String homepage){
-        Sns sns = snsRepository.findByPhotographer(photographer)
-                .orElseGet(() -> snsRepository.save(
-                        Sns.builder().photographer(photographer).build()
-                ));
-
+        Sns sns = photographer.getSns();
         sns.updateSns(instagram, twitter, kakaoChannel, naverBlog, homepage);
     }
 
@@ -28,4 +24,5 @@ public class SnsDomainService {
           Sns.builder().photographer(photographer).build()
         );
     }
+
 }

@@ -1,6 +1,7 @@
 package snap.api.photographer.dto.request;
 
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import snap.enums.SpecialKeyword;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class PhotographerCustomDto {
     private String nickname;
     private String profileImage;
@@ -20,7 +22,7 @@ public class PhotographerCustomDto {
 
     private List<Long> areaId;
 
-    private Sns sns;
+    private SnsReq sns;
 
     private List<SpecialKeyword> specialList;
 
@@ -28,28 +30,5 @@ public class PhotographerCustomDto {
 
     private List<LocalDateTime> unableDates;
 
-    private Image image;
-}
-
-@Getter
-class Sns {
-    private String instagram;
-    private String twitter;
-    private String kakaoChannel;
-    private String naverBlog;
-    private String homepage;
-}
-
-@Getter
-class Image {
-    private String image1;
-    private String image2;
-    private String image3;
-    private String image4;
-    private String image5;
-    private String image6;
-    private String image7;
-    private String image8;
-    private String image9;
-    private String image10;
+    private ImageReq image;
 }

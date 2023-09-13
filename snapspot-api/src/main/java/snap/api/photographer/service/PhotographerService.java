@@ -71,12 +71,19 @@ public class PhotographerService {
 
         photographerAreaDomainService.updatePhotographerArea(photographer, dto.getAreaId());
 
+        snsDomainService.updateSns(
+                photographer,
+                dto.getSns().getInstagram(),
+                dto.getSns().getTwitter(),
+                dto.getSns().getKakaoChannel(),
+                dto.getSns().getNaverBlog(),
+                dto.getSns().getHomepage());
+
 
         /*
 
 
-        snsDomainService.updateSns(photographer, dto.getInstagram(), dto.getTwitter(),
-                dto.getKakaoChannel(), dto.getNaverBlog(), dto.getHomepage());
+
 
         specialDomainService.updateSpecial(photographer, dto.getSpecialList());
 
