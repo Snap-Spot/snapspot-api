@@ -71,6 +71,10 @@ public class PhotographerService {
 
         photographerAreaDomainService.updatePhotographerArea(photographer, dto.getAreaId());
 
+
+        /*
+
+
         snsDomainService.updateSns(photographer, dto.getInstagram(), dto.getTwitter(),
                 dto.getKakaoChannel(), dto.getNaverBlog(), dto.getHomepage());
 
@@ -81,6 +85,8 @@ public class PhotographerService {
         photographerScheduleDomainService.updateSchedule(photographer, dto.getUnableDates());
 
         photographerImageDomainService.updatePhotographerImage(photographer, dto.getPhotographerImages());
+
+         */
 
         return new PhotographerResponseDto(photographer);
     }

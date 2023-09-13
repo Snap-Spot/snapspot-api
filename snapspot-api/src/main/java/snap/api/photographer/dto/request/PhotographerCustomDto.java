@@ -20,11 +20,7 @@ public class PhotographerCustomDto {
 
     private List<Long> areaId;
 
-    private String instagram;
-    private String twitter;
-    private String kakaoChannel;
-    private String naverBlog;
-    private String homepage;
+    private Sns sns;
 
     private List<SpecialKeyword> specialList;
 
@@ -32,5 +28,28 @@ public class PhotographerCustomDto {
 
     private List<LocalDateTime> unableDates;
 
-    private List<String> photographerImages;
+    private Image image;
+}
+
+@Getter
+class Sns {
+    private String instagram;
+    private String twitter;
+    private String kakaoChannel;
+    private String naverBlog;
+    private String homepage;
+}
+
+@Getter
+class Image {
+    private String image1;
+    private String image2;
+    private String image3;
+    private String image4;
+    private String image5;
+    private String image6;
+    private String image7;
+    private String image8;
+    private String image9;
+    private String image10;
 }
