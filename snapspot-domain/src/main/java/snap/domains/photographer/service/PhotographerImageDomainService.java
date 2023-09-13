@@ -26,4 +26,10 @@ public class PhotographerImageDomainService {
 
          */
     }
+
+    public void createPhotographer(Photographer photographer) {
+        imageRepository.save(
+                PhotographerImage.builder().photographer(photographer).build()
+        );
+    }
 }

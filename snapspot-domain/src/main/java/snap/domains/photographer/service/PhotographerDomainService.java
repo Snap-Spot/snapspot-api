@@ -18,14 +18,19 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PhotographerDomainService {
 
-    private final PhotographerRepository photographerRepository;
     private final MemberRepository memberRepository;
+    private final PhotographerRepository photographerRepository;
+    private final PhotographerImageDomainService photographerImageDomainService;
+    private final SnsDomainService snsDomainService;
 
 
     public Photographer createPhotographer(Member member) {
-        return photographerRepository.save(
+        Photographer photographer = photographerRepository.save(
                 Photographer.builder().member(member).build()
         );
+        snsDomainService.createSns(photographer);
+        photographerImageDomainService.createPhotographer(photographer);
+        return photographer;
     }
 
     @Transactional(readOnly = true)

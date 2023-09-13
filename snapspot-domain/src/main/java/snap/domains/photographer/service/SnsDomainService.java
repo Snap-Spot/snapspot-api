@@ -22,4 +22,10 @@ public class SnsDomainService {
 
         sns.updateSns(instagram, twitter, kakaoChannel, naverBlog, homepage);
     }
+
+    public void createSns(Photographer photographer) {
+        snsRepository.save(
+          Sns.builder().photographer(photographer).build()
+        );
+    }
 }
