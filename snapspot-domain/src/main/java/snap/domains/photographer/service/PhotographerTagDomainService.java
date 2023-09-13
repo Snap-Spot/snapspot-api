@@ -42,7 +42,7 @@ public class PhotographerTagDomainService {
 
         List<Tag> tagList = tagNameList.stream()
                 .map(tagName -> tagRepository.findByTag(tagName)
-                    .orElse(tagRepository.save(Tag.builder().tag(tagName).build())))
+                        .orElseGet(() -> tagRepository.save(Tag.builder().tag(tagName).build())))
                 .collect(Collectors.toList());
 
         tagList.forEach(tag -> photographerTagRepository.save(
