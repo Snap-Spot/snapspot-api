@@ -79,13 +79,9 @@ public class PhotographerService {
                 dto.getSns().getNaverBlog(),
                 dto.getSns().getHomepage());
 
+        specialDomainService.updateSpecial(photographer, dto.getSpecialList());
 
         /*
-
-
-
-
-        specialDomainService.updateSpecial(photographer, dto.getSpecialList());
 
         photographerTagDomainService.updateTag(photographer, dto.getTagList());
 
