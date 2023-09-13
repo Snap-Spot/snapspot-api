@@ -81,11 +81,13 @@ public class PhotographerService {
 
         specialDomainService.updateSpecial(photographer, dto.getSpecialList());
 
+        photographerScheduleDomainService.updateSchedule(photographer, dto.getUnableDates());
+
         /*
 
         photographerTagDomainService.updateTag(photographer, dto.getTagList());
 
-        photographerScheduleDomainService.updateSchedule(photographer, dto.getUnableDates());
+
 
         photographerImageDomainService.updatePhotographerImage(photographer, dto.getPhotographerImages());
 
