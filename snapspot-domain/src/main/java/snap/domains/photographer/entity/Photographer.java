@@ -30,10 +30,8 @@ public class Photographer {
     @Column
     private String bio;
 
-    @OneToMany(
-            mappedBy = "photographer"
-    )
-    private List<PhotographerImage> images;
+    @OneToOne(mappedBy = "photographer")
+    private PhotographerImage images;
 
     @OneToMany(
             mappedBy = "photographer"
@@ -45,9 +43,6 @@ public class Photographer {
     )
     private List<PhotographerSchedule> unableSchedules;
 
-    /**
-     * TODO: OneToOne으로 변경하기
-     */
     @OneToOne(mappedBy = "photographer")
     private Sns sns;
 

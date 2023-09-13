@@ -13,7 +13,10 @@ import java.util.stream.Collectors;
 public class ImageUrlsDto {
     private List<String> urls;
 
+    /*
     public ImageUrlsDto(List<PhotographerImage> images){
         this.urls = images.stream().map(PhotographerImage::getImage).collect(Collectors.toList());
     }
+
+     */
 }

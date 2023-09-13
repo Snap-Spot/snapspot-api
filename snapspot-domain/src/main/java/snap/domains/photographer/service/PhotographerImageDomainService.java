@@ -19,8 +19,11 @@ public class PhotographerImageDomainService {
         List<PhotographerImage> oldList = imageRepository.findAllByPhotographer(photographer);
         imageRepository.deleteAll(oldList);
 
+        /*
         photographerImages.forEach(image -> imageRepository.save(
                 PhotographerImage.builder().photographer(photographer).image(image).build()
         ));
+
+         */
     }
 }
