@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import snap.domains.photographer.entity.Photographer;
 import snap.domains.photographer.entity.PhotographerImage;
 import snap.domains.photographer.repository.PhotographerImageRepository;
+import snap.dto.request.ImageReq;
 
 import java.util.List;
 
@@ -15,21 +16,13 @@ import java.util.List;
 public class PhotographerImageDomainService {
     private final PhotographerImageRepository imageRepository;
 
-    public void updatePhotographerImage(Photographer photographer, List<String> photographerImages) {
-        List<PhotographerImage> oldList = imageRepository.findAllByPhotographer(photographer);
-        imageRepository.deleteAll(oldList);
-
-        /*
-        photographerImages.forEach(image -> imageRepository.save(
-                PhotographerImage.builder().photographer(photographer).image(image).build()
-        ));
-
-         */
-    }
-
     public void createPhotographer(Photographer photographer) {
         imageRepository.save(
                 PhotographerImage.builder().photographer(photographer).build()
         );
+    }
+
+    public void updatePhotographerImage(Photographer photographer, ImageReq image) {
+        photographer.getImages().update(image);
     }
 }

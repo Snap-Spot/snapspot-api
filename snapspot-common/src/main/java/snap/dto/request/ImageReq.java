@@ -1,4 +1,4 @@
-package snap.api.photographer.dto.request;
+package snap.dto.request;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-class ImageReq {
+public class ImageReq {
     private String image1;
     private String image2;
     private String image3;

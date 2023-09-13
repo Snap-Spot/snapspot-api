@@ -83,14 +83,10 @@ public class PhotographerService {
 
         photographerScheduleDomainService.updateSchedule(photographer, dto.getUnableDates());
 
+        photographerImageDomainService.updatePhotographerImage(photographer, dto.getImage());
+
         /*
-
         photographerTagDomainService.updateTag(photographer, dto.getTagList());
-
-
-
-        photographerImageDomainService.updatePhotographerImage(photographer, dto.getPhotographerImages());
-
          */
 
         return new PhotographerResponseDto(photographer);
