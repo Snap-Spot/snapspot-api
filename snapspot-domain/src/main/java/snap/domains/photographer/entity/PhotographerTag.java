@@ -3,6 +3,7 @@ package snap.domains.photographer.entity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import snap.dto.request.TagReq;
 
 import javax.persistence.*;
 
@@ -31,5 +32,11 @@ public class PhotographerTag {
     @Builder
     public PhotographerTag(Photographer photographer) {
         this.photographer = photographer;
+    }
+
+    public void update(TagReq tag) {
+        this.tag1 = tag.getTag1();
+        this.tag2 = tag.getTag2();
+        this.tag3 = tag.getTag3();
     }
 }

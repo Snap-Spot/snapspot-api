@@ -85,9 +85,9 @@ public class PhotographerService {
 
         photographerImageDomainService.updatePhotographerImage(photographer, dto.getImage());
 
-        /*
-        photographerTagDomainService.updateTag(photographer, dto.getTagList());
-         */
+
+        photographerTagDomainService.updateTag(photographer, dto.getTag());
+
 
         return new PhotographerResponseDto(photographer);
     }

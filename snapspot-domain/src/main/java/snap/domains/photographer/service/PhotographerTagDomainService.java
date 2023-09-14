@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import snap.domains.photographer.entity.Photographer;
 import snap.domains.photographer.entity.PhotographerTag;
 import snap.domains.photographer.repository.PhotographerTagRepository;
+import snap.dto.request.TagReq;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,5 +29,9 @@ public class PhotographerTagDomainService {
         photographerTagRepository.save(
                 PhotographerTag.builder().photographer(photographer).build()
         );
+    }
+
+    public void updateTag(Photographer photographer, TagReq tag) {
+        photographer.getTags().update(tag);
     }
 }
