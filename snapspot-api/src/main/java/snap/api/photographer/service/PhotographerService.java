@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import snap.api.photographer.dto.request.PhotographerCustomDto;
+import snap.api.photographer.dto.response.PhotographerNameResponseDto;
 import snap.api.photographer.dto.response.PhotographerResponseDto;
 import snap.api.photographer.dto.response.PhotographerSearchResponseDto;
 import snap.domains.photographer.entity.Photographer;
@@ -53,8 +54,13 @@ public class PhotographerService {
                 .collect(Collectors.toList());
     }
 
+    public List<PhotographerNameResponseDto> findAllNames(){
+        return photographerDomainService.findAllToList().stream()
+                .map(PhotographerNameResponseDto::new).collect(Collectors.toList());
+    }
+
     public List<PhotographerResponseDto> findAllPhotographers(Pageable pageable){
-        return photographerDomainService.findAllPhotographers(pageable)
+        return photographerDomainService.findAllToPage(pageable)
                 .map(PhotographerResponseDto::new)
                 .getContent();
     }
@@ -65,16 +71,23 @@ public class PhotographerService {
 
         photographerAreaDomainService.updatePhotographerArea(photographer, dto.getAreaId());
 
-        snsDomainService.updateSns(photographer, dto.getInstagram(), dto.getTwitter(),
-                dto.getKakaoChannel(), dto.getNaverBlog(), dto.getHomepage());
+        snsDomainService.updateSns(
+                photographer,
+                dto.getSns().getInstagram(),
+                dto.getSns().getTwitter(),
+                dto.getSns().getKakaoChannel(),
+                dto.getSns().getNaverBlog(),
+                dto.getSns().getHomepage());
 
         specialDomainService.updateSpecial(photographer, dto.getSpecialList());
 
-        photographerTagDomainService.updateTag(photographer, dto.getTagList());
-
         photographerScheduleDomainService.updateSchedule(photographer, dto.getUnableDates());
 
-        photographerImageDomainService.updatePhotographerImage(photographer, dto.getPhotographerImages());
+        photographerImageDomainService.updatePhotographerImage(photographer, dto.getImage());
+
+
+        photographerTagDomainService.updateTag(photographer, dto.getTag());
+
 
         return new PhotographerResponseDto(photographer);
     }

@@ -9,6 +9,7 @@ import snap.domains.photographer.repository.PhotographerAreaRepository;
 import snap.domains.spot.entity.Area;
 import snap.domains.spot.service.AreaDomainService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,17 +26,38 @@ public class PhotographerAreaDomainService {
         List<Area> areaList = areaDomainService.findByMetropolitanAndCity(areaName);
         List<PhotographerArea> photographerAreaList =
                 areaList.stream()
-                .flatMap(area -> photographerAreaRepository.findAllByArea(area).stream())
-                .collect(Collectors.toList());
+                        .flatMap(area -> photographerAreaRepository.findAllByArea(area).stream())
+                        .collect(Collectors.toList());
         return photographerAreaList.stream().map(PhotographerArea::getPhotographer)
                 .collect(Collectors.toList());
     }
 
-    public void updatePhotographerArea(Photographer photographer, List<Long> areaId) {
-        List<Area> areaList = areaId.stream().map(areaDomainService::findArea).collect(Collectors.toList());
-        areaList.stream()
-                .map(area -> photographerAreaRepository.save(
-                        PhotographerArea.builder().photographer(photographer).area(area).build()))
+    public void updatePhotographerArea(Photographer photographer, List<Long> areaList) {
+        List<Long> existedAreaList = photographer.getAreas()
+                .stream()
+                .map(area -> area.getArea().getAreaId())
                 .collect(Collectors.toList());
+
+        List<PhotographerArea> addList = new ArrayList<>();
+        for (Long areaId : areaList) {
+            if (!existedAreaList.contains(areaId)) {
+                addList.add(
+                        PhotographerArea.builder()
+                                .area(areaDomainService.findArea(areaId))
+                                .photographer(photographer)
+                                .build()
+                );
+            }
+        }
+
+        List<PhotographerArea> removeList = new ArrayList<>();
+        for (PhotographerArea existedArea : photographer.getAreas()) {
+            if (!areaList.contains(existedArea.getPhotographerAreaId())) {
+                removeList.add(existedArea);
+            }
+        }
+
+        photographerAreaRepository.saveAll(addList);
+        photographerAreaRepository.deleteAll(removeList);
     }
 }

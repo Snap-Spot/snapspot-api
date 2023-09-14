@@ -1,3 +1,8 @@
+plugins {
+    // (1) QueryDSL 플러그인 추가
+    id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
+}
+
 bootJar { enabled = false }
 jar { enabled = true }
 
@@ -5,4 +10,34 @@ dependencies {
     implementation "com.mysql:mysql-connector-j"
     runtimeOnly("com.mysql:mysql-connector-j")
     implementation project(":snapspot-common")
+    compile('com.querydsl:querydsl-jpa')
+}
+
+def querydslDir = "$buildDir/generated/querydsl"
+
+querydsl {
+    jpa = true
+    querydslSourcesDir = querydslDir
+}
+
+sourceSets {
+    main.java.srcDir querydslDir
+}
+
+querydsl {
+    jpa = true
+    querydslSourcesDir = querydslDir
+}
+
+// (4) QClass 소스 위치를 지정합니다.
+sourceSets {
+    main.java.srcDir querydslDir
+}
+// (5) gradle 5.0 설정
+configurations {
+    querydsl.extendsFrom compileClasspath
+}
+
+compileQuerydsl {
+    options.annotationProcessorPath = configurations.querydsl
 }

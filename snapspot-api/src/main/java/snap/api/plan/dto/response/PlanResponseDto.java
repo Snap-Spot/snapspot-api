@@ -5,9 +5,9 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import snap.domains.photographer.entity.SpecialKeyword;
+import snap.enums.SpecialKeyword;
 import snap.domains.plan.entity.Plan;
-import snap.domains.plan.entity.Status;
+import snap.enums.Status;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

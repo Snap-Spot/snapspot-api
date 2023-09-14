@@ -18,14 +18,21 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PhotographerDomainService {
 
-    private final PhotographerRepository photographerRepository;
     private final MemberRepository memberRepository;
+    private final PhotographerRepository photographerRepository;
+    private final PhotographerImageDomainService photographerImageDomainService;
+    private final SnsDomainService snsDomainService;
+    private final PhotographerTagDomainService tagDomainService;
 
 
     public Photographer createPhotographer(Member member) {
-        return photographerRepository.save(
+        Photographer photographer = photographerRepository.save(
                 Photographer.builder().member(member).build()
         );
+        snsDomainService.createSns(photographer);
+        photographerImageDomainService.createPhotographer(photographer);
+        tagDomainService.createPhotographer(photographer);
+        return photographer;
     }
 
     @Transactional(readOnly = true)
@@ -47,7 +54,12 @@ public class PhotographerDomainService {
     }
 
     @Transactional(readOnly = true)
-    public Page<Photographer> findAllPhotographers(Pageable pageable){
+    public List<Photographer> findAllToList(){
+        return photographerRepository.findAll();
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Photographer> findAllToPage(Pageable pageable){
         return photographerRepository.findAll(pageable);
     }
 

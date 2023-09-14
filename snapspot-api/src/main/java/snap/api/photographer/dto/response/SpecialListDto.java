@@ -4,7 +4,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import snap.domains.photographer.entity.Special;
-import snap.domains.photographer.entity.SpecialKeyword;
+import snap.enums.SpecialKeyword;
 
 import java.util.List;
 import java.util.stream.Collectors;

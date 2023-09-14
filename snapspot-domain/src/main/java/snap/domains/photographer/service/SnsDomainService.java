@@ -15,15 +15,14 @@ public class SnsDomainService {
 
     public void updateSns(Photographer photographer, String instagram, String twitter,
                           String kakaoChannel, String naverBlog, String homepage){
+        Sns sns = photographer.getSns();
+        sns.updateSns(instagram, twitter, kakaoChannel, naverBlog, homepage);
+    }
+
+    public void createSns(Photographer photographer) {
         snsRepository.save(
-                Sns.builder()
-                        .photographer(photographer)
-                        .instagram(instagram)
-                        .twitter(twitter)
-                        .kakaoChannel(kakaoChannel)
-                        .naverBlog(naverBlog)
-                        .homepage(homepage)
-                        .build()
+          Sns.builder().photographer(photographer).build()
         );
     }
+
 }

@@ -5,9 +5,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import snap.domains.photographer.entity.Photographer;
 import snap.domains.photographer.entity.PhotographerTag;
-import snap.domains.photographer.entity.Tag;
 import snap.domains.photographer.repository.PhotographerTagRepository;
-import snap.domains.photographer.repository.TagRepository;
+import snap.dto.request.TagReq;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,36 +17,21 @@ import java.util.stream.Collectors;
 public class PhotographerTagDomainService {
 
     private final PhotographerTagRepository photographerTagRepository;
-    private final TagRepository tagRepository;
-
-    public PhotographerTag createTag(Photographer photographer, String tag){
-        Tag entity = tagRepository.findByTag(tag)
-                .orElse(tagRepository.save(new Tag(tag)));
-
-        return photographerTagRepository.save(new PhotographerTag(photographer, entity));
-    }
 
     @Transactional(readOnly = true)
     public List<Photographer> findPhotographerListByTag(String tag){
-        Tag entity = tagRepository.findByTag(tag)
-                .orElse(null);
-        List<PhotographerTag> photographerTagList = photographerTagRepository.findAllByTag(entity);
-        return photographerTagList.stream().map(PhotographerTag::getPhotographer)
-                .collect(Collectors.toList());
+
+        return photographerTagRepository.findAllByTag1OrTag2OrTag3(tag, tag, tag)
+                .stream().map(PhotographerTag::getPhotographer).toList();
+
+    }
+    public void createPhotographer(Photographer photographer) {
+        photographerTagRepository.save(
+                PhotographerTag.builder().photographer(photographer).build()
+        );
     }
 
-    public void updateTag(Photographer photographer, List<String> tagList){
-        tagList.stream()
-                .map(tagName -> photographerTagRepository.save(
-                        PhotographerTag.builder()
-                                .photographer(photographer)
-                                .tag(
-                                        tagRepository.save(
-                                                Tag.builder().tag(tagName).build()
-                                        )
-                                )
-                                .build()
-                ))
-                .collect(Collectors.toList());
+    public void updateTag(Photographer photographer, TagReq tag) {
+        photographer.getTags().update(tag);
     }
 }

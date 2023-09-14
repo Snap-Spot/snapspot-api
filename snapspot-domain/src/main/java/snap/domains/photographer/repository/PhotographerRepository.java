@@ -8,7 +8,6 @@ import snap.domains.photographer.entity.Photographer;
 
 import java.util.Optional;
 
-
 public interface PhotographerRepository extends JpaRepository<Photographer, Long> {
     Optional<Photographer> findByMember_Email(String email);
 

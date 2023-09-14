@@ -10,6 +10,7 @@ import snap.enums.Role;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MemberResponseDto {
+
     private String email;
     private String nickname;
     private Role role;
