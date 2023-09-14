@@ -20,54 +20,34 @@ public class PhotographerImage {
     @JoinColumn(name = "photographer_id")
     private Photographer photographer;
 
-    @Column(
-            name = "1"
-    )
+    @Column()
     private String image1;
 
-    @Column(
-            name = "2"
-    )
+    @Column()
     private String image2;
 
-    @Column(
-            name = "3"
-    )
+    @Column()
     private String image3;
 
-    @Column(
-            name = "4"
-    )
+    @Column()
     private String image4;
 
-    @Column(
-            name = "5"
-    )
+    @Column()
     private String image5;
 
-    @Column(
-            name = "6"
-    )
+    @Column()
     private String image6;
 
-    @Column(
-            name = "7"
-    )
+    @Column()
     private String image7;
 
-    @Column(
-            name = "8"
-    )
+    @Column()
     private String image8;
 
-    @Column(
-            name = "9"
-    )
+    @Column()
     private String image9;
 
-    @Column(
-            name = "10"
-    )
+    @Column()
     private String image10;
 
     @Builder
