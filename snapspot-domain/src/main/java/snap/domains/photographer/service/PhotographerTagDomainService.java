@@ -5,9 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import snap.domains.photographer.entity.Photographer;
 import snap.domains.photographer.entity.PhotographerTag;
-import snap.domains.photographer.entity.Tag;
 import snap.domains.photographer.repository.PhotographerTagRepository;
-import snap.domains.photographer.repository.TagRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;
