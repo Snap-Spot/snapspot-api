@@ -53,6 +53,10 @@ jobs:
       - name: create application.yml in admin
         run: touch ./snapspot-admin/src/main/resources/application-admin.yml 
           && echo "${{secrets.APPLICATION_ADMIN}}" > ./snapspot-admin/src/main/resources/application-admin.yml 
+
+      - name: create application.yml in mail
+        run: touch ./snapspot-admin/src/main/resources/application-mail.yml 
+          && echo "${{secrets.APPLICATION_MAIL}}" > ./snapspot-mail/src/main/resources/application-mail.yml 
         
       - uses: actions/upload-artifact@v2
         with:
@@ -73,6 +77,11 @@ jobs:
         with:
           name: application-admin.yml
           path: ./snapspot-admin/src/main/resources/application-admin.yml
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: application-mail.yml
+          path: ./snapspot-mail/src/main/resources/application-mail.yml
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
