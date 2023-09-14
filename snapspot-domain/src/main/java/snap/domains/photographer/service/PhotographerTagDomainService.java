@@ -21,11 +21,10 @@ public class PhotographerTagDomainService {
 
     @Transactional(readOnly = true)
     public List<Photographer> findPhotographerListByTag(String tag){
-        Tag entity = tagRepository.findByTag(tag)
-                .orElse(null);
-        List<PhotographerTag> photographerTagList = photographerTagRepository.findAllByTag(entity);
-        return photographerTagList.stream().map(PhotographerTag::getPhotographer)
-                .collect(Collectors.toList());
+
+        return photographerTagRepository.findAllByTag1OrTag2OrTag3(tag, tag, tag)
+                .stream().map(PhotographerTag::getPhotographer).toList();
+
     }
     public void createPhotographer(Photographer photographer) {
         photographerTagRepository.save(
