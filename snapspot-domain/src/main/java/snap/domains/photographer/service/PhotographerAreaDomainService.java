@@ -9,6 +9,7 @@ import snap.domains.photographer.repository.PhotographerAreaRepository;
 import snap.domains.spot.entity.Area;
 import snap.domains.spot.service.AreaDomainService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,13 +32,32 @@ public class PhotographerAreaDomainService {
                 .collect(Collectors.toList());
     }
 
-    public void updatePhotographerArea(Photographer photographer, List<Long> areaId) {
-        List<PhotographerArea> oldList = photographerAreaRepository.findAllByPhotographer(photographer);
-        photographerAreaRepository.deleteAll(oldList);
+    public void updatePhotographerArea(Photographer photographer, List<Long> areaList) {
+        List<Long> existedAreaList = photographer.getAreas()
+                .stream()
+                .map(area -> area.getArea().getAreaId())
+                .collect(Collectors.toList());
 
-        List<Area> areaList = areaId.stream().map(areaDomainService::findArea).collect(Collectors.toList());
-        areaList.forEach(area -> photographerAreaRepository.save(
-                PhotographerArea.builder().photographer(photographer).area(area).build())
-        );
+        List<PhotographerArea> addList = new ArrayList<>();
+        for (Long areaId : areaList) {
+            if (!existedAreaList.contains(areaId)) {
+                addList.add(
+                        PhotographerArea.builder()
+                                .area(areaDomainService.findArea(areaId))
+                                .photographer(photographer)
+                                .build()
+                );
+            }
+        }
+
+        List<PhotographerArea> removeList = new ArrayList<>();
+        for (PhotographerArea existedArea : photographer.getAreas()) {
+            if (!areaList.contains(existedArea.getPhotographerAreaId())) {
+                removeList.add(existedArea);
+            }
+        }
+
+        photographerAreaRepository.saveAll(addList);
+        photographerAreaRepository.deleteAll(removeList);
     }
 }
