@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import snap.dto.request.ImageReq;
+import snap.dto.request.TagReq;
 import snap.enums.SpecialKeyword;
 
 import java.time.LocalDateTime;
@@ -27,7 +28,7 @@ public class PhotographerCustomDto {
 
     private List<SpecialKeyword> specialList;
 
-    private List<String> tagList;
+    private TagReq tag;
 
     private List<LocalDateTime> unableDates;
 

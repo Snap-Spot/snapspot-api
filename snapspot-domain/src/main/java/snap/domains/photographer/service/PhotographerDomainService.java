@@ -22,6 +22,7 @@ public class PhotographerDomainService {
     private final PhotographerRepository photographerRepository;
     private final PhotographerImageDomainService photographerImageDomainService;
     private final SnsDomainService snsDomainService;
+    private final PhotographerTagDomainService tagDomainService;
 
 
     public Photographer createPhotographer(Member member) {
@@ -30,6 +31,7 @@ public class PhotographerDomainService {
         );
         snsDomainService.createSns(photographer);
         photographerImageDomainService.createPhotographer(photographer);
+        tagDomainService.createPhotographer(photographer);
         return photographer;
     }
 

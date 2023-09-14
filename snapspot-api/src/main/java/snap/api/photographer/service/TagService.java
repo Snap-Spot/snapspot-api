@@ -17,13 +17,5 @@ public class TagService {
     private final PhotographerTagDomainService photographerTagDomainService;
     private final TagDomainService tagDomainService;
 
-    public TagsDto createTag(Photographer photographer, String tags) {
-        return new TagsDto(Arrays.stream(tags.split("#"))
-                .map(tag -> photographerTagDomainService.createTag(photographer, tag.trim()).getTag())
-                .collect(Collectors.toList()));
-    }
 
-    public TagsDto findTagList(){
-        return new TagsDto(tagDomainService.tagList());
-    }
 }

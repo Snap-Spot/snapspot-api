@@ -51,10 +51,10 @@ public class Photographer {
     )
     private List<Special> specialList;
 
-    @OneToMany(
+    @OneToOne(
             mappedBy = "photographer"
     )
-    private List<PhotographerTag> tags;
+    private PhotographerTag tags;
 
     @Builder
     public Photographer(Member member, Long lowestPay, String paymentImage, String bio) {

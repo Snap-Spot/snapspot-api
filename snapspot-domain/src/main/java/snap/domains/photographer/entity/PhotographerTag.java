@@ -15,17 +15,21 @@ public class PhotographerTag {
     @Column(name = "photographer_tag_id")
     private Long photographerTagId;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "photographer_id")
     private Photographer photographer;
 
-    @ManyToOne
-    @JoinColumn(name = "tag_id")
-    private Tag tag;
+    @Column
+    private String tag1;
+
+    @Column
+    private String tag2;
+
+    @Column
+    private String tag3;
 
     @Builder
-    public PhotographerTag(Photographer photographer, Tag tag){
+    public PhotographerTag(Photographer photographer) {
         this.photographer = photographer;
-        this.tag = tag;
     }
 }

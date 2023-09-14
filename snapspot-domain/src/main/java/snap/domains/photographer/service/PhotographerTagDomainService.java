@@ -18,14 +18,6 @@ import java.util.stream.Collectors;
 public class PhotographerTagDomainService {
 
     private final PhotographerTagRepository photographerTagRepository;
-    private final TagRepository tagRepository;
-
-    public PhotographerTag createTag(Photographer photographer, String tag){
-        Tag entity = tagRepository.findByTag(tag)
-                .orElse(tagRepository.save(new Tag(tag)));
-
-        return photographerTagRepository.save(new PhotographerTag(photographer, entity));
-    }
 
     @Transactional(readOnly = true)
     public List<Photographer> findPhotographerListByTag(String tag){
@@ -35,18 +27,9 @@ public class PhotographerTagDomainService {
         return photographerTagList.stream().map(PhotographerTag::getPhotographer)
                 .collect(Collectors.toList());
     }
-
-    public void updateTag(Photographer photographer, List<String> tagNameList){
-        List<PhotographerTag> oldList = photographerTagRepository.findAllByPhotographer(photographer);
-        photographerTagRepository.deleteAll(oldList);
-
-        List<Tag> tagList = tagNameList.stream()
-                .map(tagName -> tagRepository.findByTag(tagName)
-                        .orElseGet(() -> tagRepository.save(Tag.builder().tag(tagName).build())))
-                .collect(Collectors.toList());
-
-        tagList.forEach(tag -> photographerTagRepository.save(
-                PhotographerTag.builder().photographer(photographer).tag(tag).build()
-        ));
+    public void createPhotographer(Photographer photographer) {
+        photographerTagRepository.save(
+                PhotographerTag.builder().photographer(photographer).build()
+        );
     }
 }
