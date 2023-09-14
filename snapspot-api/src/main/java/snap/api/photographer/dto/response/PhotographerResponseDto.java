@@ -40,8 +40,6 @@ public class PhotographerResponseDto {
         this.unableSchedules = new UnableSchedulesDto(entity.getUnableSchedules());
         this.sns = new SnsDto(entity.getSns());
         this.specialList = new SpecialListDto(entity.getSpecialList());
-        this.tags = new TagsDto(entity.getTags().stream()
-                .map(PhotographerTag::getTag)
-                .collect(Collectors.toList()));
+        this.tags = new TagsDto(entity.getTags());
     }
 }

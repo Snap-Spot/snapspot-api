@@ -3,17 +3,18 @@ package snap.api.photographer.dto.response;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import snap.domains.photographer.entity.Tag;
-
-import java.util.List;
-import java.util.stream.Collectors;
+import snap.domains.photographer.entity.PhotographerTag;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class TagsDto {
-    private List<String> tags;
+    private String tag1;
+    private String tag2;
+    private String tag3;
 
-    public TagsDto(List<Tag> tags){
-        this.tags = tags.stream().map(Tag::getTag).collect(Collectors.toList());
+    public TagsDto(PhotographerTag entity) {
+        this.tag1 = entity.getTag1();
+        this.tag2 = entity.getTag2();
+        this.tag3 = entity.getTag3();
     }
 }

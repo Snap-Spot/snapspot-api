@@ -71,16 +71,23 @@ public class PhotographerService {
 
         photographerAreaDomainService.updatePhotographerArea(photographer, dto.getAreaId());
 
-        snsDomainService.updateSns(photographer, dto.getInstagram(), dto.getTwitter(),
-                dto.getKakaoChannel(), dto.getNaverBlog(), dto.getHomepage());
+        snsDomainService.updateSns(
+                photographer,
+                dto.getSns().getInstagram(),
+                dto.getSns().getTwitter(),
+                dto.getSns().getKakaoChannel(),
+                dto.getSns().getNaverBlog(),
+                dto.getSns().getHomepage());
 
         specialDomainService.updateSpecial(photographer, dto.getSpecialList());
 
-        photographerTagDomainService.updateTag(photographer, dto.getTagList());
-
         photographerScheduleDomainService.updateSchedule(photographer, dto.getUnableDates());
 
-        photographerImageDomainService.updatePhotographerImage(photographer, dto.getPhotographerImages());
+        photographerImageDomainService.updatePhotographerImage(photographer, dto.getImage());
+
+
+        photographerTagDomainService.updateTag(photographer, dto.getTag());
+
 
         return new PhotographerResponseDto(photographer);
     }
