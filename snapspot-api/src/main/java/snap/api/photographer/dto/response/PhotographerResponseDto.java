@@ -33,7 +33,7 @@ public class PhotographerResponseDto {
         this.lowestPay = entity.getLowestPay();
         this.paymentImage = entity.getPaymentImage();
         this.bio = entity.getBio();
-        // this.images = new ImageUrlsDto(entity.getImages());
+        this.images = new ImageUrlsDto(entity.getImages());
         this.areas = entity.getAreas().stream().map(PhotographerArea::getArea)
                 .map(AreaResponseDto::new)
                 .collect(Collectors.toList());
