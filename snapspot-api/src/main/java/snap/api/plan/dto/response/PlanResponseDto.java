@@ -23,6 +23,7 @@ public class PlanResponseDto {
     private SpecialKeyword category;
     private Long people;
     private String wishPlace;
+    private Long price;
     private String request;
     private Status status;
 
@@ -34,6 +35,7 @@ public class PlanResponseDto {
         this.planDate = plan.getPlanDate();
         this.category = plan.getCategory();
         this.people = plan.getPeople();
+        this.price = plan.getPrice();
         this.wishPlace = plan.getWishPlace();
         this.request = plan.getRequest();
         this.status = plan.getStatus();
