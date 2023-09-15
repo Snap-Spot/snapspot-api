@@ -16,10 +16,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static snap.domains.photographer.entity.QPhotographer.photographer;
-import static snap.domains.photographer.entity.QPhotographerArea.photographerArea;
-import static snap.domains.spot.entity.QArea.area;
-import static snap.domains.photographer.entity.QPhotographerSchedule.photographerSchedule;
-import static snap.domains.photographer.entity.QSpecial.special;
 
 @Repository
 @RequiredArgsConstructor
