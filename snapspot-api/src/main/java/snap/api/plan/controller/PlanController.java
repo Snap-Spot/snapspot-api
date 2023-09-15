@@ -17,6 +17,7 @@ import snap.api.plan.dto.response.PlanResponseDto;
 import snap.api.plan.service.PlanService;
 import snap.domains.member.entity.Member;
 import snap.domains.photographer.entity.Photographer;
+import snap.domains.plan.service.PlanDomainService;
 import snap.resolver.AuthMember;
 import snap.resolver.AuthPhotographer;
 import snap.response.SuccessResponse;
@@ -32,6 +33,12 @@ public class PlanController {
     private final PlanService planService;
 
     private final MessageService messageService;
+    private final PlanDomainService planDomainService;
+
+    @PostMapping("/test")
+    private void test(){
+        planDomainService.updateStateOfToday();
+    }
 
 
     @GetMapping("/member")
