@@ -13,13 +13,11 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PhotographerFilterReq {
-    //지역
+
     private Long areaId;
-    //날짜
+
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime ableDate;
-    //전문분야
+
     private SpecialKeyword special;
-    //페이지
-    private Integer page;
 }
