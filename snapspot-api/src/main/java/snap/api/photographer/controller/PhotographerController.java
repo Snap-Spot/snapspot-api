@@ -11,6 +11,7 @@ import snap.api.photographer.dto.response.PhotographerResponseDto;
 import snap.api.photographer.dto.response.PhotographerSearchResponseDto;
 import snap.api.photographer.service.PhotographerService;
 import snap.domains.photographer.entity.Photographer;
+import snap.dto.request.PhotographerFilterReq;
 import snap.resolver.AuthPhotographer;
 
 import java.util.List;
@@ -49,8 +50,8 @@ public class PhotographerController {
     }
 
     @GetMapping
-    public ResponseEntity<List<PhotographerResponseDto>> photographerList(Pageable pageable){
-        return new ResponseEntity<>(photographerService.findAllPhotographers(pageable), HttpStatus.OK);
+    public ResponseEntity<List<PhotographerResponseDto>> photographerList(PhotographerFilterReq filterReq, Pageable pageable){
+        return new ResponseEntity<>(photographerService.findByFilter(filterReq, pageable), HttpStatus.OK);
     }
 
     @GetMapping("/name")
