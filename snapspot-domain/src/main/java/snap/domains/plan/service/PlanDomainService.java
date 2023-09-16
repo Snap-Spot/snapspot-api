@@ -81,4 +81,8 @@ public class PlanDomainService {
     public void updateStateOfToday() {
         planQueryDslRepository.changePlanStatusOfToday();
     }
+
+    public void updateStateOfComplete() {
+        planQueryDslRepository.changePlanStatusTomorrow();
+    }
 }

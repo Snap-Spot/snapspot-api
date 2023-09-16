@@ -29,6 +29,7 @@ public class JobConfiguration {
     public Job job() {
         return this.jobBuilderFactory.get("job")
                 .start(step1())
+                .next(step2())
                 .on("*").end().build().build();
     }
 
@@ -36,8 +37,16 @@ public class JobConfiguration {
     public Step step1() {
         return stepBuilderFactory.get("step1")
                 .tasklet((stepContribution, chunkContext) -> {
-
                     planDomainService.updateStateOfToday();
+                    return RepeatStatus.FINISHED;
+                }).build();
+    }
+
+    @Bean
+    public Step step2() {
+        return stepBuilderFactory.get("step1")
+                .tasklet((stepContribution, chunkContext) -> {
+                    planDomainService.updateStateOfComplete();
                     return RepeatStatus.FINISHED;
                 }).build();
     }
