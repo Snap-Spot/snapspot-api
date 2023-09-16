@@ -35,11 +35,6 @@ public class PlanController {
     private final MessageService messageService;
     private final PlanDomainService planDomainService;
 
-    @PostMapping("/test")
-    private void test(){
-        planDomainService.updateStateOfToday();
-    }
-
 
     @GetMapping("/member")
     private ResponseEntity<List<PlanResponseDto>> planFindByMember(@AuthMember Member member){
@@ -95,11 +90,11 @@ public class PlanController {
     public ResponseEntity<SuccessResponse> completePlan(
             @AuthPhotographer Photographer photographer,
             @RequestParam("file") MultipartFile file,
-            @RequestParam("json") String reqeust
+            @RequestParam("json") String request
     ) throws JsonProcessingException
     {
         ObjectMapper objectMapper = new ObjectMapper().registerModule(new SimpleModule());
-        PlanCompleteDto requestDto = objectMapper.readValue(reqeust, new TypeReference<>() {});
+        PlanCompleteDto requestDto = objectMapper.readValue(request, new TypeReference<>() {});
         log.info(requestDto.getPlanId().toString());
         planService.completePlan(file, requestDto);
         return ResponseEntity
