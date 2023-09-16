@@ -13,6 +13,7 @@ import snap.enums.SpecialKeyword;
 import snap.enums.Status;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -39,7 +40,7 @@ public class Plan {
     private Status status;
 
     @Column
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+    // @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDateTime planDate;
 
     @Column
