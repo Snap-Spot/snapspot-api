@@ -9,6 +9,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<ErrorResponse> handleException(Exception e) {
-        return ErrorResponse.toResponseEntity(ErrorStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        return ErrorResponse.toResponseEntity(ErrorStatus.INTERNAL_SERVER_ERROR, e.getMessage(), e.getLocalizedMessage().substring(0, 200));
     }
 }

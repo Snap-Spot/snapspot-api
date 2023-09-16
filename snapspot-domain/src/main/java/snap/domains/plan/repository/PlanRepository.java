@@ -13,4 +13,5 @@ public interface PlanRepository extends JpaRepository<Plan, UUID> {
 
     List<Plan> findAllByCustomer(Member member);
     List<Plan> findAllByPhotographer(Photographer photographer);
+    Optional<Plan> findByPlanIdAndCustomer(UUID planId, Member member);
 }
