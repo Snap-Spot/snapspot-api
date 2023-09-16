@@ -9,6 +9,7 @@ import snap.enums.SpecialKeyword;
 import snap.domains.plan.entity.Plan;
 import snap.enums.Status;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -18,7 +19,7 @@ public class PlanResponseDto {
     private UUID planId;
     private Long customer;
     private Long photographer;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+    // @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDateTime planDate;
     private SpecialKeyword category;
     private Long people;

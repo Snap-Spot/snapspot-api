@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import snap.enums.SpecialKeyword;
 import snap.domains.plan.entity.Plan;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
