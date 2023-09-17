@@ -9,6 +9,7 @@ import snap.domains.member.entity.Member;
 import snap.domains.member.repository.MemberRepository;
 import snap.domains.photographer.entity.Photographer;
 import snap.domains.photographer.repository.PhotographerRepository;
+import snap.dto.request.PhotographerFilterReq;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -61,6 +62,11 @@ public class PhotographerDomainService {
     @Transactional(readOnly = true)
     public Page<Photographer> findAllToPage(Pageable pageable){
         return photographerRepository.findAll(pageable);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Photographer> findAllByFilter(PhotographerFilterReq filterReq, Pageable pageable){
+        return photographerRepository.searchAll(filterReq, pageable);
     }
 
     public void updatePhotographer(Photographer photographer, String nickname, String profileImage,

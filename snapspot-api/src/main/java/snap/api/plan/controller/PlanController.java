@@ -17,6 +17,7 @@ import snap.api.plan.dto.response.PlanResponseDto;
 import snap.api.plan.service.PlanService;
 import snap.domains.member.entity.Member;
 import snap.domains.photographer.entity.Photographer;
+import snap.domains.plan.service.PlanDomainService;
 import snap.resolver.AuthMember;
 import snap.resolver.AuthPhotographer;
 import snap.response.SuccessResponse;
@@ -32,6 +33,7 @@ public class PlanController {
     private final PlanService planService;
 
     private final MessageService messageService;
+    private final PlanDomainService planDomainService;
 
 
     @GetMapping("/member")
@@ -88,11 +90,11 @@ public class PlanController {
     public ResponseEntity<SuccessResponse> completePlan(
             @AuthPhotographer Photographer photographer,
             @RequestParam("file") MultipartFile file,
-            @RequestParam("json") String reqeust
+            @RequestParam("json") String request
     ) throws JsonProcessingException
     {
         ObjectMapper objectMapper = new ObjectMapper().registerModule(new SimpleModule());
-        PlanCompleteDto requestDto = objectMapper.readValue(reqeust, new TypeReference<>() {});
+        PlanCompleteDto requestDto = objectMapper.readValue(request, new TypeReference<>() {});
         log.info(requestDto.getPlanId().toString());
         planService.completePlan(file, requestDto);
         return ResponseEntity

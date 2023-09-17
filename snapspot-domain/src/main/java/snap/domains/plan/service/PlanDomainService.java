@@ -9,8 +9,9 @@ import snap.domains.message.entity.Sender;
 import snap.domains.message.repository.MessageRepository;
 import snap.domains.photographer.entity.Photographer;
 import snap.domains.plan.entity.Plan;
+import snap.domains.plan.repository.PlanQueryDslRepository;
 import snap.enums.Status;
-import snap.domains.plan.repository.PlanRepository;
+import snap.domains.plan.repository.PlanJPARepository;
 
 import java.util.List;
 import java.util.UUID;
@@ -20,7 +21,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class PlanDomainService {
 
-    private final PlanRepository planRepository;
+    private final PlanJPARepository planRepository;
+    private final PlanQueryDslRepository planQueryDslRepository;
     private final MessageRepository messageRepository;
 
     public Plan createRequest(Member member, Photographer photographer, Plan plan) {
@@ -78,5 +80,13 @@ public class PlanDomainService {
 
     public Plan findByPlanIdAndMember(UUID planId, Member member) {
         return planRepository.findByPlanIdAndCustomer(planId, member).orElseThrow(() -> new IllegalArgumentException("올바르지 않은 유저이거나, 유효하지 않은 planId입니다."));
+    }
+
+    public void updateStateOfToday() {
+        planQueryDslRepository.changePlanStatusOfToday();
+    }
+
+    public void updateStateOfComplete() {
+        planQueryDslRepository.changePlanStatusTomorrow();
     }
 }
