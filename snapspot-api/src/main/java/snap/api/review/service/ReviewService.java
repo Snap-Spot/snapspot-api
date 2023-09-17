@@ -8,8 +8,11 @@ import snap.domains.member.entity.Member;
 import snap.domains.photographer.entity.Photographer;
 import snap.domains.plan.entity.Plan;
 import snap.domains.plan.service.PlanDomainService;
+import snap.domains.review.entity.Review;
 import snap.domains.review.service.ReviewDomainService;
 import snap.enums.Status;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -26,7 +29,10 @@ public class ReviewService {
         }
     }
 
-    public PhotographerReviewResponseDto findReviewInfoByPhotographer(Photographer photographer) {
 
+    public PhotographerReviewResponseDto findReviewInfoByPhotographer(Photographer photographer) {
+        List<Review> reviewList = reviewDomainService.findReviewListByPhotographer(photographer);
+        return new PhotographerReviewResponseDto(photographer, reviewList);
     }
+
 }

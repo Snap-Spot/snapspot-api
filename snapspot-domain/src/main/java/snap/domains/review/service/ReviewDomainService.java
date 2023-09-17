@@ -8,9 +8,11 @@ import snap.domains.plan.entity.Plan;
 import snap.domains.review.entity.Review;
 import snap.domains.review.repository.ReviewRepository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class ReviewDomainService {
     private final ReviewRepository reviewRepository;
