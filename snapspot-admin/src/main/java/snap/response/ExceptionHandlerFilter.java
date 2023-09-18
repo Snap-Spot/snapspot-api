@@ -27,7 +27,7 @@ public class ExceptionHandlerFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
         } catch (ExpiredJwtException e){
             throwException(response, ResponseMessage.JWT_EXPIRE, e);
-        } catch (JwtException | IllegalArgumentException | ServletException e){
+        } catch (JwtException | ServletException e){
             throwException(response, ResponseMessage.JWT_INVALID, e);
         }
     }
