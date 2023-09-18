@@ -27,7 +27,8 @@ public class HeartDomainService {
 
     public Heart createHeart(Member member, Long photographerId){
         Photographer photographer = photographerDomainService.findById(photographerId);
-        return heartRepository.save(Heart.builder().member(member).photographer(photographer).build());
+        return heartRepository.findByMemberAndPhotographer(member, photographer)
+                .orElseGet(() -> heartRepository.save(Heart.builder().member(member).photographer(photographer).build()));
     }
 
     public Photographer deleteHeart(Member member, Long photographerId){
