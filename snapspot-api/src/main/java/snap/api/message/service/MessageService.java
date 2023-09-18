@@ -3,6 +3,7 @@ package snap.api.message.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import snap.api.message.dto.MessageRequestDto;
+import snap.api.message.dto.MessageResponseDto;
 import snap.domains.member.entity.Member;
 import snap.domains.message.entity.Message;
 import snap.domains.message.entity.Sender;
@@ -10,6 +11,11 @@ import snap.domains.message.service.MessageDomainService;
 import snap.domains.plan.entity.Plan;
 import snap.domains.plan.service.PlanDomainService;
 import snap.enums.Role;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -41,4 +47,10 @@ public class MessageService {
         );
     }
 
+    public List<MessageResponseDto> getMessages(Member member, UUID planId) {
+        List<Message> messageList = messageDomainService.findByPlanId(planId);
+        return messageList.stream()
+                .map(message -> new MessageResponseDto(message, member))
+                .collect(Collectors.toList());
+    }
 }
