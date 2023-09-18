@@ -47,7 +47,7 @@ public class PlanService {
     public PlanFullResponseDto refusePlan(RefuseRequestDto requestDto) {
         Plan plan = planDomainService.findByPlanId(requestDto.getPlanId());
         Plan updatedPlan = planDomainService.updateState(plan, Status.REFUSE);
-        Message message = messageDomainService.createMessage(updatedPlan, requestDto.toEntity(), Sender.PHOTOGRAPHER);
+        Message message = messageDomainService.createMessage(updatedPlan, requestDto.getContents(), Sender.PHOTOGRAPHER);
         return new PlanFullResponseDto(plan);
     }
 
@@ -64,7 +64,7 @@ public class PlanService {
     public void reservePlan(PlanReservedDto requestDto) {
         Plan plan = planDomainService.findByPlanId(requestDto.getPlanId());
         Plan updatedPlan = planDomainService.updateState(plan, Status.RESERVED);
-        Message message = messageDomainService.createMessage(updatedPlan, requestDto.toEntity(),Sender.PHOTOGRAPHER);
+        Message message = messageDomainService.createMessage(updatedPlan,requestDto.getContents(), Sender.PHOTOGRAPHER);
     }
 
     public void cancelPlan(Member member, PlanCancelDto requestDto) {
@@ -76,7 +76,7 @@ public class PlanService {
             sender = Sender.PHOTOGRAPHER;
         }
 
-        Message message = messageDomainService.createMessage(updatedPlan, requestDto.toEntity(), sender);
+        Message message = messageDomainService.createMessage(updatedPlan, "취소되었습니다.", sender);
     }
 
     public void completePlan(MultipartFile file, PlanCompleteDto requestDto) {

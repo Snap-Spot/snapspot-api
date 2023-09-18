@@ -15,10 +15,10 @@ public class MessageDomainService {
 
     private final MessageRepository messageRepository;
 
-    public Message createMessage(Plan plan, Message message, Sender sender) {
+    public Message createMessage(Plan plan, String contents, Sender sender) {
         return messageRepository.save(Message.builder()
                 .plan(plan)
-                .contents(message.getContents())
+                .contents(contents)
                 .sender(sender)
                 .build());
     }

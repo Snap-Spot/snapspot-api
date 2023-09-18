@@ -14,12 +14,13 @@ public class ErrorResponse {
     private final String details;
 
 
-    public static ResponseEntity<ErrorResponse> toResponseEntity(ErrorStatus errorCode, String details) {
+    public static ResponseEntity<ErrorResponse> toResponseEntity(ErrorStatus errorCode, String details, String message) {
         return ResponseEntity
                 .status(errorCode.getStatusCode())
                 .body(ErrorResponse.builder()
                         .code(errorCode.getCode())
                         .details(details)
+                        .message(message)
                         .build()
                 );
     }
