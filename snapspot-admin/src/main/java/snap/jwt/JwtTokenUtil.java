@@ -14,6 +14,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import snap.dto.TokenRes;
 import snap.enums.Role;
+import snap.response.ErrorResponse;
+import snap.response.ErrorStatus;
 
 import java.security.Key;
 import java.util.Arrays;
