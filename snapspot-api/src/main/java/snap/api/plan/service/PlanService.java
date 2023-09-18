@@ -21,6 +21,7 @@ import snap.mail.MailDto;
 import snap.mail.MailService;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,16 +40,16 @@ public class PlanService {
         return new PlanResponseDto(plan);
     }
 
-    public PlanFullResponseDto createDeposit(DepositRequestDto requestDto) {
+    public PlanFullResponseDto createDeposit(Member member, DepositRequestDto requestDto) {
         Plan plan = planDomainService.createDeposit(requestDto.toEntity());
-        return new PlanFullResponseDto(plan);
+        return new PlanFullResponseDto(plan, member, messageDomainService.findByPlanId(plan.getPlanId()));
     }
 
-    public PlanFullResponseDto refusePlan(RefuseRequestDto requestDto) {
+    public PlanFullResponseDto refusePlan(Member member, RefuseRequestDto requestDto) {
         Plan plan = planDomainService.findByPlanId(requestDto.getPlanId());
         Plan updatedPlan = planDomainService.updateState(plan, Status.REFUSE);
         Message message = messageDomainService.createMessage(updatedPlan, requestDto.getContents(), Sender.PHOTOGRAPHER);
-        return new PlanFullResponseDto(plan);
+        return new PlanFullResponseDto(plan, member, messageDomainService.findByPlanId(plan.getPlanId()));
     }
 
     public List<PlanResponseDto> findAllPlanByPhotographer(Photographer photographer) {
@@ -89,5 +90,11 @@ public class PlanService {
                         .message(requestDto.getContents())
                         .file(file)
                 .build());
+    }
+
+    public PlanFullResponseDto findPlanById(UUID planId, Member member) {
+        Plan plan = planDomainService.findByPlanId(planId);
+        List<Message> messageList = messageDomainService.findByPlanEntity(plan);
+        return new PlanFullResponseDto(plan, member, messageList);
     }
 }

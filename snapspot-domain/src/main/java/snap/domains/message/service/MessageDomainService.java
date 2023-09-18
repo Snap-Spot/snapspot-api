@@ -29,4 +29,8 @@ public class MessageDomainService {
     public List<Message> findByPlanId(UUID planId) {
         return messageRepository.findAllByPlan_PlanId(planId);
     }
+
+    public List<Message> findByPlanEntity(Plan plan) {
+        return messageRepository.findByPlan(plan);
+    }
 }

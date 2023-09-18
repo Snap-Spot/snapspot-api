@@ -23,6 +23,7 @@ import snap.resolver.AuthPhotographer;
 import snap.response.SuccessResponse;
 
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @RestController
@@ -46,6 +47,11 @@ public class PlanController {
         return ResponseEntity.ok(planService.findAllPlanByPhotographer(photographer));
     }
 
+    @GetMapping("{planId}")
+    private ResponseEntity<PlanFullResponseDto> planFindById(@AuthMember Member member, @PathVariable UUID planId) {
+        return ResponseEntity.ok(planService.findPlanById(planId, member));
+    }
+
     @PostMapping()
     public ResponseEntity<PlanResponseDto> requestPlan(@AuthMember Member member, @RequestBody PlanRequestDto requestDto) {
         return new ResponseEntity<>(planService.createRequest(member, requestDto), HttpStatus.CREATED);
@@ -53,8 +59,8 @@ public class PlanController {
 
     @PutMapping("/refuse")
     @ResponseStatus(value = HttpStatus.OK)
-    public ResponseEntity<SuccessResponse> refusePlan(@RequestBody RefuseRequestDto requestDto) {
-        PlanFullResponseDto responseDto = planService.refusePlan(requestDto);
+    public ResponseEntity<SuccessResponse> refusePlan(@AuthMember Member member, @RequestBody RefuseRequestDto requestDto) {
+        PlanFullResponseDto responseDto = planService.refusePlan(member, requestDto);
         return ResponseEntity
                 .ok(SuccessResponse.builder().
                         code("OK").status(200).message("스냅 사진 촬영 예약 거절 및 취소").details("사진 작가가 스냅 사진 촬영 예약을 거절했습니다.")
@@ -62,8 +68,8 @@ public class PlanController {
     }
 
     @PutMapping("/deposit")
-    public ResponseEntity<PlanFullResponseDto> depositPlan(@RequestBody DepositRequestDto requestDto) {
-        return new ResponseEntity<>(planService.createDeposit(requestDto), HttpStatus.OK);
+    public ResponseEntity<PlanFullResponseDto> depositPlan(@AuthMember Member member, @RequestBody DepositRequestDto requestDto) {
+        return new ResponseEntity<>(planService.createDeposit(member, requestDto), HttpStatus.OK);
     }
 
     @PutMapping("/reserve")
