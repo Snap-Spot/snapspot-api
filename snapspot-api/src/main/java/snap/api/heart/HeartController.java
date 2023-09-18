@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import snap.api.heart.dto.HeartCancelResponseDto;
+import snap.api.heart.dto.HeartRequestDto;
 import snap.api.heart.dto.HeartSuccessResponseDto;
 import snap.api.photographer.dto.response.PhotographerResponseDto;
 import snap.domains.member.entity.Member;
@@ -25,12 +26,12 @@ public class HeartController {
     }
 
     @PostMapping
-    public ResponseEntity<HeartSuccessResponseDto> heartCreate(@AuthMember Member member, @RequestBody Long photographerId){
-        return new ResponseEntity<>(heartService.heartCreate(member, photographerId), HttpStatus.OK);
+    public ResponseEntity<HeartSuccessResponseDto> heartCreate(@AuthMember Member member, @RequestBody HeartRequestDto requestDto){
+        return new ResponseEntity<>(heartService.heartCreate(member, requestDto.getPhotographerId()), HttpStatus.CREATED);
     }
 
     @DeleteMapping
-    public ResponseEntity<HeartCancelResponseDto> heartDelete(@AuthMember Member member, @RequestBody Long photographerId){
-        return new ResponseEntity<>(heartService.heartDelete(member, photographerId), HttpStatus.OK);
+    public ResponseEntity<HeartCancelResponseDto> heartDelete(@AuthMember Member member, @RequestBody HeartRequestDto requestDto){
+        return new ResponseEntity<>(heartService.heartDelete(member, requestDto.getPhotographerId()), HttpStatus.OK);
     }
 }
