@@ -9,10 +9,13 @@ import snap.api.photographer.dto.request.PhotographerCustomDto;
 import snap.api.photographer.dto.response.PhotographerNameResponseDto;
 import snap.api.photographer.dto.response.PhotographerResponseDto;
 import snap.api.photographer.dto.response.PhotographerSearchResponseDto;
+import snap.api.photographer.dto.response.PhotographerWithHeartDto;
 import snap.api.photographer.dto.response.PhotographerSimpleDto;
 import snap.api.photographer.service.PhotographerService;
+import snap.domains.member.entity.Member;
 import snap.domains.photographer.entity.Photographer;
 import snap.dto.request.PhotographerFilterReq;
+import snap.resolver.AuthMember;
 import snap.resolver.AuthPhotographer;
 
 import java.util.List;
@@ -36,8 +39,8 @@ public class PhotographerController {
     }
 
     @GetMapping("/{photographerId}")
-    public ResponseEntity<PhotographerResponseDto> photographerFindById(@PathVariable Long photographerId) {
-        return new ResponseEntity<>(photographerService.findPhotographer(photographerId), HttpStatus.OK);
+    public ResponseEntity<PhotographerWithHeartDto> photographerFindById(@PathVariable Long photographerId, @AuthMember Member member) {
+        return new ResponseEntity<>(photographerService.findPhotographer(photographerId, member), HttpStatus.OK);
     }
 
     @GetMapping("/search")

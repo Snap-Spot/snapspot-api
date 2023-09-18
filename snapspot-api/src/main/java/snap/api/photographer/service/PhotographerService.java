@@ -8,6 +8,9 @@ import snap.api.photographer.dto.request.PhotographerCustomDto;
 import snap.api.photographer.dto.response.PhotographerNameResponseDto;
 import snap.api.photographer.dto.response.PhotographerResponseDto;
 import snap.api.photographer.dto.response.PhotographerSearchResponseDto;
+import snap.api.photographer.dto.response.PhotographerWithHeartDto;
+import snap.domains.heart.service.HeartDomainService;
+import snap.domains.member.entity.Member;
 import snap.api.photographer.dto.response.PhotographerSimpleDto;
 import snap.domains.photographer.entity.Photographer;
 import snap.domains.photographer.service.*;
@@ -28,11 +31,12 @@ public class PhotographerService {
     private final SpecialDomainService specialDomainService;
     private final PhotographerScheduleDomainService photographerScheduleDomainService;
     private final PhotographerImageDomainService photographerImageDomainService;
+    private final HeartDomainService heartDomainService;
 
-    public PhotographerResponseDto findPhotographer(Long photographerId) {
-        return PhotographerResponseDto.builder()
-                .entity(photographerDomainService.findById(photographerId))
-                .build();
+    public PhotographerWithHeartDto findPhotographer(Long photographerId, Member member) {
+        Photographer photographer = photographerDomainService.findById(photographerId);
+        return new PhotographerWithHeartDto(new PhotographerResponseDto(photographer),
+                heartDomainService.existsHeart(member, photographer));
     }
 
     public PhotographerSearchResponseDto findBySearch(String word) {
