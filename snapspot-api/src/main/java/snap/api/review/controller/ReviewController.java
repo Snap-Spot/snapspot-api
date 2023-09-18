@@ -36,6 +36,7 @@ public class ReviewController {
         return new ResponseEntity<>(reviewService.findReviewInfoByPhotographer(photographer), HttpStatus.OK);
     }
 
+
     @GetMapping("/member")
     private ResponseEntity<List<ReviewResponseDto>> findReviewByMember(@AuthMember Member member) {
         return new ResponseEntity<>(reviewService.findReviewListByMember(member), HttpStatus.OK);

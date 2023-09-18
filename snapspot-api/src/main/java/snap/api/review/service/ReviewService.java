@@ -2,6 +2,7 @@ package snap.api.review.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import snap.api.review.dto.PhotographerReviewResponseDto;
 import snap.api.review.dto.ReviewRequestDto;
 import snap.api.review.dto.ReviewResponseDto;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class ReviewService {
     private final ReviewDomainService reviewDomainService;
@@ -31,12 +33,13 @@ public class ReviewService {
         }
     }
 
-
+    @Transactional(readOnly = true)
     public PhotographerReviewResponseDto findReviewInfoByPhotographer(Photographer photographer) {
         List<Review> reviewList = reviewDomainService.findReviewListByPhotographer(photographer);
         return new PhotographerReviewResponseDto(photographer, reviewList);
     }
-
+    
+    @Transactional(readOnly = true)
     public List<ReviewResponseDto> findReviewListByMember(Member member) {
         List<Review> reviewList = reviewDomainService.findReviewListByMember(member);
         return reviewList.stream().map(ReviewResponseDto::new).collect(Collectors.toList());
