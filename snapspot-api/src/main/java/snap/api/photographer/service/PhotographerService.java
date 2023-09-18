@@ -98,4 +98,8 @@ public class PhotographerService {
 
         return new PhotographerResponseDto(photographer);
     }
+
+    public Photographer findPhotographerEntity(Long photographerId) {
+        return photographerDomainService.findById(photographerId);
+    }
 }
