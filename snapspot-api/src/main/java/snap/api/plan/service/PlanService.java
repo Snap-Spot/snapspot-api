@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import snap.api.plan.dto.request.*;
 import snap.api.plan.dto.response.PlanFullResponseDto;
+import snap.api.plan.dto.response.PlanPhotographerDto;
 import snap.api.plan.dto.response.PlanResponseDto;
 import snap.domains.member.entity.Member;
 import snap.domains.message.entity.Message;
@@ -96,5 +97,13 @@ public class PlanService {
         Plan plan = planDomainService.findByPlanId(planId);
         List<Message> messageList = messageDomainService.findByPlanEntity(plan);
         return new PlanFullResponseDto(plan, member, messageList);
+    }
+
+    public PlanPhotographerDto planFindByPhotographerClient(Photographer photographer) {
+        List<Plan> requestList = planDomainService.findByPhotographerAndStatus1(photographer, Status.REQUEST, Status.DEPOSIT);
+        List<Plan> reserveList = planDomainService.findByPhotographerAndStatus(photographer, Status.RESERVED, Status.TODAY, Status.COMPLETE);
+        return new PlanPhotographerDto(
+                requestList, reserveList
+        );
     }
 }

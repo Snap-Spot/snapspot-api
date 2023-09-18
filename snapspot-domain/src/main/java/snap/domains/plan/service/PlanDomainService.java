@@ -1,6 +1,7 @@
 package snap.domains.plan.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import snap.domains.member.entity.Member;
@@ -16,6 +17,7 @@ import snap.domains.plan.repository.PlanJPARepository;
 import java.util.List;
 import java.util.UUID;
 
+@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -70,10 +72,12 @@ public class PlanDomainService {
         return planRepository.save(plan);
     }
 
+    @Transactional(readOnly = true)
     public List<Plan> findByPhotographer(Photographer photographer) {
         return planRepository.findAllByPhotographer(photographer);
     }
 
+    @Transactional(readOnly = true)
     public List<Plan> findByMember(Member member) {
         return planRepository.findAllByCustomer(member);
     }
@@ -84,5 +88,15 @@ public class PlanDomainService {
 
     public void updateStateOfComplete() {
         planQueryDslRepository.changePlanStatusTomorrow();
+    }
+
+    @Transactional(readOnly = true)
+    public List<Plan> findByPhotographerAndStatus1(Photographer photographer, Status status, Status status1) {
+        return planRepository.findAllByPhotographerAndStatusOrStatus(photographer, status, status1);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Plan> findByPhotographerAndStatus(Photographer photographer, Status status, Status status1, Status status2) {
+        return planRepository.findAllByPhotographerAndStatusOrStatusOrStatus(photographer,status,status1,status2);
     }
 }

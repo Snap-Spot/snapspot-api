@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import snap.api.plan.dto.request.*;
 import snap.api.message.service.MessageService;
 import snap.api.plan.dto.response.PlanFullResponseDto;
+import snap.api.plan.dto.response.PlanPhotographerDto;
 import snap.api.plan.dto.response.PlanResponseDto;
 import snap.api.plan.service.PlanService;
 import snap.domains.member.entity.Member;
@@ -50,6 +51,11 @@ public class PlanController {
     @GetMapping("{planId}")
     private ResponseEntity<PlanFullResponseDto> planFindById(@AuthMember Member member, @PathVariable UUID planId) {
         return ResponseEntity.ok(planService.findPlanById(planId, member));
+    }
+
+    @GetMapping("/photographer/client")
+    private ResponseEntity<PlanPhotographerDto> planFindByPhotographerClient(@AuthPhotographer Photographer photographer) {
+        return ResponseEntity.ok(planService.planFindByPhotographerClient(photographer));
     }
 
     @PostMapping()
