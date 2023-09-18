@@ -8,6 +8,7 @@ import snap.api.photographer.dto.request.PhotographerCustomDto;
 import snap.api.photographer.dto.response.PhotographerNameResponseDto;
 import snap.api.photographer.dto.response.PhotographerResponseDto;
 import snap.api.photographer.dto.response.PhotographerSearchResponseDto;
+import snap.api.photographer.dto.response.PhotographerSimpleDto;
 import snap.domains.photographer.entity.Photographer;
 import snap.domains.photographer.service.*;
 import snap.dto.request.PhotographerFilterReq;
@@ -35,23 +36,23 @@ public class PhotographerService {
     }
 
     public PhotographerSearchResponseDto findBySearch(String word) {
-        List<PhotographerResponseDto> nicknameResult =
+        List<PhotographerSimpleDto> nicknameResult =
                 photographerDomainService.findByNickname(word).stream()
-                        .map(PhotographerResponseDto::new)
+                        .map(PhotographerSimpleDto::new)
                         .collect(Collectors.toList());
 
-        List<PhotographerResponseDto> areaResult =
+        List<PhotographerSimpleDto> areaResult =
                 photographerAreaDomainService.findPhotographerListByArea(word).stream()
-                        .map(PhotographerResponseDto::new)
+                        .map(PhotographerSimpleDto::new)
                         .collect(Collectors.toList());
 
         return new PhotographerSearchResponseDto(nicknameResult, areaResult);
     }
 
-    public List<PhotographerResponseDto> findByTag(String tag){
+    public List<PhotographerSimpleDto> findByTag(String tag){
         List<Photographer> photographerList = photographerTagDomainService.findPhotographerListByTag(tag);
         return photographerList.stream()
-                .map(PhotographerResponseDto::new)
+                .map(PhotographerSimpleDto::new)
                 .collect(Collectors.toList());
     }
 
@@ -66,9 +67,9 @@ public class PhotographerService {
                 .getContent();
     }
 
-    public List<PhotographerResponseDto> findByFilter(PhotographerFilterReq filterReq, Pageable pageable){
+    public List<PhotographerSimpleDto> findByFilter(PhotographerFilterReq filterReq, Pageable pageable){
         return photographerDomainService.findAllByFilter(filterReq, pageable)
-                .map(PhotographerResponseDto::new)
+                .map(PhotographerSimpleDto::new)
                 .getContent();
     }
 

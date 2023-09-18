@@ -9,6 +9,7 @@ import snap.api.photographer.dto.request.PhotographerCustomDto;
 import snap.api.photographer.dto.response.PhotographerNameResponseDto;
 import snap.api.photographer.dto.response.PhotographerResponseDto;
 import snap.api.photographer.dto.response.PhotographerSearchResponseDto;
+import snap.api.photographer.dto.response.PhotographerSimpleDto;
 import snap.api.photographer.service.PhotographerService;
 import snap.domains.photographer.entity.Photographer;
 import snap.dto.request.PhotographerFilterReq;
@@ -45,12 +46,12 @@ public class PhotographerController {
     }
 
     @GetMapping("/tag")
-    public ResponseEntity<List<PhotographerResponseDto>> photographerFindByTag(@RequestParam String tag){
+    public ResponseEntity<List<PhotographerSimpleDto>> photographerFindByTag(@RequestParam String tag){
         return new ResponseEntity<>(photographerService.findByTag(tag), HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<List<PhotographerResponseDto>> photographerList(PhotographerFilterReq filterReq, Pageable pageable){
+    public ResponseEntity<List<PhotographerSimpleDto>> photographerList(PhotographerFilterReq filterReq, Pageable pageable){
         return new ResponseEntity<>(photographerService.findByFilter(filterReq, pageable), HttpStatus.OK);
     }
 
