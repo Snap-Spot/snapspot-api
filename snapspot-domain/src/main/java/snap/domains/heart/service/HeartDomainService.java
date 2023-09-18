@@ -38,4 +38,8 @@ public class HeartDomainService {
         heartRepository.delete(heart);
         return photographer;
     }
+
+    public Boolean existsHeart(Member member, Photographer photographer){
+        return heartRepository.existsByMemberAndPhotographer(member, photographer);
+    }
 }

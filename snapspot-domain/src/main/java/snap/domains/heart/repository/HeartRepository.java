@@ -13,4 +13,6 @@ public interface HeartRepository extends JpaRepository<Heart, Long> {
     List<Heart> findByMember(Member member);
 
     Optional<Heart> findByMemberAndPhotographer(Member member, Photographer photographer);
+
+    Boolean existsByMemberAndPhotographer(Member member, Photographer photographer);
 }
