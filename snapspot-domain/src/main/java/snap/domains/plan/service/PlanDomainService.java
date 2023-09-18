@@ -82,6 +82,10 @@ public class PlanDomainService {
         return planRepository.findAllByCustomer(member);
     }
 
+    public Plan findByPlanIdAndMember(UUID planId, Member member) {
+        return planRepository.findByPlanIdAndCustomer(planId, member).orElseThrow(() -> new IllegalArgumentException("올바르지 않은 유저이거나, 유효하지 않은 planId입니다."));
+    }
+
     public void updateStateOfToday() {
         planQueryDslRepository.changePlanStatusOfToday();
     }

@@ -10,6 +10,7 @@ import snap.api.photographer.dto.response.PhotographerResponseDto;
 import snap.api.photographer.dto.response.PhotographerSearchResponseDto;
 import snap.domains.photographer.entity.Photographer;
 import snap.domains.photographer.service.*;
+import snap.dto.request.PhotographerFilterReq;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -65,6 +66,12 @@ public class PhotographerService {
                 .getContent();
     }
 
+    public List<PhotographerResponseDto> findByFilter(PhotographerFilterReq filterReq, Pageable pageable){
+        return photographerDomainService.findAllByFilter(filterReq, pageable)
+                .map(PhotographerResponseDto::new)
+                .getContent();
+    }
+
     public PhotographerResponseDto updatePhotographerInfo(Photographer photographer, PhotographerCustomDto dto){
         photographerDomainService.updatePhotographer(photographer, dto.getNickname(), dto.getProfileImage(),
                 dto.getPaymentImage(), dto.getLowestPay(), dto.getBio());
@@ -90,5 +97,9 @@ public class PhotographerService {
 
 
         return new PhotographerResponseDto(photographer);
+    }
+
+    public Photographer findPhotographerEntity(Long photographerId) {
+        return photographerDomainService.findById(photographerId);
     }
 }
