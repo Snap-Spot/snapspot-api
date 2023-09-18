@@ -92,8 +92,8 @@ public class PlanController {
                         .build());
     }
 
-    @PutMapping("/complete")
-    public ResponseEntity<SuccessResponse> completePlan(
+    @PutMapping("/delivery")
+    public ResponseEntity<SuccessResponse> deliveryPlan(
             @AuthPhotographer Photographer photographer,
             @RequestParam("file") MultipartFile file,
             @RequestParam("json") String request
