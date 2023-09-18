@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import snap.api.plan.dto.request.*;
 import snap.api.plan.dto.response.PlanFullResponseDto;
+import snap.api.plan.dto.response.PlanPhotographerDto;
 import snap.api.plan.dto.response.PlanResponseDto;
 import snap.domains.member.entity.Member;
 import snap.domains.message.entity.Message;
@@ -21,6 +22,7 @@ import snap.mail.MailDto;
 import snap.mail.MailService;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,16 +41,16 @@ public class PlanService {
         return new PlanResponseDto(plan);
     }
 
-    public PlanFullResponseDto createDeposit(DepositRequestDto requestDto) {
+    public PlanFullResponseDto createDeposit(Member member, DepositRequestDto requestDto) {
         Plan plan = planDomainService.createDeposit(requestDto.toEntity());
-        return new PlanFullResponseDto(plan);
+        return new PlanFullResponseDto(plan, member, messageDomainService.findByPlanId(plan.getPlanId()));
     }
 
-    public PlanFullResponseDto refusePlan(RefuseRequestDto requestDto) {
+    public PlanFullResponseDto refusePlan(Member member, RefuseRequestDto requestDto) {
         Plan plan = planDomainService.findByPlanId(requestDto.getPlanId());
         Plan updatedPlan = planDomainService.updateState(plan, Status.REFUSE);
-        Message message = messageDomainService.createMessage(updatedPlan, requestDto.toEntity(), Sender.PHOTOGRAPHER);
-        return new PlanFullResponseDto(plan);
+        Message message = messageDomainService.createMessage(updatedPlan, requestDto.getContents(), Sender.PHOTOGRAPHER);
+        return new PlanFullResponseDto(plan, member, messageDomainService.findByPlanId(plan.getPlanId()));
     }
 
     public List<PlanResponseDto> findAllPlanByPhotographer(Photographer photographer) {
@@ -64,7 +66,7 @@ public class PlanService {
     public void reservePlan(PlanReservedDto requestDto) {
         Plan plan = planDomainService.findByPlanId(requestDto.getPlanId());
         Plan updatedPlan = planDomainService.updateState(plan, Status.RESERVED);
-        Message message = messageDomainService.createMessage(updatedPlan, requestDto.toEntity(),Sender.PHOTOGRAPHER);
+        Message message = messageDomainService.createMessage(updatedPlan,requestDto.getContents(), Sender.PHOTOGRAPHER);
     }
 
     public void cancelPlan(Member member, PlanCancelDto requestDto) {
@@ -76,7 +78,7 @@ public class PlanService {
             sender = Sender.PHOTOGRAPHER;
         }
 
-        Message message = messageDomainService.createMessage(updatedPlan, requestDto.toEntity(), sender);
+        Message message = messageDomainService.createMessage(updatedPlan, "취소되었습니다.", sender);
     }
 
     public void completePlan(MultipartFile file, PlanCompleteDto requestDto) {
@@ -89,5 +91,19 @@ public class PlanService {
                         .message(requestDto.getContents())
                         .file(file)
                 .build());
+    }
+
+    public PlanFullResponseDto findPlanById(UUID planId, Member member) {
+        Plan plan = planDomainService.findByPlanId(planId);
+        List<Message> messageList = messageDomainService.findByPlanEntity(plan);
+        return new PlanFullResponseDto(plan, member, messageList);
+    }
+
+    public PlanPhotographerDto planFindByPhotographerClient(Photographer photographer) {
+        List<Plan> requestList = planDomainService.findByPhotographerAndStatus1(photographer, Status.REQUEST, Status.DEPOSIT);
+        List<Plan> reserveList = planDomainService.findByPhotographerAndStatus(photographer, Status.RESERVED, Status.TODAY, Status.COMPLETE);
+        return new PlanPhotographerDto(
+                requestList, reserveList
+        );
     }
 }
