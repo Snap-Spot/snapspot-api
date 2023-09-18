@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import snap.api.heart.dto.HeartCancelResponseDto;
 import snap.api.heart.dto.HeartSuccessResponseDto;
 import snap.api.photographer.dto.response.PhotographerResponseDto;
+import snap.api.photographer.dto.response.PhotographerSimpleDto;
 import snap.domains.heart.service.HeartDomainService;
 import snap.domains.member.entity.Member;
 import snap.domains.photographer.entity.Photographer;
@@ -17,8 +18,8 @@ public class HeartService {
 
     private final HeartDomainService heartDomainService;
 
-    public List<PhotographerResponseDto> heartListByMember(Member member){
-        return heartDomainService.findHeartByMember(member).stream().map(PhotographerResponseDto::new).toList();
+    public List<PhotographerSimpleDto> heartListByMember(Member member){
+        return heartDomainService.findHeartByMember(member).stream().map(PhotographerSimpleDto::new).toList();
     }
 
     public HeartSuccessResponseDto heartCreate(Member member, Long photographerId){

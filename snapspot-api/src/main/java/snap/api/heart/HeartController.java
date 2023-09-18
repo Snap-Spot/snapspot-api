@@ -8,6 +8,7 @@ import snap.api.heart.dto.HeartCancelResponseDto;
 import snap.api.heart.dto.HeartRequestDto;
 import snap.api.heart.dto.HeartSuccessResponseDto;
 import snap.api.photographer.dto.response.PhotographerResponseDto;
+import snap.api.photographer.dto.response.PhotographerSimpleDto;
 import snap.domains.member.entity.Member;
 import snap.resolver.AuthMember;
 
@@ -21,7 +22,7 @@ public class HeartController {
     private final HeartService heartService;
 
     @GetMapping
-    public ResponseEntity<List<PhotographerResponseDto>> heartList(@AuthMember Member member){
+    public ResponseEntity<List<PhotographerSimpleDto>> heartList(@AuthMember Member member){
         return new ResponseEntity<>(heartService.heartListByMember(member), HttpStatus.OK);
     }
 
