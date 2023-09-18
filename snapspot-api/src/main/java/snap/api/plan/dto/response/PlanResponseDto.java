@@ -5,13 +5,18 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import snap.api.message.dto.MessageResponseDto;
+import snap.domains.member.entity.Member;
+import snap.domains.message.entity.Message;
 import snap.enums.SpecialKeyword;
 import snap.domains.plan.entity.Plan;
 import snap.enums.Status;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
