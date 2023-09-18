@@ -29,4 +29,12 @@ public class HeartDomainService {
         Photographer photographer = photographerDomainService.findById(photographerId);
         return heartRepository.save(Heart.builder().member(member).photographer(photographer).build());
     }
+
+    public Photographer deleteHeart(Member member, Long photographerId){
+        Photographer photographer = photographerDomainService.findById(photographerId);
+        Heart heart = heartRepository.findByMemberAndPhotographer(member, photographer)
+                .orElseThrow(()->new IllegalArgumentException("해당 고객이 해당 작가에게 좋아요를 누르지 않았습니다."));
+        heartRepository.delete(heart);
+        return photographer;
+    }
 }
