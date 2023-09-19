@@ -7,6 +7,8 @@ import snap.domains.member.entity.Member;
 import snap.domains.photo.entity.SnapPhoto;
 import snap.domains.photo.repository.SnapPhotoRepository;
 
+import java.util.List;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -16,5 +18,9 @@ public class SnapPhotoDomainService {
 
     public SnapPhoto createPhoto(Member member, String imageUrl){
         return snapPhotoRepository.save(SnapPhoto.builder().member(member).imageUrl(imageUrl).build());
+    }
+
+    public List<SnapPhoto> findPhotoListByMember(Member member) {
+        return snapPhotoRepository.findAllByMember(member);
     }
 }
