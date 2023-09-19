@@ -30,7 +30,7 @@ public class SnapPhoto {
     @Column
     private String location;
 
-    @Column(name = "photagrapher_name",length = 16)
+    @Column(name = "photographer_name",length = 16)
     private String photographerName;
 
     @Column(length = 31)
