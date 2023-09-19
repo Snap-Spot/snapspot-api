@@ -12,6 +12,7 @@ import snap.api.review.service.ReviewService;
 import snap.domains.member.entity.Member;
 import snap.domains.photographer.entity.Photographer;
 import snap.resolver.AuthMember;
+import snap.resolver.AuthPhotographer;
 import snap.response.SuccessResponse;
 
 import java.util.List;
@@ -40,5 +41,10 @@ public class ReviewController {
     @GetMapping("/member")
     private ResponseEntity<List<ReviewResponseDto>> findReviewByMember(@AuthMember Member member) {
         return new ResponseEntity<>(reviewService.findReviewListByMember(member), HttpStatus.OK);
+    }
+
+    @GetMapping("/photographer")
+    private ResponseEntity<List<ReviewResponseDto>> findReviewByPhotographer(@AuthPhotographer Photographer photographer) {
+        return new ResponseEntity<>(reviewService.findReviewListByPhotographer(photographer), HttpStatus.OK);
     }
 }
