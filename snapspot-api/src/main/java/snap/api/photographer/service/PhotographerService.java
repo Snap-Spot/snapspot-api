@@ -9,6 +9,8 @@ import snap.api.photographer.dto.response.PhotographerNameResponseDto;
 import snap.api.photographer.dto.response.PhotographerResponseDto;
 import snap.api.photographer.dto.response.PhotographerSearchResponseDto;
 import snap.api.photographer.dto.response.PhotographerWithHeartDto;
+import snap.api.review.dto.PhotographerReviewResponseDto;
+import snap.api.review.service.ReviewService;
 import snap.domains.heart.service.HeartDomainService;
 import snap.domains.member.entity.Member;
 import snap.api.photographer.dto.response.PhotographerSimpleDto;
@@ -32,22 +34,23 @@ public class PhotographerService {
     private final PhotographerScheduleDomainService photographerScheduleDomainService;
     private final PhotographerImageDomainService photographerImageDomainService;
     private final HeartDomainService heartDomainService;
+    private final ReviewService reviewService;
 
     public PhotographerWithHeartDto findPhotographer(Long photographerId, Member member) {
         Photographer photographer = photographerDomainService.findById(photographerId);
-        return new PhotographerWithHeartDto(new PhotographerResponseDto(photographer),
+        return new PhotographerWithHeartDto(new PhotographerResponseDto(photographer, findReview(photographer)),
                 heartDomainService.existsHeart(member, photographer));
     }
 
     public PhotographerSearchResponseDto findBySearch(String word) {
         List<PhotographerSimpleDto> nicknameResult =
                 photographerDomainService.findByNickname(word).stream()
-                        .map(PhotographerSimpleDto::new)
+                        .map(photographer -> new PhotographerSimpleDto(photographer, findReview(photographer)))
                         .collect(Collectors.toList());
 
         List<PhotographerSimpleDto> areaResult =
                 photographerAreaDomainService.findPhotographerListByArea(word).stream()
-                        .map(PhotographerSimpleDto::new)
+                        .map(photographer -> new PhotographerSimpleDto(photographer, findReview(photographer)))
                         .collect(Collectors.toList());
 
         return new PhotographerSearchResponseDto(nicknameResult, areaResult);
@@ -56,7 +59,7 @@ public class PhotographerService {
     public List<PhotographerSimpleDto> findByTag(String tag){
         List<Photographer> photographerList = photographerTagDomainService.findPhotographerListByTag(tag);
         return photographerList.stream()
-                .map(PhotographerSimpleDto::new)
+                .map(photographer -> new PhotographerSimpleDto(photographer, findReview(photographer)))
                 .collect(Collectors.toList());
     }
 
@@ -67,13 +70,13 @@ public class PhotographerService {
 
     public List<PhotographerResponseDto> findAllPhotographers(Pageable pageable){
         return photographerDomainService.findAllToPage(pageable)
-                .map(PhotographerResponseDto::new)
+                .map(photographer -> new PhotographerResponseDto(photographer, findReview(photographer)))
                 .getContent();
     }
 
     public List<PhotographerSimpleDto> findByFilter(PhotographerFilterReq filterReq, Pageable pageable){
         return photographerDomainService.findAllByFilter(filterReq, pageable)
-                .map(PhotographerSimpleDto::new)
+                .map(photographer -> new PhotographerSimpleDto(photographer, findReview(photographer)))
                 .getContent();
     }
 
@@ -101,10 +104,14 @@ public class PhotographerService {
         photographerTagDomainService.updateTag(photographer, dto.getTag());
 
 
-        return new PhotographerResponseDto(photographer);
+        return new PhotographerResponseDto(photographer, findReview(photographer));
     }
 
     public Photographer findPhotographerEntity(Long photographerId) {
         return photographerDomainService.findById(photographerId);
+    }
+    
+    public PhotographerReviewResponseDto findReview(Photographer photographer){
+        return reviewService.findReviewInfoByPhotographer(photographer);
     }
 }
