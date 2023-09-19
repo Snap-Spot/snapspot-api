@@ -44,4 +44,9 @@ public class ReviewService {
         List<Review> reviewList = reviewDomainService.findReviewListByMember(member);
         return reviewList.stream().map(ReviewResponseDto::new).collect(Collectors.toList());
     }
+
+    public List<ReviewResponseDto> findReviewListByPhotographer(Photographer photographer) {
+        return reviewDomainService.findReviewListByPhotographer(photographer)
+                .stream().map(ReviewResponseDto::new).collect(Collectors.toList());
+    }
 }

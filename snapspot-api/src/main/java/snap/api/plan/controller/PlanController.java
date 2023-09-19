@@ -33,7 +33,6 @@ import java.util.UUID;
 public class PlanController {
 
     private final PlanService planService;
-
     private final MessageService messageService;
     private final PlanDomainService planDomainService;
 
@@ -115,5 +114,4 @@ public class PlanController {
                         .details("사진 작가가 스냅 사진을 전달했습니다.")
                         .build());
     }
-
 }
