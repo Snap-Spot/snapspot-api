@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import snap.api.review.dto.PhotographerReviewResponseDto;
 import snap.api.spot.dto.AreaResponseDto;
 import snap.domains.photographer.entity.Photographer;
 import snap.domains.photographer.entity.PhotographerArea;
@@ -22,14 +23,11 @@ public class PhotographerSimpleDto {
     private List<AreaResponseDto> areas;
     private SpecialListDto specialList;
     private TagsDto tags;
-
-    /**
-     * TODO: review 브랜치 머지 후 별점, 리뷰 수 필드 추가
-     *
-     */
+    private Integer totalReview;
+    private Double averageScore;
 
     @Builder
-    public PhotographerSimpleDto(Photographer entity) {
+    public PhotographerSimpleDto(Photographer entity, PhotographerReviewResponseDto review) {
         this.photographerId = entity.getPhotographerId();
         this.nickname = entity.getMember().getNickname();
         this.lowestPay = entity.getLowestPay();
@@ -39,5 +37,7 @@ public class PhotographerSimpleDto {
                 .collect(Collectors.toList());
         this.specialList = new SpecialListDto(entity.getSpecialList());
         this.tags = new TagsDto(entity.getTags());
+        this.totalReview = review.getTotalReview();
+        this.averageScore = review.getAverageScore();
     }
 }

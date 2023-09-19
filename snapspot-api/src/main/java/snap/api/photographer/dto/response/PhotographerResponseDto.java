@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import snap.api.member.dto.MemberResponseDto;
+import snap.api.review.dto.PhotographerReviewResponseDto;
 import snap.api.spot.dto.AreaResponseDto;
 import snap.domains.photographer.entity.Photographer;
 import snap.domains.photographer.entity.PhotographerArea;
@@ -27,9 +28,10 @@ public class PhotographerResponseDto {
     private SnsDto sns;
     private SpecialListDto specialList;
     private TagsDto tags;
+    private PhotographerReviewResponseDto review;
 
     @Builder
-    public PhotographerResponseDto(Photographer entity) {
+    public PhotographerResponseDto(Photographer entity, PhotographerReviewResponseDto review) {
         this.member = new MemberResponseDto(entity.getMember());
         this.photographerId = entity.getPhotographerId();
         this.lowestPay = entity.getLowestPay();
@@ -43,5 +45,6 @@ public class PhotographerResponseDto {
         this.sns = new SnsDto(entity.getSns());
         this.specialList = new SpecialListDto(entity.getSpecialList());
         this.tags = new TagsDto(entity.getTags());
+        this.review = review;
     }
 }
