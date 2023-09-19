@@ -1,7 +1,7 @@
 REPOSITORY=/home/ubuntu/snapspot
 cd $REPOSITORY
 
-CURRENT_CONTAINER=$(sudo docker ps | grep snapspot-server)
+CURRENT_CONTAINER=$(sudo docker ps)
 
 if [ -z $CURRENT_CONTAINER ]
 then
