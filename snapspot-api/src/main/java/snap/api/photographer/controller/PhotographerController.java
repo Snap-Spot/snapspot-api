@@ -2,6 +2,7 @@ package snap.api.photographer.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import snap.api.photographer.dto.response.PhotographerSearchResponseDto;
 import snap.api.photographer.dto.response.PhotographerWithHeartDto;
 import snap.api.photographer.dto.response.PhotographerSimpleDto;
 import snap.api.photographer.service.PhotographerService;
+import snap.api.review.service.ReviewService;
 import snap.domains.member.entity.Member;
 import snap.domains.photographer.entity.Photographer;
 import snap.dto.request.PhotographerFilterReq;
@@ -29,11 +31,12 @@ import java.util.List;
 public class PhotographerController {
 
     private final PhotographerService photographerService;
+    private final ReviewService reviewService;
     private final MemberService memberService;
 
     @GetMapping("/me")
     public ResponseEntity<PhotographerResponseDto> photographerInfoFind(@AuthPhotographer Photographer photographer) {
-        return new ResponseEntity<>(new PhotographerResponseDto(photographer), HttpStatus.OK);
+        return new ResponseEntity<>(new PhotographerResponseDto(photographer, reviewService.findReviewInfoByPhotographer(photographer)), HttpStatus.OK);
     }
 
     @PutMapping("/me")
@@ -58,7 +61,7 @@ public class PhotographerController {
     }
 
     @GetMapping
-    public ResponseEntity<List<PhotographerSimpleDto>> photographerList(PhotographerFilterReq filterReq, Pageable pageable){
+    public ResponseEntity<List<PhotographerSimpleDto>> photographerList(PhotographerFilterReq filterReq, @PageableDefault(size = 6) Pageable pageable){
         return new ResponseEntity<>(photographerService.findByFilter(filterReq, pageable), HttpStatus.OK);
     }
 
