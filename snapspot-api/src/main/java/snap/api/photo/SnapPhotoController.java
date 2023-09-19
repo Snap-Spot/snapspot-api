@@ -20,7 +20,7 @@ public class SnapPhotoController {
 
     @PostMapping
     public ResponseEntity<SnapPhotoResponseDto> photoRegister(@AuthMember Member member, @RequestBody SnapPhotoRequestDto requestDto) {
-        return new ResponseEntity<>(snapPhotoService.createPhoto(member, requestDto.getImageUrl()), HttpStatus.CREATED);
+        return new ResponseEntity<>(snapPhotoService.createPhoto(member, requestDto), HttpStatus.CREATED);
     }
 
     @GetMapping

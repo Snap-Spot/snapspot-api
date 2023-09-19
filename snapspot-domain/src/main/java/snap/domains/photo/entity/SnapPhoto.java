@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import snap.domains.member.entity.Member;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Getter
 @Entity
@@ -23,9 +24,26 @@ public class SnapPhoto {
     @Column(name = "image_url", length = 255, nullable = false)
     private String imageUrl;
 
+    @Column(name = "photo_date")
+    private LocalDateTime photoDate;
+
+    @Column
+    private String location;
+
+    @Column(name = "photagrapher_name",length = 16)
+    private String photographerName;
+
+    @Column(length = 31)
+    private String tag;
+
     @Builder
-    public SnapPhoto(Member member, String imageUrl) {
+    public SnapPhoto(Member member, String imageUrl, LocalDateTime photoDate,
+                     String location, String photographerName, String tag) {
         this.member = member;
         this.imageUrl = imageUrl;
+        this.photoDate = photoDate;
+        this.location = location;
+        this.photographerName = photographerName;
+        this.tag = tag;
     }
 }
