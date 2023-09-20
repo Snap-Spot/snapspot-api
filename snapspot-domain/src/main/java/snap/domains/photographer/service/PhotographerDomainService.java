@@ -1,7 +1,9 @@
 package snap.domains.photographer.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +16,7 @@ import snap.dto.request.PhotographerFilterReq;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -72,5 +75,13 @@ public class PhotographerDomainService {
     public void updatePhotographer(Photographer photographer, String nickname, String profileImage,
                                            String paymentImage, Long lowestPay, String bio){
         photographer.updatePhotographer(nickname, profileImage, paymentImage, lowestPay, bio);
+    }
+
+    public List<Photographer> findRandom() {
+        Long size = photographerRepository.countBy();
+        int idx = (int)(Math.random() * size);
+        Page<Photographer> photographers = photographerRepository.findAll(PageRequest.of(1, 3));
+        log.info(String.valueOf(photographers.stream().collect(Collectors.toList()).size()));
+        return photographers.stream().toList();
     }
 }

@@ -32,6 +32,7 @@ public class PlanDomainService {
                 .customer(member)
                 .photographer(photographer)
                 .status(Status.REQUEST)
+                .time(plan.getTime())
                 .planDate(plan.getPlanDate())
                 .category(plan.getCategory())
                 .people(plan.getPeople())

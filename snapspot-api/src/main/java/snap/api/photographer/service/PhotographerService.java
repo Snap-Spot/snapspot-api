@@ -53,6 +53,14 @@ public class PhotographerService {
                         .map(photographer -> new PhotographerSimpleDto(photographer, findReview(photographer)))
                         .collect(Collectors.toList());
 
+        if (nicknameResult.isEmpty() && areaResult.isEmpty()) {
+            return new PhotographerSearchResponseDto(
+                    photographerDomainService.findRandom().stream()
+                            .map(photographer -> new PhotographerSimpleDto(photographer, findReview(photographer)))
+                            .collect(Collectors.toList())
+            );
+        }
+
         return new PhotographerSearchResponseDto(nicknameResult, areaResult);
     }
 
