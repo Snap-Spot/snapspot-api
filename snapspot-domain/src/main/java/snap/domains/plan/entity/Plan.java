@@ -13,7 +13,6 @@ import snap.enums.SpecialKeyword;
 import snap.enums.Status;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -40,8 +39,10 @@ public class Plan {
     private Status status;
 
     @Column
-    // @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDateTime planDate;
+
+    @Column
+    private String time;
 
     @Column
     @Enumerated(EnumType.STRING)
@@ -74,8 +75,10 @@ public class Plan {
     @Column
     private String message;
 
+
     @Builder
-    public Plan(UUID planId, Member customer, Photographer photographer, Status status, LocalDateTime planDate,
+    public Plan(UUID planId, Member customer, Photographer photographer, Status status,
+                LocalDateTime planDate, String time,
                 SpecialKeyword category, Long people, Long price, String wishPlace, String placeName,
                 String placeAddress, Long x, Long y, String request, String message) {
         this.planId = planId;
@@ -86,6 +89,7 @@ public class Plan {
         this.category = category;
         this.people = people;
         this.price = price;
+        this.time = time;
         this.wishPlace = wishPlace;
         this.placeName = placeName;
         this.placeAddress = placeAddress;

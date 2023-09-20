@@ -16,4 +16,6 @@ public interface PhotographerRepository extends JpaRepository<Photographer, Long
     Page<Photographer> findAll(Pageable pageable);
     
     Optional<Photographer> findByPhotographerId(Long photographerId);
+
+    Long countBy();
 }
