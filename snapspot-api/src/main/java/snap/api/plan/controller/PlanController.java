@@ -23,6 +23,7 @@ import snap.resolver.AuthMember;
 import snap.resolver.AuthPhotographer;
 import snap.response.SuccessResponse;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
@@ -58,7 +59,7 @@ public class PlanController {
     }
 
     @PostMapping()
-    public ResponseEntity<PlanResponseDto> requestPlan(@AuthMember Member member, @RequestBody PlanRequestDto requestDto) {
+    public ResponseEntity<PlanResponseDto> requestPlan(@AuthMember Member member, @RequestBody @Valid PlanRequestDto requestDto) {
         return new ResponseEntity<>(planService.createRequest(member, requestDto), HttpStatus.CREATED);
     }
 

@@ -12,6 +12,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RestControllerAdvice
@@ -30,9 +31,26 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             )
     {
         return ErrorResponse.toResponseEntityObject(
-                ErrorStatus.BAD_REQUEST,
+                ErrorStatus.METHOD_NOT_ALLOWED,
                 ex.getBindingResult().getFieldErrors().get(0).getDefaultMessage(),
                 ex.getMessage());
     }
+
+    @Override
+    protected ResponseEntity<Object> handleHttpRequestMethodNotSupported (
+            HttpRequestMethodNotSupportedException ex,
+            HttpHeaders headers,
+            HttpStatus status,
+            WebRequest request)
+    {
+        return ErrorResponse.toResponseEntityObject(
+                ErrorStatus.BAD_REQUEST,
+                String.valueOf(Arrays.stream(ex.getSupportedMethods()).reduce(Objects::toString)),
+                ex.getMessage()
+        );
+    }
+
+    
+
 
 }

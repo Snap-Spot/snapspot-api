@@ -1,11 +1,14 @@
 package snap.api.plan.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import snap.enums.SpecialKeyword;
 import snap.domains.plan.entity.Plan;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 /**
