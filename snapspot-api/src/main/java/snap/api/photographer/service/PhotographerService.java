@@ -45,6 +45,15 @@ public class PhotographerService {
                         .map(PhotographerResponseDto::new)
                         .collect(Collectors.toList());
 
+        if (nicknameResult.isEmpty() && areaResult.isEmpty()) {
+            log.info("null!");
+            return new PhotographerSearchResponseDto(
+                    photographerDomainService.findRandom().stream()
+                            .map(PhotographerResponseDto::new)
+                            .collect(Collectors.toList())
+            );
+        }
+
         return new PhotographerSearchResponseDto(nicknameResult, areaResult);
     }
 

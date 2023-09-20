@@ -10,6 +10,7 @@ import snap.domains.plan.entity.Plan;
 import javax.validation.Valid;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * 예약신청
