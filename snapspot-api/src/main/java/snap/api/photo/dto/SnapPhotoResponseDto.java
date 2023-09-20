@@ -14,15 +14,21 @@ public class SnapPhotoResponseDto {
     private String imageUrl;
     private LocalDateTime photoDate;
     private String location;
+    private Long photographerId;
     private String photographerName;
-    private String tag;
+    private String tag1;
+    private String tag2;
+    private String tag3;
 
     public SnapPhotoResponseDto(SnapPhoto snapPhoto) {
         this.snapPhotoId = snapPhoto.getSnapPhotoId();
         this.imageUrl = snapPhoto.getImageUrl();
         this.photoDate = snapPhoto.getPhotoDate();
         this.location = snapPhoto.getLocation();
-        this.photographerName = snapPhoto.getPhotographerName();
-        this.tag = snapPhoto.getTag();
+        this.photographerId = snapPhoto.getPhotographer().getPhotographerId();
+        this.photographerName = snapPhoto.getPhotographer().getMember().getNickname();
+        this.tag1 = snapPhoto.getTag1();
+        this.tag2 = snapPhoto.getTag2();
+        this.tag3 = snapPhoto.getTag3();
     }
 }

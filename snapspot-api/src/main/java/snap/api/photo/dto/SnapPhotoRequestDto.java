@@ -12,6 +12,8 @@ public class SnapPhotoRequestDto {
     private String imageUrl;
     private LocalDateTime photoDate;
     private String location;
-    private String photographerName;
-    private String tag;
+    private Long photographerId;
+    private String tag1;
+    private String tag2;
+    private String tag3;
 }

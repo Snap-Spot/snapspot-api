@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import snap.domains.member.entity.Member;
+import snap.domains.photographer.entity.Photographer;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -30,20 +31,29 @@ public class SnapPhoto {
     @Column
     private String location;
 
-    @Column(name = "photographer_name",length = 16)
-    private String photographerName;
+    @ManyToOne
+    @JoinColumn(name = "photographer_id")
+    private Photographer photographer;
 
-    @Column(length = 31)
-    private String tag;
+    @Column(length = 16)
+    private String tag1;
+
+    @Column(length = 16)
+    private String tag2;
+
+    @Column(length = 16)
+    private String tag3;
 
     @Builder
     public SnapPhoto(Member member, String imageUrl, LocalDateTime photoDate,
-                     String location, String photographerName, String tag) {
+                     String location, Photographer photographer, String tag1, String tag2, String tag3) {
         this.member = member;
         this.imageUrl = imageUrl;
         this.photoDate = photoDate;
         this.location = location;
-        this.photographerName = photographerName;
-        this.tag = tag;
+        this.photographer = photographer;
+        this.tag1 = tag1;
+        this.tag2 = tag2;
+        this.tag3 = tag3;
     }
 }

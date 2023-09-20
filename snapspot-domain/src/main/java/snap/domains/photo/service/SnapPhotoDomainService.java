@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import snap.domains.member.entity.Member;
 import snap.domains.photo.entity.SnapPhoto;
 import snap.domains.photo.repository.SnapPhotoRepository;
+import snap.domains.photographer.entity.Photographer;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,15 +19,17 @@ public class SnapPhotoDomainService {
     private final SnapPhotoRepository snapPhotoRepository;
 
     public SnapPhoto createPhoto(Member member, String imageUrl, LocalDateTime photoDate, String location,
-                                 String photographerName, String tag){
+                                 Photographer photographer, String tag1, String tag2, String tag3){
         return snapPhotoRepository.save(
                 SnapPhoto.builder()
                         .member(member)
                         .imageUrl(imageUrl)
                         .photoDate(photoDate)
                         .location(location)
-                        .photographerName(photographerName)
-                        .tag(tag)
+                        .photographer(photographer)
+                        .tag1(tag1)
+                        .tag2(tag2)
+                        .tag3(tag3)
                         .build()
         );
     }
