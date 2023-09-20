@@ -15,8 +15,8 @@ public class PhotographerSearchResponseDto {
     private List<PhotographerResponseDto> recommend;
 
     public PhotographerSearchResponseDto(
-            List<PhotographerResponseDto> nicknameResult,
-            List<PhotographerResponseDto> areaResult) {
+            List<PhotographerSimpleDto> nicknameResult,
+            List<PhotographerSimpleDto> areaResult) {
         this.nicknameResult = nicknameResult;
         this.areaResult = areaResult;
     }

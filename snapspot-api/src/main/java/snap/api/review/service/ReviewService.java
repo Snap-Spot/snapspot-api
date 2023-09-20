@@ -36,7 +36,7 @@ public class ReviewService {
     @Transactional(readOnly = true)
     public PhotographerReviewResponseDto findReviewInfoByPhotographer(Photographer photographer) {
         List<Review> reviewList = reviewDomainService.findReviewListByPhotographer(photographer);
-        return new PhotographerReviewResponseDto(photographer, reviewList);
+        return new PhotographerReviewResponseDto(reviewList);
     }
     
     @Transactional(readOnly = true)

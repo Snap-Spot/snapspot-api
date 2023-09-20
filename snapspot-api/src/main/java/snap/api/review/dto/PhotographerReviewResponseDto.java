@@ -13,13 +13,11 @@ import java.util.stream.Collectors;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PhotographerReviewResponseDto {
-    private PhotographerResponseDto photographer;
     private Integer totalReview;
     private Double averageScore;
     private List<ReviewResponseDto> reviews;
 
-    public PhotographerReviewResponseDto(Photographer photographer, List<Review> entities) {
-        this.photographer = new PhotographerResponseDto(photographer);
+    public PhotographerReviewResponseDto(List<Review> entities) {
         this.totalReview = entities.size();
         this.averageScore = (entities.stream().mapToDouble(Review::getScore).sum() / entities.size());
         this.reviews = entities.stream().map(ReviewResponseDto::new).toList();

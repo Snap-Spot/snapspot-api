@@ -48,4 +48,10 @@ public class MemberDomainService {
                         .build()
         );
     }
+
+    public Member updateMember(Member member, String nickname, String profileImage, String email) {
+        member.updateMember(nickname, profileImage);
+        member.updateEmail(email);
+        return member;
+    }
 }

@@ -8,6 +8,12 @@ import snap.api.photographer.dto.request.PhotographerCustomDto;
 import snap.api.photographer.dto.response.PhotographerNameResponseDto;
 import snap.api.photographer.dto.response.PhotographerResponseDto;
 import snap.api.photographer.dto.response.PhotographerSearchResponseDto;
+import snap.api.photographer.dto.response.PhotographerWithHeartDto;
+import snap.api.review.dto.PhotographerReviewResponseDto;
+import snap.api.review.service.ReviewService;
+import snap.domains.heart.service.HeartDomainService;
+import snap.domains.member.entity.Member;
+import snap.api.photographer.dto.response.PhotographerSimpleDto;
 import snap.domains.photographer.entity.Photographer;
 import snap.domains.photographer.service.*;
 import snap.dto.request.PhotographerFilterReq;
@@ -27,22 +33,24 @@ public class PhotographerService {
     private final SpecialDomainService specialDomainService;
     private final PhotographerScheduleDomainService photographerScheduleDomainService;
     private final PhotographerImageDomainService photographerImageDomainService;
+    private final HeartDomainService heartDomainService;
+    private final ReviewService reviewService;
 
-    public PhotographerResponseDto findPhotographer(Long photographerId) {
-        return PhotographerResponseDto.builder()
-                .entity(photographerDomainService.findById(photographerId))
-                .build();
+    public PhotographerWithHeartDto findPhotographer(Long photographerId, Member member) {
+        Photographer photographer = photographerDomainService.findById(photographerId);
+        return new PhotographerWithHeartDto(new PhotographerResponseDto(photographer, findReview(photographer)),
+                heartDomainService.existsHeart(member, photographer));
     }
 
     public PhotographerSearchResponseDto findBySearch(String word) {
-        List<PhotographerResponseDto> nicknameResult =
+        List<PhotographerSimpleDto> nicknameResult =
                 photographerDomainService.findByNickname(word).stream()
-                        .map(PhotographerResponseDto::new)
+                        .map(photographer -> new PhotographerSimpleDto(photographer, findReview(photographer)))
                         .collect(Collectors.toList());
 
-        List<PhotographerResponseDto> areaResult =
+        List<PhotographerSimpleDto> areaResult =
                 photographerAreaDomainService.findPhotographerListByArea(word).stream()
-                        .map(PhotographerResponseDto::new)
+                        .map(photographer -> new PhotographerSimpleDto(photographer, findReview(photographer)))
                         .collect(Collectors.toList());
 
         if (nicknameResult.isEmpty() && areaResult.isEmpty()) {
@@ -57,10 +65,10 @@ public class PhotographerService {
         return new PhotographerSearchResponseDto(nicknameResult, areaResult);
     }
 
-    public List<PhotographerResponseDto> findByTag(String tag){
+    public List<PhotographerSimpleDto> findByTag(String tag){
         List<Photographer> photographerList = photographerTagDomainService.findPhotographerListByTag(tag);
         return photographerList.stream()
-                .map(PhotographerResponseDto::new)
+                .map(photographer -> new PhotographerSimpleDto(photographer, findReview(photographer)))
                 .collect(Collectors.toList());
     }
 
@@ -71,13 +79,13 @@ public class PhotographerService {
 
     public List<PhotographerResponseDto> findAllPhotographers(Pageable pageable){
         return photographerDomainService.findAllToPage(pageable)
-                .map(PhotographerResponseDto::new)
+                .map(photographer -> new PhotographerResponseDto(photographer, findReview(photographer)))
                 .getContent();
     }
 
-    public List<PhotographerResponseDto> findByFilter(PhotographerFilterReq filterReq, Pageable pageable){
+    public List<PhotographerSimpleDto> findByFilter(PhotographerFilterReq filterReq, Pageable pageable){
         return photographerDomainService.findAllByFilter(filterReq, pageable)
-                .map(PhotographerResponseDto::new)
+                .map(photographer -> new PhotographerSimpleDto(photographer, findReview(photographer)))
                 .getContent();
     }
 
@@ -105,10 +113,14 @@ public class PhotographerService {
         photographerTagDomainService.updateTag(photographer, dto.getTag());
 
 
-        return new PhotographerResponseDto(photographer);
+        return new PhotographerResponseDto(photographer, findReview(photographer));
     }
 
     public Photographer findPhotographerEntity(Long photographerId) {
         return photographerDomainService.findById(photographerId);
+    }
+    
+    public PhotographerReviewResponseDto findReview(Photographer photographer){
+        return reviewService.findReviewInfoByPhotographer(photographer);
     }
 }
