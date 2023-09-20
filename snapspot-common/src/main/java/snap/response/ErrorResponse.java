@@ -32,6 +32,21 @@ public class ErrorResponse {
                 .body(new ErrorResponse(errorCode, details, message, message));
     }
 
+    public static ResponseEntity<Object> toResponseEntityObject(ErrorStatus errorCode, String details, String message) {
+        return ResponseEntity
+                .status(errorCode.getStatusCode())
+                /*
+                .body(ErrorResponse.builder()
+                        .code(errorCode.getCode())
+                        .details(details)
+                        .message(message)
+                        .build()
+                );
+
+                 */
+                .body(new ErrorResponse(errorCode, details, message, message));
+    }
+
 
     public ErrorResponse(ErrorStatus errorCode, String details, String message, String error) {
         this.status = errorCode.getStatusCode();

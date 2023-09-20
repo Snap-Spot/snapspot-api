@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import snap.api.member.dto.MemberResponseDto;
 import snap.api.message.dto.MessageResponseDto;
 import snap.domains.member.entity.Member;
 import snap.domains.message.entity.Message;
@@ -22,10 +23,10 @@ import java.util.stream.Collectors;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PlanFullResponseDto {
     private UUID planId;
-    private Long customer;
-    private Long photographer;
-    // @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+    private MemberResponseDto customer;
+    private MemberResponseDto photographer;
     private LocalDateTime planDate;
+    private String time;
     private SpecialKeyword category;
     private Long people;
     private String wishPlace;
@@ -33,19 +34,19 @@ public class PlanFullResponseDto {
     private Long price;
     private String placeName;
     private String placeAddress;
-    // private String message;
     private Status status;
     private List<MessageResponseDto> messages;
 
     @Builder
     public PlanFullResponseDto(Plan plan, Member member, List<Message> messageList) {
         this.planId = plan.getPlanId();
-        this.customer = plan.getCustomer().getMemberId();
-        this.photographer = plan.getPhotographer().getPhotographerId();
+        this.customer = new MemberResponseDto(plan.getCustomer());
+        this.photographer = new MemberResponseDto(plan.getPhotographer().getMember());
         this.planDate = plan.getPlanDate();
         this.category = plan.getCategory();
         this.people = plan.getPeople();
         this.wishPlace = plan.getWishPlace();
+        this.time = plan.getTime();
         this.request = plan.getRequest();
         this.price = plan.getPrice();
         this.placeName = plan.getPlaceName();

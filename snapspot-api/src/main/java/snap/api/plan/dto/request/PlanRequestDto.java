@@ -1,13 +1,11 @@
 package snap.api.plan.dto.request;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import snap.enums.SpecialKeyword;
 import snap.domains.plan.entity.Plan;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -17,16 +15,17 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PlanRequestDto {
     private Long photographerId;
-    // @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime planDate;
     private SpecialKeyword category;
     private Long people;
     private String wishPlace;
     private String request;
+    private String time;
 
     public Plan toEntity() {
         return Plan.builder()
                 .planDate(planDate)
+                .time(time)
                 .category(category)
                 .people(people)
                 .wishPlace(wishPlace)
