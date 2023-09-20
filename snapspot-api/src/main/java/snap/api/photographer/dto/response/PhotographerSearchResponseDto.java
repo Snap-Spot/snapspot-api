@@ -10,9 +10,9 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PhotographerSearchResponseDto {
-    private List<PhotographerResponseDto> nicknameResult;
-    private List<PhotographerResponseDto> areaResult;
-    private List<PhotographerResponseDto> recommend;
+    private List<PhotographerSimpleDto> nicknameResult;
+    private List<PhotographerSimpleDto> areaResult;
+    private List<PhotographerSimpleDto> recommend;
 
     public PhotographerSearchResponseDto(
             List<PhotographerSimpleDto> nicknameResult,
@@ -21,7 +21,7 @@ public class PhotographerSearchResponseDto {
         this.areaResult = areaResult;
     }
 
-    public PhotographerSearchResponseDto(List<PhotographerResponseDto> random) {
+    public PhotographerSearchResponseDto(List<PhotographerSimpleDto> random) {
         this.recommend = random;
     }
 }
