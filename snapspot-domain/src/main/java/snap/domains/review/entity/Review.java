@@ -23,15 +23,19 @@ public class Review {
     private Integer score;
 
     @Column
+    private String title;
+
+    @Column
     private String comment;
 
     @Column
     private String image;
 
     @Builder
-    public Review(Plan plan, Integer score, String comment, String image) {
+    public Review(Plan plan, Integer score, String title, String comment, String image) {
         this.plan = plan;
         this.score = score;
+        this.title = title;
         this.comment = comment;
         this.image = image;
     }

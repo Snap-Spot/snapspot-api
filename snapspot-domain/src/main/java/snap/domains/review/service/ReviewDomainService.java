@@ -17,9 +17,9 @@ import java.util.List;
 public class ReviewDomainService {
     private final ReviewRepository reviewRepository;
 
-    public void createReview(Plan plan, String image, Integer score, String comment) {
+    public void createReview(Plan plan, String image, Integer score, String title, String comment) {
         reviewRepository.save(
-                Review.builder().image(image).comment(comment).score(score).plan(plan)
+                Review.builder().image(image).title(title).comment(comment).score(score).plan(plan)
                 .build());
     }
 

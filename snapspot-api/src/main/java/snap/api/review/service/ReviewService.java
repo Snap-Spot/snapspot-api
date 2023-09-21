@@ -27,7 +27,7 @@ public class ReviewService {
     public void createReview(Member member, ReviewRequestDto request) {
         Plan plan = planDomainService.findByPlanIdAndMember(request.getPlanId(), member);
         if (plan.getStatus().equals(Status.DELIVERY)) {
-            reviewDomainService.createReview(plan, request.getImage(), request.getScore(), request.getComment());
+            reviewDomainService.createReview(plan, request.getImage(), request.getScore(), request.getTitle(), request.getComment());
         } else {
             throw new IllegalArgumentException("사진 전달이 완료되지 않은 촬영입니다.");
         }

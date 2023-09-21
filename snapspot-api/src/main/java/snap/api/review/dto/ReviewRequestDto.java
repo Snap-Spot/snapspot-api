@@ -11,6 +11,7 @@ import java.util.UUID;
 public class ReviewRequestDto {
     private UUID planId;
     private Integer score;
+    private String title;
     private String comment;
     private String image;
 }
