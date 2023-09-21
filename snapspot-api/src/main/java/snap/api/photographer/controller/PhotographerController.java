@@ -57,7 +57,7 @@ public class PhotographerController {
     }
 
     @GetMapping
-    public ResponseEntity<List<PhotographerSimpleDto>> photographerList(PhotographerFilterReq filterReq, @PageableDefault(size = 6) Pageable pageable){
+    public ResponseEntity<List<PhotographerSimpleDto>> photographerList(PhotographerFilterReq filterReq, @PageableDefault(size = 15) Pageable pageable){
         return new ResponseEntity<>(photographerService.findByFilter(filterReq, pageable), HttpStatus.OK);
     }
 
