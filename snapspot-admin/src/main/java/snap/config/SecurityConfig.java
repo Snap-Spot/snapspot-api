@@ -11,7 +11,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import snap.jwt.JwtTokenUtil;
+import snap.response.ExceptionHandlerFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -37,6 +39,11 @@ public class SecurityConfig {
                 .antMatchers(HttpMethod.POST, "/members/**").authenticated()
                 .and()
                 .apply(new JwtSecurityConfig(jwtTokenUtil));
+
+        httpSecurity.addFilterBefore(
+                new ExceptionHandlerFilter(),
+                UsernamePasswordAuthenticationFilter.class
+        );
 
         return httpSecurity.build();
 

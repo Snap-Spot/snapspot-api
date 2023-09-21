@@ -7,4 +7,5 @@ dependencies {
     implementation project(":snapspot-admin")
     implementation project(":snapspot-mail")
     implementation project(":snapspot-batch")
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
 }

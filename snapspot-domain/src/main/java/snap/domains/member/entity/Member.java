@@ -53,4 +53,8 @@ public class Member {
         this.nickname = nickname;
         this.profileImage = profileImage;
     }
+
+    public void updateEmail(String email){
+        this.email = email;
+    }
 }

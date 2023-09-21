@@ -6,6 +6,9 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import snap.api.member.MemberService;
+import snap.api.member.dto.MemberModifyRequestDto;
+import snap.api.member.dto.MemberResponseDto;
 import snap.api.photographer.dto.request.PhotographerCustomDto;
 import snap.api.photographer.dto.response.PhotographerNameResponseDto;
 import snap.api.photographer.dto.response.PhotographerResponseDto;
@@ -29,6 +32,7 @@ public class PhotographerController {
 
     private final PhotographerService photographerService;
     private final ReviewService reviewService;
+    private final MemberService memberService;
 
     @GetMapping("/me")
     public ResponseEntity<PhotographerResponseDto> photographerInfoFind(@AuthPhotographer Photographer photographer) {
@@ -64,5 +68,10 @@ public class PhotographerController {
     @GetMapping("/name")
     public ResponseEntity<List<PhotographerNameResponseDto>> photographerNameList(){
         return new ResponseEntity<>(photographerService.findAllNames(), HttpStatus.OK);
+    }
+
+    @PutMapping("/setting")
+    public ResponseEntity<MemberResponseDto> photographerUpdate(@AuthPhotographer Photographer photographer, @RequestBody MemberModifyRequestDto requestDto){
+        return new ResponseEntity<>(memberService.updateMember(photographer.getMember(), requestDto), HttpStatus.OK);
     }
 }

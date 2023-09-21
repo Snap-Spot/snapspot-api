@@ -23,6 +23,7 @@ import snap.resolver.AuthMember;
 import snap.resolver.AuthPhotographer;
 import snap.response.SuccessResponse;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
@@ -33,7 +34,6 @@ import java.util.UUID;
 public class PlanController {
 
     private final PlanService planService;
-
     private final MessageService messageService;
     private final PlanDomainService planDomainService;
 
@@ -59,7 +59,7 @@ public class PlanController {
     }
 
     @PostMapping()
-    public ResponseEntity<PlanResponseDto> requestPlan(@AuthMember Member member, @RequestBody PlanRequestDto requestDto) {
+    public ResponseEntity<PlanResponseDto> requestPlan(@AuthMember Member member, @RequestBody @Valid PlanRequestDto requestDto) {
         return new ResponseEntity<>(planService.createRequest(member, requestDto), HttpStatus.CREATED);
     }
 
@@ -115,5 +115,4 @@ public class PlanController {
                         .details("사진 작가가 스냅 사진을 전달했습니다.")
                         .build());
     }
-
 }
