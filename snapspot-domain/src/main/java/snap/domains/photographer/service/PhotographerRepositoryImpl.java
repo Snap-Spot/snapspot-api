@@ -1,5 +1,6 @@
 package snap.domains.photographer.service;
 
+import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -31,63 +32,81 @@ public class PhotographerRepositoryImpl implements PhotographerRepositoryCustom 
     public Page<Photographer> searchAll(PhotographerFilterReq photographerFilterReq, Pageable pageable) {
         List<Photographer> result = new ArrayList<>();
         Sort sort = photographerFilterReq.getSort();
+
+        OrderSpecifier<Long> paySpecifier = photographer.lowestPay.asc();
+        OrderSpecifier<Long> reviewCountSpecifier = review.count().desc();
+        OrderSpecifier<Long> photographerSpecifier =  photographer.photographerId.asc();
+        OrderSpecifier<Double> reviewScoreSpecifier =  review.score.avg().desc();
+
         if(sort != null) {
             if(sort.equals(Sort.PAY)){
-                result = queryFactory
-                        .selectFrom(photographer)
-                        .where(
-                                areaIdCondition(photographerFilterReq.getAreaId()),
-                                specialKeywordCondition(photographerFilterReq.getSpecial()),
-                                ableDateCondition(photographerFilterReq.getAbleDate())
-                        )
-                        .offset(pageable.getOffset())
-                        .limit(pageable.getPageSize())
-                        .orderBy(photographer.lowestPay.asc())
-                        .fetch();
+                result = searchQuery(photographerFilterReq, pageable, paySpecifier);
             } else if(sort.equals(Sort.REVIEW)){
-                result = queryFactory
-                        .select(photographer)
-                        .from(photographer)
-                        .where(
-                                areaIdCondition(photographerFilterReq.getAreaId()),
-                                specialKeywordCondition(photographerFilterReq.getSpecial()),
-                                ableDateCondition(photographerFilterReq.getAbleDate())
-                        )
-                        .leftJoin(plan).on(plan.photographer.eq(photographer))
-                        .leftJoin(review).on(review.plan.eq(plan))
-                        .groupBy(photographer)
-                        .orderBy(review.count().desc(), photographer.photographerId.asc())
-                        .fetch();
+                result = searchQuery2(photographerFilterReq, pageable, reviewCountSpecifier, photographerSpecifier);
             } else if (sort.equals(Sort.SCORE)) {
-                result = queryFactory
-                        .select(photographer)
-                        .from(photographer)
-                        .where(
-                                areaIdCondition(photographerFilterReq.getAreaId()),
-                                specialKeywordCondition(photographerFilterReq.getSpecial()),
-                                ableDateCondition(photographerFilterReq.getAbleDate())
-                        )
-                        .leftJoin(plan).on(plan.photographer.eq(photographer))
-                        .leftJoin(review).on(review.plan.eq(plan))
-                        .groupBy(photographer)
-                        .orderBy(review.score.avg().desc(), photographer.photographerId.asc())
-                        .fetch();
+                result = searchQueryDouble(photographerFilterReq, pageable, reviewScoreSpecifier, photographerSpecifier);
             }
         }
         else {
-            result = queryFactory
-                    .selectFrom(photographer)
-                    .where(
-                            areaIdCondition(photographerFilterReq.getAreaId()),
-                            specialKeywordCondition(photographerFilterReq.getSpecial()),
-                            ableDateCondition(photographerFilterReq.getAbleDate())
-                    )
-                    .offset(pageable.getOffset())
-                    .limit(pageable.getPageSize())
-                    .orderBy(photographer.photographerId.asc())
-                    .fetch();
+            result = searchQuery(photographerFilterReq, pageable, photographerSpecifier);
         }
         return new PageImpl<>(result);
+    }
+
+    private List<Photographer> searchQuery (
+            PhotographerFilterReq photographerFilterReq,
+            Pageable pageable,
+            OrderSpecifier<Long> specifier1
+    ) {
+        return queryFactory
+                .selectFrom(photographer)
+                .where(
+                        areaIdCondition(photographerFilterReq.getAreaId()),
+                        specialKeywordCondition(photographerFilterReq.getSpecial()),
+                        ableDateCondition(photographerFilterReq.getAbleDate())
+                )
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .orderBy(specifier1)
+                .fetch();
+    }
+
+    private List<Photographer> searchQuery2 (
+            PhotographerFilterReq photographerFilterReq,
+            Pageable pageable,
+            OrderSpecifier<Long> specifier1,
+            OrderSpecifier<Long> specifier2
+    ) {
+        return queryFactory
+                .selectFrom(photographer)
+                .where(
+                        areaIdCondition(photographerFilterReq.getAreaId()),
+                        specialKeywordCondition(photographerFilterReq.getSpecial()),
+                        ableDateCondition(photographerFilterReq.getAbleDate())
+                )
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .orderBy(specifier1, specifier2)
+                .fetch();
+    }
+
+    private List<Photographer> searchQueryDouble (
+            PhotographerFilterReq photographerFilterReq,
+            Pageable pageable,
+            OrderSpecifier<Double> specifier1,
+            OrderSpecifier<Long> specifier2
+    ) {
+        return queryFactory
+                .selectFrom(photographer)
+                .where(
+                        areaIdCondition(photographerFilterReq.getAreaId()),
+                        specialKeywordCondition(photographerFilterReq.getSpecial()),
+                        ableDateCondition(photographerFilterReq.getAbleDate())
+                )
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .orderBy(specifier1, specifier2)
+                .fetch();
     }
 
     private BooleanExpression areaIdCondition(Long areaId) {
