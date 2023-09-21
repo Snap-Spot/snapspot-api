@@ -1,6 +1,7 @@
 package snap.domains.review.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import snap.domains.member.entity.Member;
 import snap.domains.photographer.entity.Photographer;
@@ -28,6 +29,6 @@ public class ReviewDomainService {
     }
 
     public List<Review> findReviewListByMember(Member member) {
-        return reviewRepository.findAllByPlan_Customer(member);
+        return reviewRepository.findAllByPlan_CustomerOrderByScoreDesc(member);
     }
 }
