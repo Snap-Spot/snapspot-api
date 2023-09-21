@@ -78,7 +78,8 @@ public class Plan {
     private String message;
 
     @OneToMany(
-            mappedBy = "plan"
+            mappedBy = "plan",
+            fetch = FetchType.LAZY
     )
     private List<Review> reviews;
 

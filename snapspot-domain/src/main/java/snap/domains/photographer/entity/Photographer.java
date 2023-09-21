@@ -45,7 +45,8 @@ public class Photographer {
     private List<PhotographerSchedule> unableSchedules;
 
     @OneToMany(
-            mappedBy = "photographer"
+            mappedBy = "photographer",
+            fetch = FetchType.LAZY
     )
     private List<Plan> plan;
 
