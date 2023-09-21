@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import snap.domains.member.entity.Member;
+import snap.domains.plan.entity.Plan;
 
 import javax.persistence.*;
 import java.util.List;
@@ -42,6 +43,11 @@ public class Photographer {
             mappedBy = "photographer"
     )
     private List<PhotographerSchedule> unableSchedules;
+
+    @OneToMany(
+            mappedBy = "photographer"
+    )
+    private List<Plan> plan;
 
     @OneToOne(mappedBy = "photographer")
     private Sns sns;

@@ -2,6 +2,7 @@ package snap.domains.photographer.service;
 
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,8 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static snap.domains.photographer.entity.QPhotographer.photographer;
-import static snap.domains.plan.entity.QPlan.plan;
 import static snap.domains.review.entity.QReview.review;
+import static snap.domains.plan.entity.QPlan.plan;
 
 @Repository
 @RequiredArgsConstructor
@@ -40,26 +41,27 @@ public class PhotographerRepositoryImpl implements PhotographerRepositoryCustom 
 
         if(sort != null) {
             if(sort.equals(Sort.PAY)){
-                result = searchQuery(photographerFilterReq, pageable, paySpecifier);
+                result = searchQuery(photographerFilterReq, pageable).orderBy(paySpecifier).fetch();
             } else if(sort.equals(Sort.REVIEW)){
-                result = searchQuery2(photographerFilterReq, pageable, reviewCountSpecifier, photographerSpecifier);
+                result = searchQuery(photographerFilterReq, pageable).orderBy(review.count().desc()).fetch();
             } else if (sort.equals(Sort.SCORE)) {
-                result = searchQueryDouble(photographerFilterReq, pageable, reviewScoreSpecifier, photographerSpecifier);
+                result = searchQuery(photographerFilterReq, pageable).orderBy(reviewScoreSpecifier, photographerSpecifier).fetch();
             }
         }
         else {
-            result = searchQuery(photographerFilterReq, pageable, photographerSpecifier);
+            result = searchQuery(photographerFilterReq, pageable).orderBy(photographerSpecifier).fetch();
         }
         return new PageImpl<>(result);
     }
 
-    private List<Photographer> searchQuery (
+    private JPAQuery<Photographer> searchQuery (
             PhotographerFilterReq photographerFilterReq,
-            Pageable pageable,
-            OrderSpecifier<Long> specifier1
+            Pageable pageable
     ) {
         return queryFactory
                 .selectFrom(photographer)
+                .leftJoin(photographer.plan, plan)
+                .leftJoin(plan.reviews, review)
                 .where(
                         areaIdCondition(photographerFilterReq.getAreaId()),
                         specialKeywordCondition(photographerFilterReq.getSpecial()),
@@ -67,46 +69,7 @@ public class PhotographerRepositoryImpl implements PhotographerRepositoryCustom 
                 )
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
-                .orderBy(specifier1)
-                .fetch();
-    }
-
-    private List<Photographer> searchQuery2 (
-            PhotographerFilterReq photographerFilterReq,
-            Pageable pageable,
-            OrderSpecifier<Long> specifier1,
-            OrderSpecifier<Long> specifier2
-    ) {
-        return queryFactory
-                .selectFrom(photographer)
-                .where(
-                        areaIdCondition(photographerFilterReq.getAreaId()),
-                        specialKeywordCondition(photographerFilterReq.getSpecial()),
-                        ableDateCondition(photographerFilterReq.getAbleDate())
-                )
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .orderBy(specifier1, specifier2)
-                .fetch();
-    }
-
-    private List<Photographer> searchQueryDouble (
-            PhotographerFilterReq photographerFilterReq,
-            Pageable pageable,
-            OrderSpecifier<Double> specifier1,
-            OrderSpecifier<Long> specifier2
-    ) {
-        return queryFactory
-                .selectFrom(photographer)
-                .where(
-                        areaIdCondition(photographerFilterReq.getAreaId()),
-                        specialKeywordCondition(photographerFilterReq.getSpecial()),
-                        ableDateCondition(photographerFilterReq.getAbleDate())
-                )
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .orderBy(specifier1, specifier2)
-                .fetch();
+                .groupBy(photographer);
     }
 
     private BooleanExpression areaIdCondition(Long areaId) {
