@@ -10,12 +10,16 @@ import org.springframework.stereotype.Repository;
 import snap.domains.photographer.entity.Photographer;
 import snap.domains.photographer.repository.PhotographerRepositoryCustom;
 import snap.dto.request.PhotographerFilterReq;
+import snap.enums.Sort;
 import snap.enums.SpecialKeyword;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import static snap.domains.photographer.entity.QPhotographer.photographer;
+import static snap.domains.plan.entity.QPlan.plan;
+import static snap.domains.review.entity.QReview.review;
 
 @Repository
 @RequiredArgsConstructor
@@ -25,18 +29,64 @@ public class PhotographerRepositoryImpl implements PhotographerRepositoryCustom 
 
     @Override
     public Page<Photographer> searchAll(PhotographerFilterReq photographerFilterReq, Pageable pageable) {
-
-        List<Photographer> result = queryFactory
-                .selectFrom(photographer)
-                .where(
-                        areaIdCondition(photographerFilterReq.getAreaId()),
-                        specialKeywordCondition(photographerFilterReq.getSpecial()),
-                        ableDateCondition(photographerFilterReq.getAbleDate())
-                )
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .fetch();
-
+        List<Photographer> result = new ArrayList<>();
+        Sort sort = photographerFilterReq.getSort();
+        if(sort != null) {
+            if(sort.equals(Sort.PAY)){
+                result = queryFactory
+                        .selectFrom(photographer)
+                        .where(
+                                areaIdCondition(photographerFilterReq.getAreaId()),
+                                specialKeywordCondition(photographerFilterReq.getSpecial()),
+                                ableDateCondition(photographerFilterReq.getAbleDate())
+                        )
+                        .offset(pageable.getOffset())
+                        .limit(pageable.getPageSize())
+                        .orderBy(photographer.lowestPay.asc())
+                        .fetch();
+            } else if(sort.equals(Sort.REVIEW)){
+                result = queryFactory
+                        .select(photographer)
+                        .from(photographer)
+                        .where(
+                                areaIdCondition(photographerFilterReq.getAreaId()),
+                                specialKeywordCondition(photographerFilterReq.getSpecial()),
+                                ableDateCondition(photographerFilterReq.getAbleDate())
+                        )
+                        .leftJoin(plan).on(plan.photographer.eq(photographer))
+                        .leftJoin(review).on(review.plan.eq(plan))
+                        .groupBy(photographer)
+                        .orderBy(review.count().desc(), photographer.photographerId.asc())
+                        .fetch();
+            } else if (sort.equals(Sort.SCORE)) {
+                result = queryFactory
+                        .select(photographer)
+                        .from(photographer)
+                        .where(
+                                areaIdCondition(photographerFilterReq.getAreaId()),
+                                specialKeywordCondition(photographerFilterReq.getSpecial()),
+                                ableDateCondition(photographerFilterReq.getAbleDate())
+                        )
+                        .leftJoin(plan).on(plan.photographer.eq(photographer))
+                        .leftJoin(review).on(review.plan.eq(plan))
+                        .groupBy(photographer)
+                        .orderBy(review.score.avg().desc(), photographer.photographerId.asc())
+                        .fetch();
+            }
+        }
+        else {
+            result = queryFactory
+                    .selectFrom(photographer)
+                    .where(
+                            areaIdCondition(photographerFilterReq.getAreaId()),
+                            specialKeywordCondition(photographerFilterReq.getSpecial()),
+                            ableDateCondition(photographerFilterReq.getAbleDate())
+                    )
+                    .offset(pageable.getOffset())
+                    .limit(pageable.getPageSize())
+                    .orderBy(photographer.photographerId.asc())
+                    .fetch();
+        }
         return new PageImpl<>(result);
     }
 
