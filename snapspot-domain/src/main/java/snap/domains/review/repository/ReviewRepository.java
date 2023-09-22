@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface ReviewRepository extends JpaRepository<Review, Long> {
     List<Review> findAllByPlan_Photographer(Photographer photographer);
-    List<Review> findAllByPlan_Customer(Member customer);
+    List<Review> findAllByPlan_CustomerOrderByScoreDesc(Member customer);
 }

@@ -25,7 +25,7 @@ public class JobScheduler {
     private final JobLauncher jobLauncher;
     private final JobConfiguration jobConfiguration;
 
-    @Scheduled(cron = "0 0 0 * * *")
+    @Scheduled(cron = "0 51 19 * * *")
     public void runJob() throws JobInstanceAlreadyCompleteException, JobExecutionAlreadyRunningException, JobParametersInvalidException, JobRestartException {
         Map<String, JobParameter> confMap = new HashMap<>();
         log.info("start job");
