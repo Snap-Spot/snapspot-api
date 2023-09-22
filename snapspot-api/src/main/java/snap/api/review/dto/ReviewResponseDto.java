@@ -13,6 +13,7 @@ public class ReviewResponseDto {
     private PlanResponseDto plan;
     private Integer score;
     private String image;
+    private String title;
     private String comment;
 
     public ReviewResponseDto(Review entity) {
@@ -20,6 +21,7 @@ public class ReviewResponseDto {
         this.plan = new PlanResponseDto(entity.getPlan());
         this.score = entity.getScore();
         this.image = entity.getImage();
+        this.title = entity.getTitle();
         this.comment = entity.getComment();
     }
 }
