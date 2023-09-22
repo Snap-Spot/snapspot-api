@@ -10,9 +10,11 @@ then
 else
   echo "> kill -15 $CURRENT_CONTAINER"
   sudo docker stop snapspot-server
+  sleep 5
   sudo docker stop snapspot-batch-server
-  sleep 10
+  sleep 5
   sudo docker rm snapspot-server
+  sleep 5
   sudo docker rm snapspot-batch-server
   sleep 5
 fi
