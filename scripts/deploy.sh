@@ -1,6 +1,5 @@
-#REPOSITORY=/home/ubuntu/snapspot
-# cd $REPOSITORY
-cd ../
+REPOSITORY=/home/ubuntu/snapspot
+cd $REPOSITORY
 
 CURRENT_CONTAINER=$(sudo docker ps)
 
