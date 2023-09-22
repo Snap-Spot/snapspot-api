@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
+import snap.enums.Sort;
 import snap.enums.SpecialKeyword;
 
 import java.time.LocalDateTime;
@@ -20,4 +21,6 @@ public class PhotographerFilterReq {
     private LocalDateTime ableDate;
 
     private SpecialKeyword special;
+
+    private Sort sort;
 }

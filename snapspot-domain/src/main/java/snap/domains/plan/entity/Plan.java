@@ -9,11 +9,13 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import snap.domains.member.entity.Member;
 import snap.domains.photographer.entity.Photographer;
+import snap.domains.review.entity.Review;
 import snap.enums.SpecialKeyword;
 import snap.enums.Status;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -74,6 +76,12 @@ public class Plan {
 
     @Column
     private String message;
+
+    @OneToMany(
+            mappedBy = "plan",
+            fetch = FetchType.LAZY
+    )
+    private List<Review> reviews;
 
 
     @Builder
