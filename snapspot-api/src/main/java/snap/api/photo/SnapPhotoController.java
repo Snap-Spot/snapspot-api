@@ -1,8 +1,6 @@
 package snap.api.photo;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +24,7 @@ public class SnapPhotoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<SnapPhotoResponseDto>> photoList(@AuthMember Member member, @PageableDefault(size = 6) Pageable pageable) {
-        return new ResponseEntity<>(snapPhotoService.findPhotoListByMember(member, pageable), HttpStatus.OK);
+    public ResponseEntity<List<SnapPhotoResponseDto>> photoList(@AuthMember Member member) {
+        return new ResponseEntity<>(snapPhotoService.findPhotoListByMember(member), HttpStatus.OK);
     }
 }

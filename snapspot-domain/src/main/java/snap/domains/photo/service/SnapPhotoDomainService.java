@@ -1,8 +1,6 @@
 package snap.domains.photo.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import snap.domains.member.entity.Member;
@@ -37,7 +35,7 @@ public class SnapPhotoDomainService {
     }
 
     @Transactional(readOnly = true)
-    public Page<SnapPhoto> findPhotoListByMember(Member member, Pageable pageable) {
-        return snapPhotoRepository.findAllByMember(member, pageable);
+    public List<SnapPhoto> findPhotoListByMember(Member member) {
+        return snapPhotoRepository.findAllByMember(member);
     }
 }
