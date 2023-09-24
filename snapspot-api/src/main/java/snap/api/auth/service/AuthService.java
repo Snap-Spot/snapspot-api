@@ -10,6 +10,7 @@ import snap.api.auth.dto.response.SignInResponseDto;
 import snap.api.auth.dto.response.SignUpResponseDto;
 import snap.domains.member.entity.Member;
 import snap.dto.KakaoRes;
+import snap.dto.TokenRes;
 import snap.enums.Provider;
 import snap.enums.Role;
 import snap.domains.member.service.MemberDomainService;
@@ -67,5 +68,14 @@ public class AuthService {
                 kakaoRes.getEmail(),
                 jwtSecurityService.createJwtOfKakaoMember(kakaoRes.getEmail(), member.getRole())
         );
+    }
+
+    public TokenRes reissue(String token) {
+        Member member = memberDomainService.findMemberByEmail(jwtSecurityService.getEmailFromToken(token))
+                .orElseThrow(() -> new IllegalArgumentException("refresh token을 파싱하는 도중 문제가 발생하였습니다. 다시 로그인하시는 것을 권장합니다."));
+        if (!jwtSecurityService.validateRefreshToken(member, token)) {
+            throw new RuntimeException("refresh token의 기한이 만료되었습니다.");
+        }
+        return jwtSecurityService.reissueJwt(member, token);
     }
 }

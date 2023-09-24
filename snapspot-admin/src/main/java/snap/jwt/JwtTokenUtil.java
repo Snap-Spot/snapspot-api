@@ -69,6 +69,7 @@ public class JwtTokenUtil {
                 .setExpiration(new Date(current + ACCESS_TOKEN_EXPIRE_TIME))
                 .signWith(key, SignatureAlgorithm.HS256).compact();
         String refreshToken = Jwts.builder()
+                .setSubject(email)
                 .setExpiration((new Date(current + REFRESH_TOKEN_EXPIRE_TIME)))
                 .signWith(key, SignatureAlgorithm.HS256).compact();
 
@@ -91,6 +92,11 @@ public class JwtTokenUtil {
 
         UserDetails principal = new User(claims.getSubject(), "", authorities);
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
+    }
+
+    public String getEmail(String token) {
+        Claims claims = parseClaims(token);
+        return claims.getSubject();
     }
 
     private Claims parseClaims(String accessToken) {

@@ -35,6 +35,10 @@ public class JwtSecurityService {
         return tokenRes;
     }
 
+    public String getEmailFromToken(String token) {
+        return jwtUtil.getEmail(token);
+    }
+
     public void setRefreshToken(String email, String refreshToken) {
         redisService.setValues(refreshToken, email, Duration.ofDays(31));
     }
