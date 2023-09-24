@@ -32,9 +32,6 @@ public class MemberDomainService {
     }
 
     public Member createKakaoMember(String nickname, String profile, String email, Role role) {
-        if (memberRepository.existsByEmail(email)) {
-            throw new IllegalArgumentException("이미 가입된 계정입니다.");
-        }
         return memberRepository.save(
                 Member.builder()
                         .role(role)

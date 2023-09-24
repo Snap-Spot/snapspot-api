@@ -46,7 +46,7 @@ public class AuthService {
     public SignUpResponseDto createKakaoMember(KaKaoSignUpRequestDto requestDto) {
         KakaoRes kakaoRes = kakaoOAuthService.getKakaoInfo(requestDto.getAccessToken());
         if (memberDomainService.isExistedMemberByEmail(kakaoRes.getEmail())) {
-
+            throw new IllegalArgumentException("이미 가입된 계정입니다.");
         }
         Member member = memberDomainService.createKakaoMember(
                 kakaoRes.getNickname(),
