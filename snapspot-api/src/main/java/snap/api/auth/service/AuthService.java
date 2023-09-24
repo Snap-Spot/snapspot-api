@@ -10,6 +10,7 @@ import snap.api.auth.dto.response.SignInResponseDto;
 import snap.api.auth.dto.response.SignUpResponseDto;
 import snap.domains.member.entity.Member;
 import snap.dto.KakaoRes;
+import snap.enums.Provider;
 import snap.enums.Role;
 import snap.domains.member.service.MemberDomainService;
 import snap.domains.photographer.service.PhotographerDomainService;
@@ -44,6 +45,9 @@ public class AuthService {
 
     public SignUpResponseDto createKakaoMember(KaKaoSignUpRequestDto requestDto) {
         KakaoRes kakaoRes = kakaoOAuthService.getKakaoInfo(requestDto.getAccessToken());
+        if (memberDomainService.isExistedMemberByEmail(kakaoRes.getEmail())) {
+            throw new IllegalArgumentException("이미 가입된 계정입니다.");
+        }
         Member member = memberDomainService.createKakaoMember(
                 kakaoRes.getNickname(),
                 kakaoRes.getProfile(),
@@ -58,7 +62,7 @@ public class AuthService {
 
     public SignInResponseDto createJwtOfKakaoMember(KakaoSignInRequestDto requestDto) {
         KakaoRes kakaoRes = kakaoOAuthService.getKakaoInfo(requestDto.getAccessToken());
-        Member member = memberDomainService.findKakaoMemberByEmail(kakaoRes.getEmail());
+        Member member = memberDomainService.findMemberByEmailAndProvider(kakaoRes.getEmail(), Provider.PROD_KAKAO);
         return new SignInResponseDto(
                 kakaoRes.getEmail(),
                 jwtSecurityService.createJwtOfKakaoMember(kakaoRes.getEmail(), member.getRole())
