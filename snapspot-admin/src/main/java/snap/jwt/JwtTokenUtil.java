@@ -13,8 +13,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import snap.dto.TokenRes;
 import snap.enums.Role;
-import snap.response.ErrorResponse;
-import snap.response.ErrorStatus;
 
 import java.security.Key;
 import java.util.Arrays;
@@ -51,6 +49,7 @@ public class JwtTokenUtil {
                 .setExpiration(new Date(current + ACCESS_TOKEN_EXPIRE_TIME))
                 .signWith(key, SignatureAlgorithm.HS256).compact();
         String refreshToken = Jwts.builder()
+                .setSubject(authentication.getName())
                 .setExpiration((new Date(current + REFRESH_TOKEN_EXPIRE_TIME)))
                 .signWith(key, SignatureAlgorithm.HS256).compact();
 
