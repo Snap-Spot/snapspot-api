@@ -1,6 +1,5 @@
 package snap.domains.spot.entity;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -9,24 +8,24 @@ import javax.persistence.*;
 @Getter
 @Entity
 @NoArgsConstructor
-public class Spot {
+public class AreaImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long spotId;
+    private Long imageId;
 
     @ManyToOne
     @JoinColumn(name = "area_id")
     private Area area;
 
-    private String name;
+    @Column
+    private String title;
 
-    private String address;
+    @Column
+    private String location;
 
-    private String theme;
+    @Column
+    private String photographer;
 
-    @Builder
-    public Spot(Area area, String name) {
-        this.area = area;
-        this.name = name;
-    }
+    @Column
+    private String url;
 }
