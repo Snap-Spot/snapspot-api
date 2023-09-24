@@ -23,6 +23,7 @@ import snap.resolver.AuthMember;
 import snap.resolver.AuthPhotographer;
 import snap.response.SuccessResponse;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
@@ -33,7 +34,6 @@ import java.util.UUID;
 public class PlanController {
 
     private final PlanService planService;
-
     private final MessageService messageService;
     private final PlanDomainService planDomainService;
 
@@ -59,7 +59,7 @@ public class PlanController {
     }
 
     @PostMapping()
-    public ResponseEntity<PlanResponseDto> requestPlan(@AuthMember Member member, @RequestBody PlanRequestDto requestDto) {
+    public ResponseEntity<PlanResponseDto> requestPlan(@AuthMember Member member, @RequestBody @Valid PlanRequestDto requestDto) {
         return new ResponseEntity<>(planService.createRequest(member, requestDto), HttpStatus.CREATED);
     }
 
@@ -113,6 +113,16 @@ public class PlanController {
                 .ok(SuccessResponse.builder()
                         .code("OK").status(200).message("스냅 사진 파일을 전달했습니다.")
                         .details("사진 작가가 스냅 사진을 전달했습니다.")
+                        .build());
+    }
+
+    @PutMapping("/change")
+    public ResponseEntity<SuccessResponse> changePlan(@AuthMember Member member, @RequestBody PlanChangeDto requestDto) {
+        planService.changePlan(requestDto);
+        return ResponseEntity
+                .ok(SuccessResponse.builder()
+                        .code("OK").status(200).message("스냅 사진 촬영 일정을 변경 요청했습니다.")
+                        .details("일반 고객이 스냅 사진 촬영 일정을 변경 요청했습니다.")
                         .build());
     }
 

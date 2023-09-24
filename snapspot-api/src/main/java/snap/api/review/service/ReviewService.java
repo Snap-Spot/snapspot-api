@@ -27,7 +27,7 @@ public class ReviewService {
     public void createReview(Member member, ReviewRequestDto request) {
         Plan plan = planDomainService.findByPlanIdAndMember(request.getPlanId(), member);
         if (plan.getStatus().equals(Status.DELIVERY)) {
-            reviewDomainService.createReview(plan, request.getImage(), request.getScore(), request.getComment());
+            reviewDomainService.createReview(plan, request.getImage(), request.getScore(), request.getTitle(), request.getComment());
         } else {
             throw new IllegalArgumentException("사진 전달이 완료되지 않은 촬영입니다.");
         }
@@ -36,12 +36,17 @@ public class ReviewService {
     @Transactional(readOnly = true)
     public PhotographerReviewResponseDto findReviewInfoByPhotographer(Photographer photographer) {
         List<Review> reviewList = reviewDomainService.findReviewListByPhotographer(photographer);
-        return new PhotographerReviewResponseDto(photographer, reviewList);
+        return new PhotographerReviewResponseDto(reviewList);
     }
     
     @Transactional(readOnly = true)
     public List<ReviewResponseDto> findReviewListByMember(Member member) {
         List<Review> reviewList = reviewDomainService.findReviewListByMember(member);
         return reviewList.stream().map(ReviewResponseDto::new).collect(Collectors.toList());
+    }
+
+    public List<ReviewResponseDto> findReviewListByPhotographer(Photographer photographer) {
+        return reviewDomainService.findReviewListByPhotographer(photographer)
+                .stream().map(ReviewResponseDto::new).collect(Collectors.toList());
     }
 }

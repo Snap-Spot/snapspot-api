@@ -12,7 +12,7 @@ import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
+import snap.batch.service.JobPlanService;
 import snap.domains.plan.service.PlanDomainService;
 
 @Slf4j
@@ -23,7 +23,8 @@ public class JobConfiguration {
 
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
-    private final PlanDomainService planDomainService;
+    private final JobPlanService planService;
+
 
     @Bean
     public Job job() {
@@ -37,7 +38,7 @@ public class JobConfiguration {
     public Step step1() {
         return stepBuilderFactory.get("step1")
                 .tasklet((stepContribution, chunkContext) -> {
-                    planDomainService.updateStateOfToday();
+                    planService.updateStateOfToday();
                     return RepeatStatus.FINISHED;
                 }).build();
     }
@@ -46,7 +47,7 @@ public class JobConfiguration {
     public Step step2() {
         return stepBuilderFactory.get("step1")
                 .tasklet((stepContribution, chunkContext) -> {
-                    planDomainService.updateStateOfComplete();
+                    planService.updateStateOfComplete();
                     return RepeatStatus.FINISHED;
                 }).build();
     }

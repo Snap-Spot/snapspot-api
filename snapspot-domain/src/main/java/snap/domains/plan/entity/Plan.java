@@ -9,12 +9,13 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import snap.domains.member.entity.Member;
 import snap.domains.photographer.entity.Photographer;
+import snap.domains.review.entity.Review;
 import snap.enums.SpecialKeyword;
 import snap.enums.Status;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -40,8 +41,10 @@ public class Plan {
     private Status status;
 
     @Column
-    // @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDateTime planDate;
+
+    @Column
+    private String time;
 
     @Column
     @Enumerated(EnumType.STRING)
@@ -74,8 +77,16 @@ public class Plan {
     @Column
     private String message;
 
+    @OneToMany(
+            mappedBy = "plan",
+            fetch = FetchType.LAZY
+    )
+    private List<Review> reviews;
+
+
     @Builder
-    public Plan(UUID planId, Member customer, Photographer photographer, Status status, LocalDateTime planDate,
+    public Plan(UUID planId, Member customer, Photographer photographer, Status status,
+                LocalDateTime planDate, String time,
                 SpecialKeyword category, Long people, Long price, String wishPlace, String placeName,
                 String placeAddress, Long x, Long y, String request, String message) {
         this.planId = planId;
@@ -86,6 +97,7 @@ public class Plan {
         this.category = category;
         this.people = people;
         this.price = price;
+        this.time = time;
         this.wishPlace = wishPlace;
         this.placeName = placeName;
         this.placeAddress = placeAddress;
@@ -102,6 +114,13 @@ public class Plan {
         this.placeName = placeName;
         this.placeAddress = placeAddress;
         this.message = message;
+    }
+
+    public void updatePlan(LocalDateTime planDate, String time , Long people, Status status) {
+        this.planDate = planDate;
+        this.time = time;
+        this.people = people;
+        this.status = status;
     }
 
     public void setStatus(Status status) {

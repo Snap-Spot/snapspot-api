@@ -106,4 +106,9 @@ public class PlanService {
                 requestList, reserveList
         );
     }
+
+    public void changePlan(PlanChangeDto requestDto) {
+        Plan plan = planDomainService.findByPlanId(requestDto.getPlanId());
+        planDomainService.changePlan(plan, requestDto.getPlanDate(), requestDto.getTime(), requestDto.getPeople(), requestDto.getReason());
+    }
 }
