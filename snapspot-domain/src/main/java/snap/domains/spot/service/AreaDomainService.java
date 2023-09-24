@@ -1,9 +1,13 @@
 package snap.domains.spot.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import snap.domains.spot.entity.Area;
+import snap.domains.spot.entity.AreaImage;
+import snap.domains.spot.repository.AreaImageRepository;
 import snap.domains.spot.repository.AreaRepository;
 
 import java.util.ArrayList;
@@ -15,6 +19,7 @@ import java.util.List;
 public class AreaDomainService {
 
     private final AreaRepository areaRepository;
+    private final AreaImageRepository areaImageRepository;
 
     @Transactional(readOnly = true)
     public Area findArea(Long areaId){
@@ -30,5 +35,10 @@ public class AreaDomainService {
         areaList.addAll(metroList);
         areaList.addAll(cityList);
         return areaList;
+    }
+
+    @Transactional(readOnly = true)
+    public Page<AreaImage> findAreaImagesForFeed(Pageable pageable) {
+        return areaImageRepository.findAll(pageable);
     }
 }
