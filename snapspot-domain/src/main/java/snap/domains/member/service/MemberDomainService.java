@@ -31,6 +31,9 @@ public class MemberDomainService {
     }
 
     public Member createMember(Member member) {
+        if (memberRepository.existsByEmail(member.getEmail())) {
+            throw new IllegalArgumentException("이미 가입된 이메일입니다.");
+        }
         return memberRepository.save(member);
     }
 
