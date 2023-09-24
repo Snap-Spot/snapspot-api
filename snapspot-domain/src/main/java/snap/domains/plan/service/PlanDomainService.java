@@ -104,4 +104,22 @@ public class PlanDomainService {
     public List<Plan> findByPhotographerAndStatus(Photographer photographer, Status status, Status status1, Status status2) {
         return planRepository.findAllByPhotographerAndStatusOrStatusOrStatus(photographer,status,status1,status2);
     }
+
+    public Plan changePlan(Plan plan) {
+        Plan requestedPlan = findByPlanId(plan.getPlanId());
+
+        requestedPlan.changePlan(
+                plan.getPlanDate(),
+                plan.getTime(),
+                plan.getPeople()
+        );
+
+        messageRepository.save(Message.builder()
+                .plan(plan)
+                .contents(plan.getRequest())
+                .sender(Sender.MEMBER)
+                .build());
+
+        return  requestedPlan;
+    }
 }

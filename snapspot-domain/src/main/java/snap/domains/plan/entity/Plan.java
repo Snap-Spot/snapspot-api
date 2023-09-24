@@ -116,6 +116,12 @@ public class Plan {
         this.message = message;
     }
 
+    public void changePlan(LocalDateTime planDate, String time , Long people) {
+        this.planDate = planDate;
+        this.time = time;
+        this.people = people;
+    }
+
     public void setStatus(Status status) {
         this.status = status;
     }

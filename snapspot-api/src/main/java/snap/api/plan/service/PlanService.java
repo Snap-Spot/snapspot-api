@@ -106,4 +106,9 @@ public class PlanService {
                 requestList, reserveList
         );
     }
+
+    public void changePlan(PlanChangeDto requestDto) {
+        Plan plan = planDomainService.changePlan(requestDto.toEntity());
+        Plan updatePlan = planDomainService.updateState(plan, Status.REQUEST);
+    }
 }
