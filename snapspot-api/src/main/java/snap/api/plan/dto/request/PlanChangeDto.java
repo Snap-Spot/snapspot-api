@@ -16,14 +16,4 @@ public class PlanChangeDto {
     private LocalDateTime planDate;
     private String time;
     private Long people;
-
-    public Plan toEntity() {
-        return Plan.builder()
-                .planId(planId)
-                .request(reason)
-                .planDate(planDate)
-                .time(time)
-                .people(people)
-                .build();
-    }
 }

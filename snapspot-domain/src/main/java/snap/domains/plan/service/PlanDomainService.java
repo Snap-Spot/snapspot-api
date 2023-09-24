@@ -14,6 +14,7 @@ import snap.domains.plan.repository.PlanQueryDslRepository;
 import snap.enums.Status;
 import snap.domains.plan.repository.PlanJPARepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -105,21 +106,23 @@ public class PlanDomainService {
         return planRepository.findAllByPhotographerAndStatusOrStatusOrStatus(photographer,status,status1,status2);
     }
 
-    public Plan changePlan(Plan plan) {
-        Plan requestedPlan = findByPlanId(plan.getPlanId());
-
-        requestedPlan.changePlan(
-                plan.getPlanDate(),
-                plan.getTime(),
-                plan.getPeople()
+    public void changePlan(
+            Plan plan,
+            LocalDateTime modifiedDate,
+            String modifiedTime,
+            Long modifiedPeople,
+            String message
+    ) {
+        plan.updatePlan(
+                modifiedDate,
+                modifiedTime,
+                modifiedPeople,
+                Status.REQUEST
         );
-
         messageRepository.save(Message.builder()
                 .plan(plan)
-                .contents(plan.getRequest())
+                .contents(message)
                 .sender(Sender.MEMBER)
                 .build());
-
-        return  requestedPlan;
     }
 }

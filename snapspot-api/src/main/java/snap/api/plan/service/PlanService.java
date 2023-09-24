@@ -108,7 +108,7 @@ public class PlanService {
     }
 
     public void changePlan(PlanChangeDto requestDto) {
-        Plan plan = planDomainService.changePlan(requestDto.toEntity());
-        Plan updatePlan = planDomainService.updateState(plan, Status.REQUEST);
+        Plan plan = planDomainService.findByPlanId(requestDto.getPlanId());
+        planDomainService.changePlan(plan, requestDto.getPlanDate(), requestDto.getTime(), requestDto.getPeople(), requestDto.getReason());
     }
 }
