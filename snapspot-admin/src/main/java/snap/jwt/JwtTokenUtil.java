@@ -3,7 +3,6 @@ package snap.jwt;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -122,5 +121,16 @@ public class JwtTokenUtil {
                  IllegalArgumentException e) {
             throw e;
         }
+    }
+
+    public TokenRes reissueToken(String email, Role role, String refreshToken) {
+        Long current = (new Date()).getTime();
+        String authorities = role.name();
+        String accessToken = Jwts.builder()
+                .setSubject(email)
+                .claim(AUTHORITIES_KEY, authorities)
+                .setExpiration(new Date(current + ACCESS_TOKEN_EXPIRE_TIME))
+                .signWith(key, SignatureAlgorithm.HS256).compact();
+        return TokenRes.builder().accessToken(accessToken).refreshToken(refreshToken).build();
     }
 }
