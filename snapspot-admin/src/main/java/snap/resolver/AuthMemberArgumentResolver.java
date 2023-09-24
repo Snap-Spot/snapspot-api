@@ -36,8 +36,6 @@ public class AuthMemberArgumentResolver implements HandlerMethodArgumentResolver
             throw  new RuntimeException("Security Context 에 인증 정보가 없습니다.");
         }
 
-        log.info(authentication.getName());
-
         return memberDomainService.findMemberByEmail(authentication.getName())
                 .orElseThrow(() -> new IllegalArgumentException("이메일이 올바르지 않습니다."));
     }

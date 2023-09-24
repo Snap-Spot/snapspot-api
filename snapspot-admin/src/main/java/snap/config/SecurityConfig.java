@@ -33,6 +33,7 @@ public class SecurityConfig {
                 .authorizeRequests()
                 // .antMatchers("/**").permitAll()
                 .antMatchers("/members/test", "/members/signup", "/members/signin").permitAll()
+                .antMatchers("/auth/**").permitAll()
                 .antMatchers("/photographers/**").permitAll()
                 .antMatchers("/plans/**").authenticated()
                 .antMatchers("/plans/deposit", "/plans/reserve").hasRole("PHOTOGRAPHER")

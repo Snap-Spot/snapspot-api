@@ -116,6 +116,13 @@ public class Plan {
         this.message = message;
     }
 
+    public void updatePlan(LocalDateTime planDate, String time , Long people, Status status) {
+        this.planDate = planDate;
+        this.time = time;
+        this.people = people;
+        this.status = status;
+    }
+
     public void setStatus(Status status) {
         this.status = status;
     }

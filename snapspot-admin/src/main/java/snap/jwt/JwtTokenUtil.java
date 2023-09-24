@@ -3,7 +3,6 @@ package snap.jwt;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -14,8 +13,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import snap.dto.TokenRes;
 import snap.enums.Role;
-import snap.response.ErrorResponse;
-import snap.response.ErrorStatus;
 
 import java.security.Key;
 import java.util.Arrays;
@@ -52,6 +49,7 @@ public class JwtTokenUtil {
                 .setExpiration(new Date(current + ACCESS_TOKEN_EXPIRE_TIME))
                 .signWith(key, SignatureAlgorithm.HS256).compact();
         String refreshToken = Jwts.builder()
+                .setSubject(authentication.getName())
                 .setExpiration((new Date(current + REFRESH_TOKEN_EXPIRE_TIME)))
                 .signWith(key, SignatureAlgorithm.HS256).compact();
 
@@ -72,6 +70,7 @@ public class JwtTokenUtil {
                 .setExpiration(new Date(current + ACCESS_TOKEN_EXPIRE_TIME))
                 .signWith(key, SignatureAlgorithm.HS256).compact();
         String refreshToken = Jwts.builder()
+                .setSubject(email)
                 .setExpiration((new Date(current + REFRESH_TOKEN_EXPIRE_TIME)))
                 .signWith(key, SignatureAlgorithm.HS256).compact();
 
@@ -94,6 +93,11 @@ public class JwtTokenUtil {
 
         UserDetails principal = new User(claims.getSubject(), "", authorities);
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
+    }
+
+    public String getEmail(String token) {
+        Claims claims = parseClaims(token);
+        return claims.getSubject();
     }
 
     private Claims parseClaims(String accessToken) {
@@ -124,5 +128,16 @@ public class JwtTokenUtil {
                  IllegalArgumentException e) {
             throw e;
         }
+    }
+
+    public TokenRes reissueToken(String email, Role role, String refreshToken) {
+        Long current = (new Date()).getTime();
+        String authorities = role.name();
+        String accessToken = Jwts.builder()
+                .setSubject(email)
+                .claim(AUTHORITIES_KEY, authorities)
+                .setExpiration(new Date(current + ACCESS_TOKEN_EXPIRE_TIME))
+                .signWith(key, SignatureAlgorithm.HS256).compact();
+        return TokenRes.builder().accessToken(accessToken).refreshToken(refreshToken).build();
     }
 }

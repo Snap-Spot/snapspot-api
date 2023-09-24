@@ -115,4 +115,15 @@ public class PlanController {
                         .details("사진 작가가 스냅 사진을 전달했습니다.")
                         .build());
     }
+
+    @PutMapping("/change")
+    public ResponseEntity<SuccessResponse> changePlan(@AuthMember Member member, @RequestBody PlanChangeDto requestDto) {
+        planService.changePlan(requestDto);
+        return ResponseEntity
+                .ok(SuccessResponse.builder()
+                        .code("OK").status(200).message("스냅 사진 촬영 일정을 변경 요청했습니다.")
+                        .details("일반 고객이 스냅 사진 촬영 일정을 변경 요청했습니다.")
+                        .build());
+    }
+
 }
