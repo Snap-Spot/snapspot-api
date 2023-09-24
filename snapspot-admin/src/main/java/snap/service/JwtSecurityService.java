@@ -16,6 +16,7 @@ public class JwtSecurityService {
     private final JwtTokenUtil jwtUtil;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final PasswordEncoder passwordEncoder;
+    private final RedisService redisService;
 
     public TokenRes createJwt(String email, String password) {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email, password);
