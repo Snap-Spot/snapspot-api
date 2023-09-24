@@ -1,6 +1,5 @@
-#REPOSITORY=/home/ubuntu/snapspot
-# cd $REPOSITORY
-cd ../
+REPOSITORY=/home/ubuntu/snapspot
+cd $REPOSITORY
 
 CURRENT_CONTAINER=$(sudo docker ps)
 
@@ -9,21 +8,13 @@ then
   echo "> 현재 실행중인 도커 컨테이너가 없습니다."
 else
   echo "> kill -15 $CURRENT_CONTAINER"
-  sudo docker stop snapspot-server
-  sleep 5
-  sudo docker stop snapspot-batch-server
-  sleep 5
-  sudo docker rm snapspot-server
-  sleep 5
-  sudo docker rm snapspot-batch-server
-  sleep 5
+  sudo docker-compose down
+  sudo docker rm -f $(sudo docker ps -aq)
+  sudo docker rmi $(sudo docker images -q)
 fi
 
 echo "> 도커 이미지 빌드: api"
-sudo docker build -t snapspot-api .
-
-echo "> snapspot-api 도커 컨테이너 올리기"
-sudo docker run -d -p 80:8080 --name snapspot-server snapspot-api
+sudo docker-compose up -d
 
 echo "> 도커 이미지 빌드: batch"
 cd ./snapspot-batch
