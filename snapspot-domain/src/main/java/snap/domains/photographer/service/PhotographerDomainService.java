@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import snap.domains.member.entity.Member;
@@ -63,13 +62,8 @@ public class PhotographerDomainService {
     }
 
     @Transactional(readOnly = true)
-    public Page<Photographer> findAllToPage(Pageable pageable){
-        return photographerRepository.findAll(pageable);
-    }
-
-    @Transactional(readOnly = true)
-    public Page<Photographer> findAllByFilter(PhotographerFilterReq filterReq, Pageable pageable){
-        return photographerRepository.searchAll(filterReq, pageable);
+    public List<Photographer> findAllByFilter(PhotographerFilterReq filterReq){
+        return photographerRepository.searchAll(filterReq);
     }
 
     public void updatePhotographer(Photographer photographer, String nickname, String profileImage,

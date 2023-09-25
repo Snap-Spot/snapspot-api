@@ -2,7 +2,6 @@ package snap.api.photographer.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import snap.api.photographer.dto.request.PhotographerCustomDto;
 import snap.api.photographer.dto.response.PhotographerNameResponseDto;
@@ -76,16 +75,10 @@ public class PhotographerService {
                 .map(PhotographerNameResponseDto::new).collect(Collectors.toList());
     }
 
-    public List<PhotographerResponseDto> findAllPhotographers(Pageable pageable){
-        return photographerDomainService.findAllToPage(pageable)
-                .map(photographer -> new PhotographerResponseDto(photographer, findReview(photographer)))
-                .getContent();
-    }
-
-    public List<PhotographerSimpleDto> findByFilter(PhotographerFilterReq filterReq, Pageable pageable){
-        return photographerDomainService.findAllByFilter(filterReq, pageable)
+    public List<PhotographerSimpleDto> findByFilter(PhotographerFilterReq filterReq){
+        return photographerDomainService.findAllByFilter(filterReq).stream()
                 .map(photographer -> new PhotographerSimpleDto(photographer, findReview(photographer)))
-                .getContent();
+                .toList();
     }
 
     public PhotographerResponseDto updatePhotographerInfo(Photographer photographer, PhotographerCustomDto dto){
