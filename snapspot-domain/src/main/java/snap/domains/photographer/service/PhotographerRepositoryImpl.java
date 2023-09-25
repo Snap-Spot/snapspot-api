@@ -30,7 +30,7 @@ public class PhotographerRepositoryImpl implements PhotographerRepositoryCustom 
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public Page<Photographer> searchAll(PhotographerFilterReq photographerFilterReq, Pageable pageable) {
+    public List<Photographer> searchAll(PhotographerFilterReq photographerFilterReq) {
         List<Photographer> result = new ArrayList<>();
         Sort sort = photographerFilterReq.getSort();
 
@@ -41,22 +41,21 @@ public class PhotographerRepositoryImpl implements PhotographerRepositoryCustom 
 
         if(sort != null) {
             if(sort.equals(Sort.PAY)){
-                result = searchQuery(photographerFilterReq, pageable).orderBy(paySpecifier).fetch();
+                result = searchQuery(photographerFilterReq).orderBy(paySpecifier, photographerSpecifier).fetch();
             } else if(sort.equals(Sort.REVIEW)){
-                result = searchQuery(photographerFilterReq, pageable).orderBy(review.count().desc()).fetch();
+                result = searchQuery(photographerFilterReq).orderBy(reviewCountSpecifier, photographerSpecifier).fetch();
             } else if (sort.equals(Sort.SCORE)) {
-                result = searchQuery(photographerFilterReq, pageable).orderBy(reviewScoreSpecifier, photographerSpecifier).fetch();
+                result = searchQuery(photographerFilterReq).orderBy(reviewScoreSpecifier, photographerSpecifier).fetch();
             }
         }
         else {
-            result = searchQuery(photographerFilterReq, pageable).orderBy(photographerSpecifier).fetch();
+            result = searchQuery(photographerFilterReq).orderBy(photographerSpecifier).fetch();
         }
-        return new PageImpl<>(result);
+        return result;
     }
 
     private JPAQuery<Photographer> searchQuery (
-            PhotographerFilterReq photographerFilterReq,
-            Pageable pageable
+            PhotographerFilterReq photographerFilterReq
     ) {
         return queryFactory
                 .selectFrom(photographer)
@@ -67,8 +66,6 @@ public class PhotographerRepositoryImpl implements PhotographerRepositoryCustom 
                         specialKeywordCondition(photographerFilterReq.getSpecial()),
                         ableDateCondition(photographerFilterReq.getAbleDate())
                 )
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
                 .groupBy(photographer);
     }
 

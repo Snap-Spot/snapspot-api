@@ -63,13 +63,8 @@ public class PhotographerDomainService {
     }
 
     @Transactional(readOnly = true)
-    public Page<Photographer> findAllToPage(Pageable pageable){
-        return photographerRepository.findAll(pageable);
-    }
-
-    @Transactional(readOnly = true)
-    public Page<Photographer> findAllByFilter(PhotographerFilterReq filterReq, Pageable pageable){
-        return photographerRepository.searchAll(filterReq, pageable);
+    public List<Photographer> findAllByFilter(PhotographerFilterReq filterReq){
+        return photographerRepository.searchAll(filterReq);
     }
 
     public void updatePhotographer(Photographer photographer, String nickname, String profileImage,
