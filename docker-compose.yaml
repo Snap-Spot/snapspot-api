@@ -1,10 +1,9 @@
 services:
   spring-boot:
+    platform: linux/amd64 
     build:
       context: .
-      dockerfile: Dockerfile
-      args:
-        - LIBGL_PATH=/usr/lib/x86_64-linux-gnu/libGL.so.1
+      dockerfile: ./Dockerfile  
     ports:
       - 80:8080
     networks:
