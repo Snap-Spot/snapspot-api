@@ -1,15 +1,18 @@
 package snap.api.plan.client;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.util.List;
-import java.util.Map;
-
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class KakaoClient {
@@ -27,14 +30,26 @@ public class KakaoClient {
                     .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                     .build();
 
-    public List<Object> getCoordinateFromAddress(String address) {
-        Map<String, Object> response = kakaoApiWebClient.get().uri(uriBuilder ->
-                uriBuilder.path("/local/search/address")
+    public JSONObject getCoordinateFromAddress(String address) throws ParseException {
+        String response = WebClient.builder().baseUrl("https://dapi.kakao.com").build()
+                .get()
+                .uri(uriBuilder ->
+                uriBuilder
+                        .path("/v2/local/search/address")
                         .queryParam("query", address)
                         .queryParam("page", 1)
-                        .queryParam("size", 1).build()
-        ).retrieve().bodyToMono(Map.class).block();
+                        .queryParam("size", 1)
+                        .build()
+                )
+                .header("Authorization", "KakaoAK " + clientId)
+                .headers(httpHeaders -> {
+                    httpHeaders.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+                })
+                .retrieve().bodyToMono(String.class).block();
 
-        return (List<Object>) response.get("documents");
+        JSONParser jsonParser = new JSONParser();
+        JSONObject jsonObject = (JSONObject) jsonParser.parse(response);
+        JSONArray array = (JSONArray) jsonObject.get("documents");
+        return (JSONObject) array.get(0);
     }
 }

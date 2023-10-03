@@ -42,7 +42,7 @@ public class PlanDomainService {
                 .build());
     }
 
-    public Plan createDeposit(Plan plan) {
+    public Plan createDeposit(Plan plan, String x, String y) {
         Plan requestedPlan = findByPlanId(plan.getPlanId());
 
         requestedPlan.detailPlan(
@@ -51,7 +51,9 @@ public class PlanDomainService {
                 plan.getPrice(),
                 plan.getPlaceName(),
                 plan.getPlaceAddress(),
-                plan.getMessage()
+                plan.getMessage(),
+                x,
+                y
         );
 
         messageRepository.save(Message.builder()
