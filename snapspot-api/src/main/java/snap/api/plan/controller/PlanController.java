@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.json.simple.parser.ParseException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -74,7 +75,7 @@ public class PlanController {
     }
 
     @PutMapping("/deposit")
-    public ResponseEntity<PlanFullResponseDto> depositPlan(@AuthMember Member member, @RequestBody DepositRequestDto requestDto) {
+    public ResponseEntity<PlanFullResponseDto> depositPlan(@AuthMember Member member, @RequestBody DepositRequestDto requestDto) throws ParseException {
         return new ResponseEntity<>(planService.createDeposit(member, requestDto), HttpStatus.OK);
     }
 
