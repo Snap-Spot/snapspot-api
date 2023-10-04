@@ -2,8 +2,11 @@ package snap.api.plan.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import snap.api.plan.client.KakaoClient;
 import snap.api.plan.dto.request.*;
 import snap.api.plan.dto.response.PlanFullResponseDto;
 import snap.api.plan.dto.response.PlanPhotographerDto;
@@ -26,7 +29,6 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-@Slf4j
 @RequiredArgsConstructor
 public class PlanService {
 
@@ -34,6 +36,7 @@ public class PlanService {
     private final PhotographerDomainService photographerDomainService;
     private final MessageDomainService messageDomainService;
     private final MailService mailService;
+    private final KakaoClient kakaoClient;
 
     public PlanResponseDto createRequest(Member member, PlanRequestDto requestDto) {
         Photographer photographer = photographerDomainService.findById(requestDto.getPhotographerId());
@@ -41,8 +44,9 @@ public class PlanService {
         return new PlanResponseDto(plan);
     }
 
-    public PlanFullResponseDto createDeposit(Member member, DepositRequestDto requestDto) {
-        Plan plan = planDomainService.createDeposit(requestDto.toEntity());
+    public PlanFullResponseDto createDeposit(Member member, DepositRequestDto requestDto) throws ParseException {
+        JSONObject coordinate = kakaoClient.getCoordinateFromAddress(requestDto.getPlaceAddress());
+        Plan plan = planDomainService.createDeposit(requestDto.toEntity(), (String) coordinate.get("x"), (String) coordinate.get("y"));
         return new PlanFullResponseDto(plan, member, messageDomainService.findByPlanId(plan.getPlanId()));
     }
 

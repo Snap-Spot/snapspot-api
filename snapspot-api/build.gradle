@@ -7,4 +7,5 @@ dependencies {
     implementation project(":snapspot-admin")
     implementation project(":snapspot-mail")
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
 }

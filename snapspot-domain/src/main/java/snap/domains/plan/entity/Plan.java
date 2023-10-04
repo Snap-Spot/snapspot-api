@@ -66,10 +66,10 @@ public class Plan {
     private String placeAddress;
 
     @Column
-    private Long x;
+    private String x;
 
     @Column
-    private Long y;
+    private String y;
 
     @Column
     private String request;
@@ -88,7 +88,7 @@ public class Plan {
     public Plan(UUID planId, Member customer, Photographer photographer, Status status,
                 LocalDateTime planDate, String time,
                 SpecialKeyword category, Long people, Long price, String wishPlace, String placeName,
-                String placeAddress, Long x, Long y, String request, String message) {
+                String placeAddress, String x, String y, String request, String message) {
         this.planId = planId;
         this.customer = customer;
         this.photographer = photographer;
@@ -107,10 +107,20 @@ public class Plan {
         this.message = message;
     }
 
-    public void detailPlan(UUID planId, Status status, Long price, String placeName, String placeAddress, String message) {
+    public void detailPlan(
+            UUID planId,
+            Status status,
+            Long price, String placeName,
+            String placeAddress,
+            String message,
+            String x,
+            String y
+            ) {
         this.planId = planId;
         this.status = status;
         this.price = price;
+        this.x = x;
+        this.y = y;
         this.placeName = placeName;
         this.placeAddress = placeAddress;
         this.message = message;
