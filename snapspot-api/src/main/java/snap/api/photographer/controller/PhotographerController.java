@@ -18,10 +18,12 @@ import snap.api.review.service.ReviewService;
 import snap.domains.member.entity.Member;
 import snap.domains.photographer.entity.Photographer;
 import snap.dto.request.PhotographerFilterReq;
-import snap.resolver.AuthMember;
 import snap.resolver.AuthPhotographer;
+import snap.service.JwtSecurityService;
 
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequiredArgsConstructor
@@ -31,6 +33,7 @@ public class PhotographerController {
     private final PhotographerService photographerService;
     private final ReviewService reviewService;
     private final MemberService memberService;
+    private final JwtSecurityService jwtSecurityService;
 
     @GetMapping("/me")
     public ResponseEntity<PhotographerResponseDto> photographerInfoFind(@AuthPhotographer Photographer photographer) {
@@ -44,7 +47,8 @@ public class PhotographerController {
     }
 
     @GetMapping("/{photographerId}")
-    public ResponseEntity<PhotographerWithHeartDto> photographerFindById(@PathVariable Long photographerId, @AuthMember Member member) {
+    public ResponseEntity<PhotographerWithHeartDto> photographerFindById(@PathVariable Long photographerId, HttpServletRequest request) {
+        Member member = jwtSecurityService.getMemberByRequest(request).getMember();
         return new ResponseEntity<>(photographerService.findPhotographer(photographerId, member), HttpStatus.OK);
     }
 

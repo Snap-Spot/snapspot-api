@@ -40,6 +40,7 @@ public class HeartDomainService {
     }
 
     public Boolean existsHeart(Member member, Photographer photographer){
+        if (member == null) return false;
         return heartRepository.existsByMemberAndPhotographer(member, photographer);
     }
 }
