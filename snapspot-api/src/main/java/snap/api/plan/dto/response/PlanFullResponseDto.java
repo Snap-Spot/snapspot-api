@@ -34,6 +34,8 @@ public class PlanFullResponseDto {
     private Long price;
     private String placeName;
     private String placeAddress;
+    private String x;
+    private String y;
     private Status status;
     private List<MessageResponseDto> messages;
 
@@ -51,7 +53,8 @@ public class PlanFullResponseDto {
         this.price = plan.getPrice();
         this.placeName = plan.getPlaceName();
         this.placeAddress = plan.getPlaceAddress();
-        // this.message = plan.getMessage();
+        this.x = plan.getX();
+        this.y = plan.getY();
         this.status = plan.getStatus();
         this.messages = messageList.stream()
                 .map(message -> new MessageResponseDto(message, member))
