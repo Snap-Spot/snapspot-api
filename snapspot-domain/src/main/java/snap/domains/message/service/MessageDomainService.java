@@ -26,6 +26,15 @@ public class MessageDomainService {
                 .build());
     }
 
+    public Message createCustomMessage(Plan plan, String custom, String contents, Sender sender) {
+        return messageRepository.save(Message.builder()
+                .plan(plan)
+                .custom(custom)
+                .contents(contents)
+                .sender(sender)
+                .build());
+    }
+
     public List<Message> findByPlanId(UUID planId) {
         return messageRepository.findAllByPlan_PlanId(planId);
     }

@@ -58,6 +58,7 @@ public class PlanDomainService {
 
         messageRepository.save(Message.builder()
                         .plan(requestedPlan)
+                        .custom("입금 요청")
                         .contents(plan.getMessage())
                         .sender(Sender.PHOTOGRAPHER)
                 .build());
@@ -123,6 +124,7 @@ public class PlanDomainService {
         );
         messageRepository.save(Message.builder()
                 .plan(plan)
+                .custom("변경 사유")
                 .contents(message)
                 .sender(Sender.MEMBER)
                 .build());

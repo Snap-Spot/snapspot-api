@@ -17,6 +17,7 @@ public class MessageResponseDto {
     private Long messageId;
     private Boolean isMine;
     private Sender sender;
+    private String custom;
     private String contents;
     private LocalDateTime createdAt;
 
@@ -27,6 +28,7 @@ public class MessageResponseDto {
         }
 
         this.messageId = message.getMessageId();
+        this.custom = message.getCustom();
         this.contents = message.getContents();
         this.sender = message.getSender();
         this.isMine = sender.equals(message.getSender());

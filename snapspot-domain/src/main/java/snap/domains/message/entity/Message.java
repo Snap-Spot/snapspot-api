@@ -23,6 +23,9 @@ public class Message extends BaseTimeEntity {
     private Plan plan;
 
     @Column
+    private String custom;
+
+    @Column
     private String contents;
 
     @Column
@@ -30,8 +33,9 @@ public class Message extends BaseTimeEntity {
     private Sender sender;
 
     @Builder
-    public Message(Plan plan, String contents, Sender sender) {
+    public Message(Plan plan, String custom, String contents, Sender sender) {
         this.plan = plan;
+        this.custom = custom;
         this.contents = contents;
         this.sender = sender;
     }

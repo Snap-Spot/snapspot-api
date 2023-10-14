@@ -53,7 +53,7 @@ public class PlanService {
     public PlanFullResponseDto refusePlan(Member member, RefuseRequestDto requestDto) {
         Plan plan = planDomainService.findByPlanId(requestDto.getPlanId());
         Plan updatedPlan = planDomainService.updateState(plan, Status.REFUSE);
-        Message message = messageDomainService.createMessage(updatedPlan, requestDto.getContents(), Sender.PHOTOGRAPHER);
+        Message message = messageDomainService.createCustomMessage(updatedPlan, "거절 사유", requestDto.getContents(), Sender.PHOTOGRAPHER);
         return new PlanFullResponseDto(plan, member, messageDomainService.findByPlanId(plan.getPlanId()));
     }
 
@@ -70,7 +70,7 @@ public class PlanService {
     public void reservePlan(PlanReservedDto requestDto) {
         Plan plan = planDomainService.findByPlanId(requestDto.getPlanId());
         Plan updatedPlan = planDomainService.updateState(plan, Status.RESERVED);
-        Message message = messageDomainService.createMessage(updatedPlan,requestDto.getContents(), Sender.PHOTOGRAPHER);
+        Message message = messageDomainService.createCustomMessage(updatedPlan, "예약 완료", requestDto.getContents(), Sender.PHOTOGRAPHER);
     }
 
     public void cancelPlan(Member member, PlanCancelDto requestDto) {
@@ -82,7 +82,7 @@ public class PlanService {
             sender = Sender.PHOTOGRAPHER;
         }
 
-        Message message = messageDomainService.createMessage(updatedPlan, "취소되었습니다.", sender);
+        Message message = messageDomainService.createCustomMessage(updatedPlan, "취소 사유", "취소되었습니다.", sender);
     }
 
     public void completePlan(MultipartFile file, PlanCompleteDto requestDto) {
