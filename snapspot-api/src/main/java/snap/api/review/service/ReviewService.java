@@ -45,6 +45,7 @@ public class ReviewService {
         return reviewList.stream().map(ReviewResponseDto::new).collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
     public List<ReviewResponseDto> findReviewListByPhotographer(Photographer photographer) {
         return reviewDomainService.findReviewListByPhotographer(photographer)
                 .stream().map(ReviewResponseDto::new).collect(Collectors.toList());
