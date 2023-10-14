@@ -78,12 +78,12 @@ public class PlanDomainService {
 
     @Transactional(readOnly = true)
     public List<Plan> findByPhotographer(Photographer photographer) {
-        return planRepository.findAllByPhotographer(photographer);
+        return planRepository.findAllByPhotographerOrderByCreatedAtDesc(photographer);
     }
 
     @Transactional(readOnly = true)
     public List<Plan> findByMember(Member member) {
-        return planRepository.findAllByCustomer(member);
+        return planRepository.findAllByCustomerOrderByCreatedAtDesc(member);
     }
 
     public Plan findByPlanIdAndMember(UUID planId, Member member) {
@@ -100,12 +100,12 @@ public class PlanDomainService {
 
     @Transactional(readOnly = true)
     public List<Plan> findByPhotographerAndStatus1(Photographer photographer, Status status, Status status1) {
-        return planRepository.findAllByPhotographerAndStatusOrStatus(photographer, status, status1);
+        return planRepository.findAllByPhotographerAndStatusOrStatusOrderByCreatedAtDesc(photographer, status, status1);
     }
 
     @Transactional(readOnly = true)
     public List<Plan> findByPhotographerAndStatus(Photographer photographer, Status status, Status status1, Status status2) {
-        return planRepository.findAllByPhotographerAndStatusOrStatusOrStatus(photographer,status,status1,status2);
+        return planRepository.findAllByPhotographerAndStatusOrStatusOrStatusOrderByCreatedAtDesc(photographer,status,status1,status2);
     }
 
     public void changePlan(
