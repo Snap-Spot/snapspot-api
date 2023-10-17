@@ -9,6 +9,8 @@ import snap.domains.message.entity.Message;
 import snap.domains.message.entity.Sender;
 import snap.enums.Role;
 
+import java.time.LocalDateTime;
+
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MessageResponseDto {
@@ -16,6 +18,7 @@ public class MessageResponseDto {
     private Boolean isMine;
     private Sender sender;
     private String contents;
+    private LocalDateTime createdAt;
 
     public MessageResponseDto(Message message, Member member) {
         Sender sender = Sender.MEMBER;
@@ -27,5 +30,6 @@ public class MessageResponseDto {
         this.contents = message.getContents();
         this.sender = message.getSender();
         this.isMine = sender.equals(message.getSender());
+        this.createdAt = message.getCreatedAt();
     }
 }

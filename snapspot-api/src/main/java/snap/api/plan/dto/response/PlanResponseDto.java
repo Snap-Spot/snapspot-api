@@ -33,6 +33,8 @@ public class PlanResponseDto {
     private Long price;
     private String request;
     private Status status;
+    private LocalDateTime createdAt;
+    private LocalDateTime modifiedAt;
 
     @Builder
     public PlanResponseDto(Plan plan) {
@@ -47,5 +49,7 @@ public class PlanResponseDto {
         this.wishPlace = plan.getWishPlace();
         this.request = plan.getRequest();
         this.status = plan.getStatus();
+        this.createdAt = plan.getCreatedAt();
+        this.modifiedAt = plan.getModifiedAt();
     }
 }

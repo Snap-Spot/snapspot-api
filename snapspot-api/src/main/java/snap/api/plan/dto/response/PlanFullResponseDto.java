@@ -38,6 +38,8 @@ public class PlanFullResponseDto {
     private String y;
     private Status status;
     private List<MessageResponseDto> messages;
+    private LocalDateTime createdAt;
+    private LocalDateTime modifiedAt;
 
     @Builder
     public PlanFullResponseDto(Plan plan, Member member, List<Message> messageList) {
@@ -59,5 +61,7 @@ public class PlanFullResponseDto {
         this.messages = messageList.stream()
                 .map(message -> new MessageResponseDto(message, member))
                 .collect(Collectors.toList());
+        this.createdAt = plan.getCreatedAt();
+        this.modifiedAt = plan.getModifiedAt();
     }
 }

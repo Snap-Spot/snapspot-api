@@ -21,7 +21,6 @@ public class PlanQueryDslRepository {
     private final EntityManager em;
     private final JPAQueryFactory queryFactory;
 
-
     public void changePlanStatusOfToday() {
         LocalDateTime now = LocalDateTime.now();
         now = LocalDateTime.of(now.getYear(), now.getMonth(), now.getDayOfMonth(), 0, 0, 0);

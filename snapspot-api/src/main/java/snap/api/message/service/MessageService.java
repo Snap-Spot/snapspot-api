@@ -30,15 +30,12 @@ public class MessageService {
         }
         Plan plan = planDomainService.findByPlanId(request.getPlanId());
 
-
         if (!plan.getCustomer().getMemberId().equals(member.getMemberId()))
         {
             if (!plan.getPhotographer().getMember().getMemberId().equals(member.getMemberId())) {
                 throw new IllegalArgumentException("사진 촬영 일정에 대해 권한이 있는 일반 계정 혹은 사진작가 계정이 아닙니다.");
             }
         }
-
-
 
         return messageDomainService.createMessage(
                 plan,

@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class PlanService {
@@ -46,6 +47,7 @@ public class PlanService {
 
     public PlanFullResponseDto createDeposit(Member member, DepositRequestDto requestDto) throws ParseException {
         JSONObject coordinate = kakaoClient.getCoordinateFromAddress(requestDto.getPlaceAddress());
+        log.info((String) coordinate.get("x"), (String) coordinate.get("y"));
         Plan plan = planDomainService.createDeposit(requestDto.toEntity(), (String) coordinate.get("x"), (String) coordinate.get("y"));
         return new PlanFullResponseDto(plan, member, messageDomainService.findByPlanId(plan.getPlanId()));
     }
