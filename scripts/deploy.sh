@@ -1,7 +1,7 @@
 REPOSITORY=/home/ubuntu/app
 cd $REPOSITORY
 
-CURRENT_CONTAINER=$(sudo docker ps -aq --filter "name=qcard")
+CURRENT_CONTAINER=$(sudo docker ps -aq --filter "name=snapspot")
 
 if [ -z $CURRENT_CONTAINER ]
 then
@@ -12,5 +12,5 @@ else
   sudo docker rmi $CURRENT_CONTAINER
 fi
 
-sudo docker build -t qcard .
-sudo docker run -d -p 80:8080 --name qcard --network app qcard
+sudo docker build -t snapspot .
+sudo docker run -d -p 80:8080 --name snapspot --network app snapspot
